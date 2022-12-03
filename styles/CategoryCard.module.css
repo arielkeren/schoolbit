@@ -1,0 +1,40 @@
+.linkWrapper {
+  text-decoration: none;
+}
+
+.container {
+  position: relative;
+  box-shadow: 0 0 10px black;
+  height: 250px;
+  width: 30vw;
+  max-width: 650px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: scale 250ms, box-shadow 250ms;
+}
+
+.container:hover {
+  scale: 1.05;
+  box-shadow: 0 0 20px black;
+}
+
+.icon {
+  color: black;
+  font-size: 50px;
+  position: absolute;
+  top: 10px;
+}
+
+.title {
+  color: black;
+  font-weight: 800;
+  font-size: 30px;
+}
+
+.description {
+  color: #404342;
+  font-size: 20px;
+}

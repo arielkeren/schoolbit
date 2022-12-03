@@ -1,0 +1,83 @@
+.outerContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0000002d;
+}
+
+.innerContainer {
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  padding: 200px 150px 100px 150px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+  box-shadow: 0 0 15px black;
+}
+
+.title {
+  font-size: 40px;
+  position: absolute;
+  top: 10px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.closeButton:hover .closeIcon {
+  color: crimson;
+}
+
+.closeIcon {
+  font-size: 35px;
+  transition: color 250ms;
+}
+
+.textField {
+  border: #8080802e 2px solid;
+  font-size: 30px;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+  transition: box-shadow 250ms;
+}
+
+.textField:focus {
+  box-shadow: 3px 3px 5px black;
+}
+
+.addButton {
+  border: royalblue 2px solid;
+  background: none;
+  border-radius: 5px;
+  padding: 5px 75px;
+  cursor: pointer;
+  transition: background-color 250ms;
+}
+
+.addButton:hover {
+  background-color: royalblue;
+}
+
+.addButton:hover .addIcon {
+  color: white;
+}
+
+.addIcon {
+  font-size: 50px;
+  color: royalblue;
+  transition: color 250ms;
+}

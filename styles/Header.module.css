@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: #0000003a 2px solid;
+  padding: 20px;
+}
+
+.titleLink {
+  text-decoration: none;
+  color: black;
+  font-size: 50px;
+  font-weight: 800;
+}
+
+.rightContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.usernameLink {
+  font-size: 25px;
+  color: black;
+}
+
+.settingsButton {
+  border: none;
+  background: none;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 250ms;
+}
+
+.settingsIcon {
+  font-size: 25px;
+}
+
+.loginLink {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 250ms;
+}
+
+.settingsButton:hover,
+.loginLink:hover {
+  background-color: #00000018;
+}
+
+.loginIcon {
+  color: black;
+  font-size: 30px;
+}
