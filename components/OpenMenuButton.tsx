@@ -1,11 +1,11 @@
 import { AiOutlinePlus } from "react-icons/ai";
-import styles from "../styles/CreateClassroomButton.module.css";
+import styles from "../styles/OpenMenuButton.module.css";
 
 interface Props {
   openMenu: () => void;
 }
 
-const CreateClassroomButton: React.FC<Props> = ({ openMenu }) => {
+const OpenMenuButton: React.FC<Props> = ({ openMenu }) => {
   return (
     <button onClick={openMenu} className={styles.button}>
       <AiOutlinePlus className={styles.icon} />
@@ -13,4 +13,4 @@ const CreateClassroomButton: React.FC<Props> = ({ openMenu }) => {
   );
 };
 
-export default CreateClassroomButton;
+export default OpenMenuButton;

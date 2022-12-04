@@ -8,7 +8,6 @@ import {
   collection,
   doc,
   setDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { auth, database } from "../firebaseConfig";
 import { ClassroomDataInterface } from "../types";
@@ -24,7 +23,7 @@ const ClassroomCreationMenu: React.FC<Props> = ({ closeMenu }) => {
     setName(event.target.value);
 
   const createClassroom = async () => {
-    const collectionReference = collection(database, "classrooms");
+    const classroomsCollectionReference = collection(database, "classrooms");
 
     const user = auth.currentUser;
 
@@ -38,7 +37,9 @@ const ClassroomCreationMenu: React.FC<Props> = ({ closeMenu }) => {
 
       let documentID: string | null = null;
       try {
-        documentID = (await addDoc(collectionReference, classroomData)).id;
+        documentID = (
+          await addDoc(classroomsCollectionReference, classroomData)
+        ).id;
       } catch {
         alert("Error creating the classroom... Try again later");
       }
@@ -49,11 +50,11 @@ const ClassroomCreationMenu: React.FC<Props> = ({ closeMenu }) => {
           classroomID: documentID,
         };
 
-        const documentReference = doc(database, `users/${user.uid}`);
+        const userDocumentReference = doc(database, `users/${user.uid}`);
 
         try {
           await setDoc(
-            documentReference,
+            userDocumentReference,
             {
               ownedClassrooms: arrayUnion(userClassroomData),
             },
@@ -77,7 +78,7 @@ const ClassroomCreationMenu: React.FC<Props> = ({ closeMenu }) => {
       alert("Cannot create a classroom without a name...");
     } else {
       createClassroom();
-      closeMenu(); // Create the classroom here
+      closeMenu();
     }
   };
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth, database } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-import ClassroomInterface from "../types";
+import ClassroomInterface, { AssignmentInterface } from "../types";
 import Header from "../components/Header";
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -16,6 +16,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [attendedClassrooms, setAttendedClassrooms] = useState<
     ClassroomInterface[]
   >([]);
+  const [assignments, setAssignments] = useState<AssignmentInterface[]>([]);
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -44,6 +45,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     getUserData();
   }, [user]);
 
+  const changeAssignments = (assignmentArray: AssignmentInterface[]) =>
+    setAssignments(assignmentArray);
+
   return (
     <>
       <Header />
@@ -53,6 +57,8 @@ const App = ({ Component, pageProps }: AppProps) => {
         requests={requests}
         ownedClassrooms={ownedClassrooms}
         attendedClassrooms={attendedClassrooms}
+        assignments={assignments}
+        changeAssignments={changeAssignments}
       />
     </>
   );

@@ -2,7 +2,7 @@ import Head from "next/head";
 import ClassroomList from "../components/ClassroomList";
 import Title from "../components/Title";
 import ClassroomInterface from "../types";
-import CreateClassroomButton from "../components/CreateClassroomButton";
+import OpenMenuButton from "../components/OpenMenuButton";
 import ClassroomCreationMenu from "../components/ClassroomCreationMenu";
 import { useState } from "react";
 
@@ -27,7 +27,7 @@ const MyClassroomsPage: React.FC<Props> = ({ ownedClassrooms }) => {
 
       <ClassroomList classrooms={ownedClassrooms} />
 
-      <CreateClassroomButton openMenu={openMenu} />
+      <OpenMenuButton openMenu={openMenu} />
 
       {isMenuOpen && <ClassroomCreationMenu closeMenu={closeMenu} />}
     </>
