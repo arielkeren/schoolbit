@@ -4,6 +4,7 @@ import { database } from "../firebaseConfig";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
 import { AssignmentInterface } from "../types";
+import { useRouter } from "next/router";
 
 interface Props {
   assignmentName: string;
@@ -14,6 +15,8 @@ const AssignmentCreationForm: React.FC<Props> = ({
   assignmentName,
   classroomID,
 }) => {
+  const router = useRouter();
+
   const [question, setQuestion] = useState("");
 
   const changeQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -38,6 +41,8 @@ const AssignmentCreationForm: React.FC<Props> = ({
       await updateDoc(classroomDocumentReference, {
         assignments: arrayUnion(assignmentData),
       });
+
+      router.push(`/classrooms/${classroomID}`);
     } catch {
       alert("Error creating the assignment... Try again later");
     }

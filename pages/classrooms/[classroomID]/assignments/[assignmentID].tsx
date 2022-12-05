@@ -1,6 +1,8 @@
 import { AssignmentInterface } from "../../../../types";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Title from "../../../../components/Title";
+import Question from "../../../../components/Question";
 
 interface Props {
   assignments: AssignmentInterface[];
@@ -18,11 +20,17 @@ const AssignmentPage: React.FC<Props> = ({ assignments }) => {
   return (
     <>
       {assignment !== undefined ? (
-        <Head>
-          <title>Coding Classroom | {assignment.name}</title>
-        </Head>
+        <>
+          <Head>
+            <title>Coding Classroom | {assignment.name}</title>
+          </Head>
+
+          <Title title={assignment.name} />
+
+          <Question question={assignment.question} />
+        </>
       ) : (
-        <></>
+        <p>Couldn&apos;t find this assignment...</p>
       )}
     </>
   );
