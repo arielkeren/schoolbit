@@ -33,6 +33,7 @@ const ClassroomCreationMenu: React.FC<Props> = ({ closeMenu }) => {
         ownerName: user.displayName,
         ownerID: user.uid,
         assignments: [],
+        participants: [],
       };
 
       let documentID: string | null = null;

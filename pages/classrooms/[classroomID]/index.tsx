@@ -10,6 +10,9 @@ import Subtitle from "../../../components/Subtitle";
 import AssignmentList from "../../../components/AssignmentList";
 import OpenMenuButton from "../../../components/OpenMenuButton";
 import AssignmentCreationMenu from "../../../components/AssignmentCreationMenu";
+import OpenParticipantsScreenButton from "../../../components/OpenParticipantsScreenButton";
+import ParticipantsScreen from "../../../components/ParticipantsScreen";
+import ClassroomCodeText from "../../../components/ClassroomCodeText";
 
 interface Props {
   ownedClassrooms: ClassroomInterface[];
@@ -29,6 +32,9 @@ const ClassroomPage: React.FC<Props> = ({
   const [classroomName, setClassroomName] = useState<string | null>(null);
   const [ownerName, setOwnerName] = useState<string | null>(null);
   const [ownerID, setOwnerID] = useState<string | null>(null);
+  const [participants, setParticipants] = useState<string[] | null>(null);
+  const [isParticipantsScreenOpen, setIsParticipantsScreenOpen] =
+    useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const user = auth.currentUser;
@@ -56,6 +62,7 @@ const ClassroomPage: React.FC<Props> = ({
         setClassroomName(classroomDocumentSnapshot.data()?.classroomName ?? "");
         setOwnerName(classroomDocumentSnapshot.data()?.ownerName ?? "");
         setOwnerID(classroomDocumentSnapshot.data()?.ownerID ?? "");
+        setParticipants(classroomDocumentSnapshot.data()?.participants ?? []);
 
         changeAssignments(classroomDocumentSnapshot.data()?.assignments ?? []);
       }
@@ -63,6 +70,10 @@ const ClassroomPage: React.FC<Props> = ({
 
     getClassroomData();
   }, [classroomID, ownedClassrooms, attendedClassrooms, changeAssignments]);
+
+  const openParticipantsScreen = () => setIsParticipantsScreenOpen(true);
+
+  const closeParticipantsScreen = () => setIsParticipantsScreenOpen(false);
 
   const openMenu = () => setIsMenuOpen(true);
 
@@ -74,6 +85,7 @@ const ClassroomPage: React.FC<Props> = ({
       classroomName !== null &&
       ownerName !== null &&
       assignments !== null &&
+      participants !== null &&
       typeof classroomID === "string" ? (
         <>
           <Head>
@@ -85,6 +97,20 @@ const ClassroomPage: React.FC<Props> = ({
           <Subtitle subtitle={`${ownerName}'s Classroom`} />
 
           <AssignmentList assignments={assignments} classroomID={classroomID} />
+
+          <ClassroomCodeText code={classroomID} />
+
+          <OpenParticipantsScreenButton
+            openParticipantsScreen={openParticipantsScreen}
+          />
+
+          {isParticipantsScreenOpen && (
+            <ParticipantsScreen
+              participants={participants}
+              ownerName={ownerName}
+              closeParticipantsScreen={closeParticipantsScreen}
+            />
+          )}
 
           {user.uid === ownerID && <OpenMenuButton openMenu={openMenu} />}
 

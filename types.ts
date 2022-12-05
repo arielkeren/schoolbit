@@ -16,6 +16,7 @@ export interface ClassroomDataInterface {
   ownerName: string;
   ownerID: string;
   assignments: AssignmentInterface[];
+  participants: string[];
 }
 
 export default interface ClassroomInterface {
