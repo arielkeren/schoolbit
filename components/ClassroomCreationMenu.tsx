@@ -34,21 +34,22 @@ const ClassroomCreationMenu: React.FC<Props> = ({ closeMenu }) => {
         ownerID: user.uid,
         assignments: [],
         participants: [],
+        requests: [],
       };
 
-      let documentID: string | null = null;
+      let classroomDocumentID: string | null = null;
       try {
-        documentID = (
+        classroomDocumentID = (
           await addDoc(classroomsCollectionReference, classroomData)
         ).id;
       } catch {
         alert("Error creating the classroom... Try again later");
       }
 
-      if (documentID !== null) {
+      if (classroomDocumentID !== null) {
         const userClassroomData = {
           classroomName: name,
-          classroomID: documentID,
+          classroomID: classroomDocumentID,
         };
 
         const userDocumentReference = doc(database, `users/${user.uid}`);

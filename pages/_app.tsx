@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth, database } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-import ClassroomInterface, { AssignmentInterface } from "../types";
+import { ClassroomInterface, AssignmentInterface } from "../types";
 import Header from "../components/Header";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [requests, setRequests] = useState<ClassroomInterface[]>([]);
   const [ownedClassrooms, setOwnedClassrooms] = useState<ClassroomInterface[]>(
     []
   );
@@ -22,7 +21,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     setUser(currentUser);
 
     if (currentUser === null) {
-      setRequests([]);
       setOwnedClassrooms([]);
       setAttendedClassrooms([]);
     }
@@ -35,7 +33,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       const userDocumentReference = doc(database, `users/${user.uid}`);
       const userDocumentSnapshot = await getDoc(userDocumentReference);
 
-      setRequests(userDocumentSnapshot.data()?.requests ?? []);
       setOwnedClassrooms(userDocumentSnapshot.data()?.ownedClassrooms ?? []);
       setAttendedClassrooms(
         userDocumentSnapshot.data()?.attendedClassrooms ?? []
@@ -54,7 +51,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Component
         {...pageProps}
         user={user}
-        requests={requests}
         ownedClassrooms={ownedClassrooms}
         attendedClassrooms={attendedClassrooms}
         assignments={assignments}

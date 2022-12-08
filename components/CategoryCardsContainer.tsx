@@ -15,9 +15,9 @@ const CategoryCardsContainer: React.FC = () => {
         link="attended-classrooms"
       />
       <CategoryCard
-        title="Requests"
-        description="Browse your join requests"
-        link="requests"
+        title="Join Classroom"
+        description="Enter a classroom code to join it"
+        link="join-classroom"
       />
     </div>
   );

@@ -1,3 +1,8 @@
+export interface RequestInterface {
+  senderName: string;
+  senderID: string;
+}
+
 export interface AnswerInterface {
   text: string;
   senderName: string;
@@ -17,9 +22,10 @@ export interface ClassroomDataInterface {
   ownerID: string;
   assignments: AssignmentInterface[];
   participants: string[];
+  requests: RequestInterface[];
 }
 
-export default interface ClassroomInterface {
+export interface ClassroomInterface {
   classroomName: string;
   classroomID: string;
   ownerName: string;

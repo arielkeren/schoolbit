@@ -15,11 +15,6 @@ const ParticipantsScreen: React.FC<Props> = ({
   ownerName,
   closeParticipantsScreen,
 }) => {
-  const [name, setName] = useState("");
-
-  const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setName(event.target.value);
-
   const stopPropagation = (event: React.MouseEvent<HTMLDivElement>) =>
     event.stopPropagation();
 

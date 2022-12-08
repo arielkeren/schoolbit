@@ -1,5 +1,5 @@
 .container {
-  width: 85%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,18 +14,39 @@
   font-weight: bold;
 }
 
-.joinButton {
+.buttonsContainer {
+  display: flex;
+  gap: 5px;
+}
+
+.acceptButton {
   border: none;
   background-color: #4871eb;
   color: white;
   font-weight: bold;
-  padding: 10px 35px;
-  font-size: 30px;
+  padding: 10px 30px;
+  font-size: 25px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 250ms;
 }
 
-.joinButton:hover {
+.acceptButton:hover {
   background-color: #587ef3;
+}
+
+.denyButton {
+  border: none;
+  background-color: crimson;
+  color: white;
+  font-weight: bold;
+  padding: 10px 30px;
+  font-size: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 250ms;
+}
+
+.denyButton:hover {
+  background-color: rgb(235, 35, 75);
 }

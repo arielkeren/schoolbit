@@ -2,7 +2,7 @@ import { doc, getDoc } from "firebase/firestore";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { auth, database } from "../../../firebaseConfig";
-import ClassroomInterface from "../../../types";
+import { ClassroomInterface } from "../../../types";
 import { useState, useEffect } from "react";
 import { AssignmentInterface } from "../../../types";
 import Title from "../../../components/Title";
@@ -10,9 +10,11 @@ import Subtitle from "../../../components/Subtitle";
 import AssignmentList from "../../../components/AssignmentList";
 import OpenMenuButton from "../../../components/OpenMenuButton";
 import AssignmentCreationMenu from "../../../components/AssignmentCreationMenu";
-import OpenParticipantsScreenButton from "../../../components/OpenParticipantsScreenButton";
+import OpenScreenButton from "../../../components/OpenScreenButton";
 import ParticipantsScreen from "../../../components/ParticipantsScreen";
 import ClassroomCodeText from "../../../components/ClassroomCodeText";
+import { RequestInterface } from "../../..//types";
+import RequestsScreen from "../../../components/RequestsScreen";
 
 interface Props {
   ownedClassrooms: ClassroomInterface[];
@@ -33,8 +35,10 @@ const ClassroomPage: React.FC<Props> = ({
   const [ownerName, setOwnerName] = useState<string | null>(null);
   const [ownerID, setOwnerID] = useState<string | null>(null);
   const [participants, setParticipants] = useState<string[] | null>(null);
+  const [requests, setRequests] = useState<RequestInterface[] | null>(null);
   const [isParticipantsScreenOpen, setIsParticipantsScreenOpen] =
     useState(false);
+  const [isRequestsScreenOpen, setIsRequestsScreenOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const user = auth.currentUser;
@@ -63,6 +67,7 @@ const ClassroomPage: React.FC<Props> = ({
         setOwnerName(classroomDocumentSnapshot.data()?.ownerName ?? "");
         setOwnerID(classroomDocumentSnapshot.data()?.ownerID ?? "");
         setParticipants(classroomDocumentSnapshot.data()?.participants ?? []);
+        setRequests(classroomDocumentSnapshot.data()?.requests ?? []);
 
         changeAssignments(classroomDocumentSnapshot.data()?.assignments ?? []);
       }
@@ -70,6 +75,10 @@ const ClassroomPage: React.FC<Props> = ({
 
     getClassroomData();
   }, [classroomID, ownedClassrooms, attendedClassrooms, changeAssignments]);
+
+  const openRequestsScreen = () => setIsRequestsScreenOpen(true);
+
+  const closeRequestsScreen = () => setIsRequestsScreenOpen(false);
 
   const openParticipantsScreen = () => setIsParticipantsScreenOpen(true);
 
@@ -85,6 +94,7 @@ const ClassroomPage: React.FC<Props> = ({
       classroomName !== null &&
       ownerName !== null &&
       assignments !== null &&
+      requests !== null &&
       participants !== null &&
       typeof classroomID === "string" ? (
         <>
@@ -100,9 +110,23 @@ const ClassroomPage: React.FC<Props> = ({
 
           <ClassroomCodeText code={classroomID} />
 
-          <OpenParticipantsScreenButton
-            openParticipantsScreen={openParticipantsScreen}
+          {user.uid === ownerID && (
+            <OpenScreenButton openScreen={openRequestsScreen} icon="requests" />
+          )}
+
+          <OpenScreenButton
+            openScreen={openParticipantsScreen}
+            icon="participants"
           />
+
+          {isRequestsScreenOpen && (
+            <RequestsScreen
+              requests={requests}
+              closeRequestsScreen={closeRequestsScreen}
+              classroomName={classroomName}
+              classroomID={classroomID}
+            />
+          )}
 
           {isParticipantsScreenOpen && (
             <ParticipantsScreen
