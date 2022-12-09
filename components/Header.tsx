@@ -17,8 +17,8 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Link href="/" className={styles.titleLink}>
+    <div className="flex justify-between items-center p-5">
+      <Link href="/" className="text-6xl font-bold">
         Coding Classroom
       </Link>
       {username === null ? (
