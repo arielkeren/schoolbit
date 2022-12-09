@@ -1,13 +1,22 @@
-import { User } from "firebase/auth";
+import { signOut, User } from "firebase/auth";
 import Head from "next/head";
 import Title from "../components/Title";
 import ProfileDetails from "../components/ProfileDetails";
+import { auth } from "../firebaseConfig";
 
 interface Props {
   user: User | null;
 }
 
 const ProfilePage: React.FC<Props> = ({ user }) => {
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+    } catch {
+      alert("Error logging out... Try again later");
+    }
+  };
+
   return (
     <>
       <Head>
@@ -17,6 +26,8 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
       <Title title="Profile" />
 
       <ProfileDetails user={user} />
+
+      <button onClick={logOut}>Log out</button>
     </>
   );
 };
