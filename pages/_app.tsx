@@ -50,7 +50,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Header />
       <Component
         {...pageProps}
-        user={user}
         ownedClassrooms={ownedClassrooms}
         attendedClassrooms={attendedClassrooms}
         assignments={assignments}
