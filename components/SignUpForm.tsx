@@ -1,6 +1,5 @@
 import { auth } from "../firebaseConfig";
 import { useState } from "react";
-import styles from "../styles/SignUpForm.module.css";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRouter } from "next/router";
 
@@ -36,57 +35,74 @@ const LoginForm: React.FC = () => {
   return (
     <>
       {auth.currentUser === null ? (
-        <div className={styles.container}>
-          <form className={styles.form}>
-            <div className={styles.fieldContainer}>
-              <label htmlFor="username" className={styles.label}>
-                Username
-              </label>
+        <form className="flex justify-center">
+          <div className="w-1/2 flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center w-full">
+              <div className="flex justify-start w-4/5">
+                <label
+                  htmlFor="username"
+                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+                >
+                  Username
+                </label>
+              </div>
               <input
                 type="text"
                 name="username"
                 id="username"
                 value={username}
                 onChange={changeUsername}
-                className={styles.input}
+                className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
               />
             </div>
-            <div className={styles.fieldContainer}>
-              <label htmlFor="email" className={styles.label}>
-                Email
-              </label>
+            <div className="flex flex-col items-center w-full">
+              <div className="flex justify-start w-4/5">
+                <label
+                  htmlFor="email"
+                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+                >
+                  Email
+                </label>
+              </div>
               <input
                 type="email"
                 name="email"
                 id="email"
                 value={email}
                 onChange={changeEmail}
-                className={styles.input}
+                className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
               />
             </div>
-            <div className={styles.fieldContainer}>
-              <label htmlFor="password" className={styles.label}>
-                Password
-              </label>
+            <div className="flex flex-col items-center w-full">
+              <div className="flex justify-start w-4/5">
+                <label
+                  htmlFor="password"
+                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+                >
+                  Password
+                </label>
+              </div>
               <input
                 type="password"
                 name="password"
                 id="password"
                 value={password}
                 onChange={changePassword}
-                className={styles.input}
+                className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
               />
             </div>
             <input
               type="submit"
               value="Sign up"
               onClick={signUp}
-              className={styles.signUpButton}
+              className="mt-5 bg-blue-600 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-blue-700 transition-colors"
             />
-          </form>
-        </div>
+          </div>
+        </form>
       ) : (
-        <p className={styles.loggedInText}>You&apos;re already logged in...</p>
+        <p className="text-white text-3xl font-bold text-center">
+          You&apos;re already logged in...
+        </p>
       )}
     </>
   );

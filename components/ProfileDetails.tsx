@@ -1,5 +1,4 @@
 import { auth } from "../firebaseConfig";
-import styles from "../styles/ProfileDetails.module.css";
 
 const ProfileDetails: React.FC = () => {
   const user = auth.currentUser;

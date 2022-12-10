@@ -9,7 +9,7 @@ const SignUpPage: React.FC = () => {
         <title>Coding Classroom | Sign up</title>
       </Head>
 
-      <Title title="Sign up" />
+      <Title title="Sign Up" />
 
       <SignUpForm />
     </>
