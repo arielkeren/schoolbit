@@ -97,7 +97,7 @@ const LoginForm: React.FC = () => {
           </p>
           <button
             onClick={googleLogin}
-            className="mt-10 flex items-center text-2xl text-white shadow-xl py-5 px-12 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors duration-300"
+            className="mt-10 flex items-center text-2xl font-bold text-white shadow-xl py-5 px-12 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors duration-300"
           >
             <FcGoogle className="text-5xl mr-2" /> Continue with Google
           </button>
