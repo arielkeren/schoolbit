@@ -1,21 +1,33 @@
-import ClassroomInterface from "../types";
+import { ClassroomInterface } from "../types";
+import AddClassroom from "./AddClassroom";
 import Classroom from "./Classroom";
-import styles from "../styles/ClassroomList.module.css";
 
 interface Props {
   classrooms: ClassroomInterface[];
+  classroomsType: "owned" | "attended";
+  openClassroomCreationMenu: () => void;
+  openClassroomJoinMenu: () => void;
 }
 
-const ClassroomList: React.FC<Props> = ({ classrooms }) => {
+const ClassroomList: React.FC<Props> = ({
+  classrooms,
+  classroomsType,
+  openClassroomCreationMenu,
+  openClassroomJoinMenu,
+}) => {
   return (
-    <div className={styles.container}>
+    <div className="m-10 grid grid-cols-4 gap-5">
       {classrooms.map((classroom) => (
-        <Classroom
-          classroomName={classroom.classroomName}
-          classroomID={classroom.classroomID}
-          key={classroom.classroomID}
-        />
+        <Classroom classroom={classroom} key={classroom.classroomID} />
       ))}
+
+      <AddClassroom
+        openMenu={
+          classroomsType === "owned"
+            ? openClassroomCreationMenu
+            : openClassroomJoinMenu
+        }
+      />
     </div>
   );
 };

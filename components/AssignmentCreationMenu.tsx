@@ -9,7 +9,10 @@ interface Props {
   classroomID: string;
 }
 
-const ClassroomCreationMenu: React.FC<Props> = ({ closeMenu, classroomID }) => {
+const AssignmentCreationMenu: React.FC<Props> = ({
+  closeMenu,
+  classroomID,
+}) => {
   const router = useRouter();
 
   const [name, setName] = useState("");
@@ -67,4 +70,4 @@ const ClassroomCreationMenu: React.FC<Props> = ({ closeMenu, classroomID }) => {
   );
 };
 
-export default ClassroomCreationMenu;
+export default AssignmentCreationMenu;

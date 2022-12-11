@@ -27,6 +27,7 @@ export interface ClassroomDataInterface {
 
 export interface ClassroomInterface {
   classroomName: string;
-  classroomID: string;
   ownerName: string;
+  description: string;
+  classroomID: string;
 }

@@ -1,16 +1,22 @@
 import Link from "next/link";
-import styles from "../styles/Classroom.module.css";
+import { ClassroomInterface } from "../types";
 
 interface Props {
-  classroomName: string;
-  classroomID: string;
+  classroom: ClassroomInterface;
 }
 
-const Classroom: React.FC<Props> = ({ classroomName, classroomID }) => {
+const Classroom: React.FC<Props> = ({ classroom }) => {
   return (
-    <Link href={`/classrooms/${classroomID}`} className={styles.link}>
-      <div className={styles.container}>
-        <p className={styles.name}>{classroomName}</p>
+    <Link href={`/classrooms/${classroom.classroomID}`}>
+      <div className="bg-gray-800 h-96 rounded-md cursor-pointer hover:scale-105 transition-transform duration-300">
+        <div className="bg-cyan-400 h-2/5 w-full rounded-t-md"></div>
+        <div className="p-3">
+          <h2 className="text-white text-lg">{classroom.classroomName}</h2>
+          <h3 className="text-gray-400">Classroom Owner</h3>
+          <p className="text-gray-500 mt-3">
+            This should be a quick description that gets you enough information.
+          </p>
+        </div>
       </div>
     </Link>
   );

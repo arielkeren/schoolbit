@@ -17,7 +17,7 @@ const Header: React.FC = () => {
       {username === null ? (
         <Link
           href="/login"
-          className="bg-gradient-to-r from-purple-400 to-pink-600 p-3 rounded-full hover:from-purple-300 hover:to-pink-500"
+          className="bg-gradient-to-r from-purple-400 to-pink-600 p-3 rounded-full hover:from-purple-400 hover:to-pink-500"
         >
           <FiLogIn className="text-white text-4xl" />
         </Link>
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
         <div className="flex items-center">
           <Link
             href="/profile"
-            className="bg-gradient-to-r from-purple-400 to-pink-600 p-3 rounded-full hover:from-purple-300 hover:to-pink-500"
+            className="bg-gradient-to-r from-purple-400 to-pink-600 p-3 rounded-full hover:from-purple-400 hover:to-pink-500"
           >
             <RiUser3Fill className="text-white text-4xl" />
           </Link>
