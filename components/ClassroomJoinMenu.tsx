@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/AssignmentCreationMenu.module.css";
 import { IoMdAdd } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
@@ -66,7 +66,10 @@ const ClassroomJoinMenu: React.FC<Props> = ({ closeMenu }) => {
   };
 
   return (
-    <div className={styles.outerContainer} onClick={closeMenu}>
+    <div
+      className="absolute top-0 left-0 h-screen w-screen flex justify-center items-center backdrop-blur-sm"
+      onClick={closeMenu}
+    >
       <div className={styles.innerContainer} onClick={stopPropagation}>
         <h2 className={styles.title}>Join Classroom</h2>
         <button onClick={closeMenu} className={styles.closeButton}>

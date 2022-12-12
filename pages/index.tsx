@@ -12,19 +12,6 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({ ownedClassrooms, attendedClassrooms }) => {
-  const [isClassroomCreationMenuOpen, setIsClassroomCreationMenuOpen] =
-    useState(false);
-  const [isClassroomJoinMenuOpen, setIsClassroomJoinMenuOpen] = useState(false);
-
-  const openClassroomCreationMenu = () => setIsClassroomCreationMenuOpen(true);
-
-  const closeClassroomCreationMenu = () =>
-    setIsClassroomCreationMenuOpen(false);
-
-  const openClassroomJoinMenu = () => setIsClassroomJoinMenuOpen(true);
-
-  const closeClassroomJoinMenu = () => setIsClassroomJoinMenuOpen(false);
-
   return (
     <>
       <Head>
@@ -35,27 +22,15 @@ const Home: React.FC<Props> = ({ ownedClassrooms, attendedClassrooms }) => {
 
       <ClassroomList
         classrooms={ownedClassrooms}
-        classroomsType="owned"
-        openClassroomCreationMenu={openClassroomCreationMenu}
-        openClassroomJoinMenu={openClassroomJoinMenu}
+        addClassroomLink="/create-classroom"
       />
 
       <Title title="Attended Classrooms" />
 
       <ClassroomList
         classrooms={attendedClassrooms}
-        classroomsType="attended"
-        openClassroomCreationMenu={openClassroomCreationMenu}
-        openClassroomJoinMenu={openClassroomJoinMenu}
+        addClassroomLink="/join-classroom"
       />
-
-      {isClassroomCreationMenuOpen && (
-        <ClassroomCreationMenu closeMenu={closeClassroomCreationMenu} />
-      )}
-
-      {isClassroomJoinMenuOpen && (
-        <ClassroomJoinMenu closeMenu={closeClassroomJoinMenu} />
-      )}
     </>
   );
 };

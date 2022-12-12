@@ -18,6 +18,8 @@ export interface AssignmentInterface {
 
 export interface ClassroomDataInterface {
   classroomName: string;
+  description: string;
+  color: string;
   ownerName: string;
   ownerID: string;
   assignments: AssignmentInterface[];
@@ -29,5 +31,6 @@ export interface ClassroomInterface {
   classroomName: string;
   ownerName: string;
   description: string;
+  color: string;
   classroomID: string;
 }
