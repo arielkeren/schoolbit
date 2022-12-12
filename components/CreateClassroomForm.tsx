@@ -7,10 +7,7 @@ import {
 } from "firebase/firestore";
 import { useState } from "react";
 import { auth, database } from "../firebaseConfig";
-import {
-  ClassroomDataInterface,
-  ClassroomInterface,
-} from "../types";
+import { ClassroomDataInterface, ClassroomInterface } from "../types";
 import { HexColorPicker } from "react-colorful";
 
 const CreateClassroomForm: React.FC = () => {
