@@ -1,7 +1,4 @@
 import Head from "next/head";
-import { useState } from "react";
-import ClassroomCreationMenu from "../components/ClassroomCreationMenu";
-import ClassroomJoinMenu from "../components/ClassroomJoinMenu";
 import ClassroomList from "../components/ClassroomList";
 import Title from "../components/Title";
 import { ClassroomInterface } from "../types";

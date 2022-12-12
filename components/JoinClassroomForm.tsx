@@ -1,4 +1,4 @@
-import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { auth, database } from "../firebaseConfig";
 import { RequestInterface } from "../types";

@@ -3,16 +3,13 @@ import {
   arrayUnion,
   collection,
   doc,
-  getDoc,
   setDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { useState } from "react";
 import { auth, database } from "../firebaseConfig";
 import {
   ClassroomDataInterface,
   ClassroomInterface,
-  RequestInterface,
 } from "../types";
 import { HexColorPicker } from "react-colorful";
 
