@@ -8,7 +8,7 @@ import { AssignmentInterface } from "../../../types";
 import Title from "../../../components/Title";
 import Subtitle from "../../../components/Subtitle";
 import AssignmentList from "../../../components/AssignmentList";
-import OpenMenuButton from "../../../components/OpenMenuButton";
+import CreateAssignmentButton from "../../../components/CreateAssignmentButton";
 import AssignmentCreationMenu from "../../../components/AssignmentCreationMenu";
 import OpenScreenButton from "../../../components/OpenScreenButton";
 import ParticipantsScreen from "../../../components/ParticipantsScreen";
@@ -39,7 +39,6 @@ const ClassroomPage: React.FC<Props> = ({
   const [isParticipantsScreenOpen, setIsParticipantsScreenOpen] =
     useState(false);
   const [isRequestsScreenOpen, setIsRequestsScreenOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const user = auth.currentUser;
   const { classroomID } = router.query;
@@ -83,10 +82,6 @@ const ClassroomPage: React.FC<Props> = ({
   const openParticipantsScreen = () => setIsParticipantsScreenOpen(true);
 
   const closeParticipantsScreen = () => setIsParticipantsScreenOpen(false);
-
-  const openMenu = () => setIsMenuOpen(true);
-
-  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <>
@@ -136,13 +131,8 @@ const ClassroomPage: React.FC<Props> = ({
             />
           )}
 
-          {user.uid === ownerID && <OpenMenuButton openMenu={openMenu} />}
-
-          {isMenuOpen && (
-            <AssignmentCreationMenu
-              closeMenu={closeMenu}
-              classroomID={classroomID}
-            />
+          {user.uid === ownerID && (
+            <CreateAssignmentButton classroomID={classroomID} />
           )}
         </>
       ) : (
