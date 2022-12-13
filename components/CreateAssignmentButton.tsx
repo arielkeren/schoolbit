@@ -1,5 +1,4 @@
 import { AiOutlinePlus } from "react-icons/ai";
-import styles from "../styles/OpenMenuButton.module.css";
 import { useRouter } from "next/router";
 
 interface Props {
@@ -13,8 +12,11 @@ const CreateAssignmentButton: React.FC<Props> = ({ classroomID }) => {
     router.push(`/classrooms/${classroomID}/create-assignment`);
 
   return (
-    <button onClick={redirectToAssignmentCreation} className={styles.button}>
-      <AiOutlinePlus className={styles.icon} />
+    <button
+      onClick={redirectToAssignmentCreation}
+      className="absolute bottom-5 right-5 rounded-full p-2 bg-gradient-to-r from-green-400 to-teal-500  hover:rotate-180 transition-transform"
+    >
+      <AiOutlinePlus className="text-white text-6xl" />
     </button>
   );
 };
