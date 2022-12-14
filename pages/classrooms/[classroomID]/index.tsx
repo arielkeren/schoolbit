@@ -9,7 +9,6 @@ import Title from "../../../components/Title";
 import Subtitle from "../../../components/Subtitle";
 import AssignmentList from "../../../components/AssignmentList";
 import CreateAssignmentButton from "../../../components/CreateAssignmentButton";
-import AssignmentCreationMenu from "../../../components/AssignmentCreationMenu";
 import OpenScreenButton from "../../../components/OpenScreenButton";
 import ParticipantsScreen from "../../../components/ParticipantsScreen";
 import ClassroomCodeText from "../../../components/ClassroomCodeText";
