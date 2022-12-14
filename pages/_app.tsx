@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth, database } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
@@ -42,8 +42,10 @@ const App = ({ Component, pageProps }: AppProps) => {
     getUserData();
   }, [user]);
 
-  const changeAssignments = (assignmentArray: AssignmentInterface[]) =>
-    setAssignments(assignmentArray);
+  const changeAssignments = useCallback(
+    (assignmentArray: AssignmentInterface[]) => setAssignments(assignmentArray),
+    []
+  );
 
   return (
     <>

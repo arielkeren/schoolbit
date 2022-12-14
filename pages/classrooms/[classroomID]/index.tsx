@@ -53,6 +53,7 @@ const ClassroomPage: React.FC<Props> = ({
           (classroom) => classroom.classroomID === classroomID
         )
       ) {
+        console.log("read");
         const classroomDocumentReference = doc(
           database,
           `classrooms/${classroomID}`
@@ -73,7 +74,7 @@ const ClassroomPage: React.FC<Props> = ({
     };
 
     getClassroomData();
-  }, [classroomID, ownedClassrooms, attendedClassrooms, changeAssignments]);
+  }, [classroomID, changeAssignments, ownedClassrooms, attendedClassrooms]);
 
   const openRequestsScreen = () => setIsRequestsScreenOpen(true);
 
