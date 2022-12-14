@@ -68,7 +68,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
   };
 
   return (
-    <form className="flex justify-center">
+    <form className="flex justify-center mb-10">
       <div className="w-1/2 flex flex-col items-center gap-8">
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-4/5">

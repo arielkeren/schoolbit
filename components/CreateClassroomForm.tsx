@@ -94,7 +94,7 @@ const CreateClassroomForm: React.FC = () => {
   return (
     <>
       {auth.currentUser !== null ? (
-        <form className="flex justify-center">
+        <form className="flex justify-center mb-10">
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">
               <div className="flex justify-start w-4/5">
