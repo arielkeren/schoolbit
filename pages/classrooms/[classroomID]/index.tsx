@@ -53,7 +53,6 @@ const ClassroomPage: React.FC<Props> = ({
           (classroom) => classroom.classroomID === classroomID
         )
       ) {
-        console.log("read");
         const classroomDocumentReference = doc(
           database,
           `classrooms/${classroomID}`
