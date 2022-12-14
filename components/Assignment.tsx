@@ -1,5 +1,4 @@
 import Link from "next/link";
-import styles from "../styles/Assignment.module.css";
 import { AssignmentInterface } from "../types";
 
 interface Props {
@@ -11,10 +10,12 @@ const Assignment: React.FC<Props> = ({ assignment, classroomID }) => {
   return (
     <Link
       href={`/classrooms/${classroomID}/assignments/${assignment.id}`}
-      className={styles.link}
+      className="w-full"
     >
-      <div className={styles.container}>
-        <p className={styles.name}>{assignment.name}</p>
+      <div className="py-4 rounded bg-gradient-to-r from-green-400 to-teal-500 hover:scale-105 transition-transform">
+        <p className="text-white font-bold text-lg text-center">
+          {assignment.name}
+        </p>
       </div>
     </Link>
   );
