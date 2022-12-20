@@ -6,6 +6,12 @@ import { auth, database } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { ClassroomInterface, AssignmentInterface } from "../types";
 import Header from "../components/Header";
+import { Poppins } from "@next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -48,7 +54,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 
   return (
-    <>
+    <div className={poppins.className}>
       <Header />
       <Component
         {...pageProps}
@@ -57,7 +63,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         assignments={assignments}
         changeAssignments={changeAssignments}
       />
-    </>
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, database } from "../firebaseConfig";
-import styles from "../styles/Request.module.css";
 import { RequestInterface } from "../types";
 
 interface Props {
@@ -73,13 +72,19 @@ const Request: React.FC<Props> = ({
     removeRequest();
 
   return (
-    <div className={styles.container}>
-      <p className={styles.name}>{request.senderName}</p>
-      <div className={styles.buttonsContainer}>
-        <button onClick={acceptRequest} className={styles.acceptButton}>
+    <div className="bg-gray-900 flex flex-col gap-1 justify-between p-5 items-center rounded border-b-4 border-gray-700 md:flex-row">
+      <p className="text-slate-300 text-2xl">{request.senderName}</p>
+      <div className="flex gap-3">
+        <button
+          onClick={acceptRequest}
+          className="text-white rounded-md w-28 h-14 font-bold text-xl cursor-pointer uppercase hover:bg-blue-700 transition-colors"
+        >
           Accept
         </button>
-        <button onClick={removeRequest} className={styles.denyButton}>
+        <button
+          onClick={removeRequest}
+          className="text-white rounded-md w-28 h-14 font-bold text-xl cursor-pointer uppercase hover:bg-red-700 transition-colors"
+        >
           Deny
         </button>
       </div>

@@ -11,7 +11,7 @@ const OpenScreenButton: React.FC<Props> = ({ openScreen, icon }) => {
     <button
       onClick={openScreen}
       className={
-        "absolute left-5 p-5 rounded-full shadow-md bg-slate-800 hover:bg-gradient-to-r from-purple-400 to-pink-600 " +
+        "absolute left-5 p-5 rounded-full shadow-xl bg-gray-800 hover:bg-gray-900 transition-colors " +
         (icon === "participants" ? "bottom-5" : "bottom-28")
       }
     >

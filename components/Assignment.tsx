@@ -12,7 +12,7 @@ const Assignment: React.FC<Props> = ({ assignment, classroomID }) => {
       href={`/classrooms/${classroomID}/assignments/${assignment.id}`}
       className="w-full"
     >
-      <div className="py-4 rounded bg-gradient-to-r from-green-400 to-teal-500 hover:scale-105 transition-transform">
+      <div className="py-4 rounded bg-gray-900 hover:scale-105 transition-transform">
         <p className="text-white font-bold text-lg text-center">
           {assignment.name}
         </p>

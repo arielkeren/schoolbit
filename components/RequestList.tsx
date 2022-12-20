@@ -1,6 +1,5 @@
 import { RequestInterface } from "../types";
 import Request from "./Request";
-import styles from "../styles/RequestList.module.css";
 
 interface Props {
   requests: RequestInterface[];
@@ -14,9 +13,11 @@ const RequestList: React.FC<Props> = ({
   classroomID,
 }) => {
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-3">
       {requests.length === 0 ? (
-        <p>There are no join requests currently...</p>
+        <p className="text-gray-500 font-bold text-2xl text-center">
+          There are no join requests currently...
+        </p>
       ) : (
         <>
           {requests.map((request, index) => (

@@ -34,7 +34,7 @@ const ProfilePage: React.FC = () => {
         <div className="flex justify-center m-14">
           <button
             onClick={logOut}
-            className="bg-blue-600 text-white py-2 px-5 rounded-lg font-semibold text-2xl hover:bg-blue-700 transition-colors"
+            className="bg-gray-900 text-white py-2 px-5 rounded-lg font-bold text-2xl uppercase hover:bg-gray-800 transition-colors"
           >
             Log out
           </button>

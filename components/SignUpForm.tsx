@@ -39,10 +39,7 @@ const LoginForm: React.FC = () => {
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">
               <div className="flex justify-start w-4/5">
-                <label
-                  htmlFor="username"
-                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-                >
+                <label htmlFor="username" className="text-2xl font-bold">
                   Username
                 </label>
               </div>
@@ -52,15 +49,12 @@ const LoginForm: React.FC = () => {
                 id="username"
                 value={username}
                 onChange={changeUsername}
-                className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
+                className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
               />
             </div>
             <div className="flex flex-col items-center w-full">
               <div className="flex justify-start w-4/5">
-                <label
-                  htmlFor="email"
-                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-                >
+                <label htmlFor="email" className="text-2xl font-bold">
                   Email
                 </label>
               </div>
@@ -70,15 +64,12 @@ const LoginForm: React.FC = () => {
                 id="email"
                 value={email}
                 onChange={changeEmail}
-                className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
+                className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
               />
             </div>
             <div className="flex flex-col items-center w-full">
               <div className="flex justify-start w-4/5">
-                <label
-                  htmlFor="password"
-                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-                >
+                <label htmlFor="password" className="text-2xl font-bold">
                   Password
                 </label>
               </div>
@@ -88,19 +79,19 @@ const LoginForm: React.FC = () => {
                 id="password"
                 value={password}
                 onChange={changePassword}
-                className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
+                className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
               />
             </div>
             <input
               type="submit"
-              value="Sign up"
+              value="SIGN UP"
               onClick={signUp}
-              className="mt-5 bg-blue-600 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-blue-700 transition-colors"
+              className="my-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
             />
           </div>
         </form>
       ) : (
-        <p className="text-white text-3xl font-bold text-center">
+        <p className="text-3xl font-bold text-center">
           You&apos;re already logged in...
         </p>
       )}

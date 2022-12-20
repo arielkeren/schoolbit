@@ -3,7 +3,7 @@ interface Props {
 }
 
 const Subtitle: React.FC<Props> = ({ subtitle }) => {
-  return <h3 className="text-center text-3xl text-gray-600">{subtitle}</h3>;
+  return <h2 className="text-center text-3xl text-gray-700">{subtitle}</h2>;
 };
 
 export default Subtitle;

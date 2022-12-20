@@ -1,4 +1,3 @@
-import styles from "../styles/ParticipantsScreen.module.css";
 import { IoMdClose } from "react-icons/io";
 import { RequestInterface } from "../types";
 import RequestList from "./RequestList";
@@ -20,11 +19,22 @@ const ParticipantsScreen: React.FC<Props> = ({
     event.stopPropagation();
 
   return (
-    <div className={styles.outerContainer} onClick={closeRequestsScreen}>
-      <div className={styles.innerContainer} onClick={stopPropagation}>
-        <h2 className={styles.title}>Requests</h2>
-        <button onClick={closeRequestsScreen} className={styles.closeButton}>
-          <IoMdClose className={styles.closeIcon} />
+    <div
+      className="absolute top-0 left-0 h-full w-full flex justify-center items-center backdrop-brightness-75"
+      onClick={closeRequestsScreen}
+    >
+      <div
+        className="relative bg-slate-800 h-2/3 w-11/12 py-20 px-3 rounded shadow-xl md:w-2/3 lg:w-1/2"
+        onClick={stopPropagation}
+      >
+        <h3 className="absolute top-3 right-1/2 translate-x-1/2 text-4xl font-bold text-slate-300 uppercase">
+          Requests
+        </h3>
+        <button
+          onClick={closeRequestsScreen}
+          className="absolute top-3 right-3"
+        >
+          <IoMdClose className="text-4xl text-slate-500 hover:text-slate-400 transition-colors" />
         </button>
         <RequestList
           requests={requests}

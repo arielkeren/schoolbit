@@ -72,10 +72,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
       <div className="w-1/2 flex flex-col items-center gap-8">
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-4/5">
-            <label
-              htmlFor="name"
-              className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-            >
+            <label htmlFor="name" className="text-2xl font-bold">
               Name
             </label>
           </div>
@@ -85,15 +82,12 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
             id="name"
             value={name}
             onChange={changeName}
-            className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
+            className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
           />
         </div>
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-full">
-            <label
-              htmlFor="question"
-              className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-            >
+            <label htmlFor="question" className="text-2xl font-bold">
               Question
             </label>
           </div>
@@ -102,14 +96,14 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
             id="question"
             value={question}
             onChange={changeQuestion}
-            className="w-full h-96 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
+            className="w-full h-96 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
           />
         </div>
         <input
           type="submit"
-          value="Create"
+          value="CREATE"
           onClick={validateAssignment}
-          className="mt-5 bg-blue-600 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-blue-700 transition-colors"
+          className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
         />
       </div>
     </form>

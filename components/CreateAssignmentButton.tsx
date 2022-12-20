@@ -14,7 +14,7 @@ const CreateAssignmentButton: React.FC<Props> = ({ classroomID }) => {
   return (
     <button
       onClick={redirectToAssignmentCreation}
-      className="absolute bottom-5 right-5 rounded-full p-2 bg-gradient-to-r from-green-400 to-teal-500  hover:rotate-180 transition-transform"
+      className="absolute bottom-5 right-5 rounded-full p-2 bg-gray-900 hover:rotate-180 transition-transform"
     >
       <AiOutlinePlus className="text-white text-6xl" />
     </button>

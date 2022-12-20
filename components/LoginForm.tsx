@@ -48,10 +48,7 @@ const LoginForm: React.FC = () => {
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">
               <div className="flex justify-start w-4/5">
-                <label
-                  htmlFor="email"
-                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-                >
+                <label htmlFor="email" className="text-2xl font-bold">
                   Email
                 </label>
               </div>
@@ -61,15 +58,12 @@ const LoginForm: React.FC = () => {
                 id="email"
                 value={email}
                 onChange={changeEmail}
-                className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
+                className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
               />
             </div>
             <div className="flex flex-col items-center w-full">
               <div className="flex justify-start w-4/5">
-                <label
-                  htmlFor="password"
-                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-                >
+                <label htmlFor="password" className="text-2xl font-bold">
                   Password
                 </label>
               </div>
@@ -79,31 +73,34 @@ const LoginForm: React.FC = () => {
                 id="password"
                 value={password}
                 onChange={changePassword}
-                className="w-4/5 text-3xl p-3 rounded-md outline-none focus:bg-gray-100"
+                className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
               />
             </div>
             <input
               type="submit"
-              value="Log in"
+              value="LOG IN"
               onClick={emailAndPasswordLogin}
-              className="my-5 bg-blue-600 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-blue-700 transition-colors"
+              className="my-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
             />
           </div>
-          <p className="text-white font-bold text-xl">
+          <p className="font-bold text-2xl">
             Don&apos;t have an account?{" "}
-            <Link href="/sign-up" className="text-blue-600 hover:underline">
-              Sign up
+            <Link
+              href="/sign-up"
+              className="text-blue-600 font-extrabold hover:underline"
+            >
+              SIGN UP
             </Link>
           </p>
           <button
             onClick={googleLogin}
-            className="mt-10 flex items-center text-2xl font-bold text-white shadow-xl py-5 px-12 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors duration-300"
+            className="mt-10 flex items-center text-2xl font-bold text-white shadow-xl py-5 px-12 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors"
           >
-            <FcGoogle className="text-5xl mr-2" /> Continue with Google
+            <FcGoogle className="text-5xl mr-2" /> CONTINUE WITH GOOGLE
           </button>
         </form>
       ) : (
-        <p className="text-center text-white text-3xl font-bold">
+        <p className="text-center text-3xl font-bold">
           You&apos;re already logged in...
         </p>
       )}

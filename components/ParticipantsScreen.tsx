@@ -1,6 +1,6 @@
-import styles from "../styles/ParticipantsScreen.module.css";
 import { IoMdClose } from "react-icons/io";
-import Participant from "./Participant";
+import Owner from "./Owner";
+import ParticipantList from "./ParticipantList";
 
 interface Props {
   participants: string[];
@@ -17,28 +17,29 @@ const ParticipantsScreen: React.FC<Props> = ({
     event.stopPropagation();
 
   return (
-    <div className={styles.outerContainer} onClick={closeParticipantsScreen}>
-      <div className={styles.innerContainer} onClick={stopPropagation}>
-        <h2 className={styles.title}>Participants</h2>
+    <div
+      className="absolute top-0 left-0 h-full w-full flex justify-center items-center backdrop-brightness-75"
+      onClick={closeParticipantsScreen}
+    >
+      <div
+        className="relative bg-slate-800 h-2/3 w-11/12 py-20 px-3 rounded shadow-xl md:w-2/3 lg:w-1/2"
+        onClick={stopPropagation}
+      >
+        <h3 className="absolute top-3 right-1/2 translate-x-1/2 text-3xl font-bold text-slate-300 uppercase sm:text-4xl">
+          Participants
+        </h3>
         <button
           onClick={closeParticipantsScreen}
-          className={styles.closeButton}
+          className="absolute top-3 right-3"
         >
-          <IoMdClose className={styles.closeIcon} />
+          <IoMdClose className="text-4xl text-slate-500 hover:text-slate-400 transition-colors" />
         </button>
-        <h3 className={styles.sectionHeading}>Owner</h3>
-        <Participant name={ownerName} />
-        <hr className={styles.separator} />
-        <h3 className={styles.sectionHeading}>Students</h3>
-        {participants.length === 0 ? (
-          <p>Looks like there aren&apos;t any students yet...</p>
-        ) : (
-          <>
-            {participants.map((participant, index) => (
-              <Participant name={participant} key={index} />
-            ))}
-          </>
-        )}
+
+        <Owner ownerName={ownerName} />
+
+        <hr className="border-2 border-slate-400 my-5" />
+
+        <ParticipantList participants={participants} />
       </div>
     </div>
   );
