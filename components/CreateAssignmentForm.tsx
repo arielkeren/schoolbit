@@ -4,6 +4,7 @@ import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
 import { AssignmentInterface } from "../types";
 import { useRouter } from "next/router";
+import Calendar from "react-calendar";
 
 interface Props {
   classroomID: string;
@@ -14,6 +15,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
 
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
+  const [date, setDate] = useState(new Date());
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -28,6 +30,10 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
 
     const assignmentID = uuidv4();
 
+    const shortenedDate = `${date.toLocaleString("default", {
+      month: "short",
+    })} ${date.getDate()}`;
+
     const classroomDocumentReference = doc(
       database,
       `classrooms/${classroomID}`
@@ -36,6 +42,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
     const assignmentData: AssignmentInterface = {
       name: noUnnecessarySpacesName,
       question,
+      until: shortenedDate,
       answers: [],
       id: assignmentID,
     };
@@ -85,6 +92,19 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
             className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
           />
         </div>
+
+        <div>
+          <h2 className="text-2xl font-bold">Until</h2>
+
+          <Calendar
+            value={date}
+            onChange={setDate}
+            calendarType="US"
+            minDate={new Date()}
+            view="month"
+          />
+        </div>
+
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-full">
             <label htmlFor="question" className="text-2xl font-bold">
@@ -99,6 +119,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
             className="w-full h-96 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
           />
         </div>
+
         <input
           type="submit"
           value="CREATE"

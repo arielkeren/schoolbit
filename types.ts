@@ -12,6 +12,7 @@ export interface AnswerInterface {
 export interface AssignmentInterface {
   name: string;
   question: string;
+  until: string;
   answers: AnswerInterface[];
   id: string;
 }

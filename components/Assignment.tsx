@@ -8,14 +8,13 @@ interface Props {
 
 const Assignment: React.FC<Props> = ({ assignment, classroomID }) => {
   return (
-    <Link
-      href={`/classrooms/${classroomID}/assignments/${assignment.id}`}
-      className="w-full"
-    >
-      <div className="py-4 rounded bg-gray-900 hover:scale-105 transition-transform">
-        <p className="text-white font-bold text-lg text-center">
-          {assignment.name}
-        </p>
+    <Link href={`/classrooms/${classroomID}/assignments/${assignment.id}`}>
+      <div className="flex flex-col items-center gap-3 h-36 p-1 rounded bg-gray-900 hover:scale-105 transition-transform">
+        <h3 className="text-white font-bold text-lg">{assignment.name}</h3>
+        <div className="flex flex-col items-center">
+          <h4 className="text-white text-2xl">Until</h4>
+          <p className="text-white text-2xl">{assignment.until}</p>
+        </div>
       </div>
     </Link>
   );
