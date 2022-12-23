@@ -6,6 +6,10 @@ import Question from "../../../../components/Question";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { database } from "../../../../firebaseConfig";
+import { MdEdit } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
+import { TbChecklist } from "react-icons/tb";
+import AssignmentHeader from "../../../../components/AssignmentHeader";
 
 interface Props {
   assignments: AssignmentInterface[] | null;
@@ -76,7 +80,7 @@ const AssignmentPage: React.FC<Props> = ({
             <title>Coding Classroom | {assignment.name}</title>
           </Head>
 
-          <Title title={assignment.name} />
+          <AssignmentHeader assignmentName={assignment.name} />
 
           <Question question={assignment.question} />
         </>
