@@ -21,7 +21,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [attendedClassrooms, setAttendedClassrooms] = useState<
     ClassroomInterface[]
   >([]);
-  const [assignments, setAssignments] = useState<AssignmentInterface[]>([]);
+  const [assignments, setAssignments] = useState<AssignmentInterface[] | null>(
+    null
+  );
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
