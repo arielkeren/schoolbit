@@ -18,6 +18,8 @@ const Header: React.FC = () => {
           alt="Coding Classroom"
           width="150"
           height="100"
+          priority
+          className="h-16 w-36"
         />
       </Link>
       {username === null ? (
