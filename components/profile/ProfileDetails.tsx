@@ -1,4 +1,4 @@
-import { auth } from "../firebaseConfig";
+import { auth } from "../../firebaseConfig";
 
 const ProfileDetails: React.FC = () => {
   const user = auth.currentUser;

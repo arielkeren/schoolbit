@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AssignmentInterface } from "../types";
+import { AssignmentInterface } from "../../types";
 
 interface Props {
   assignment: AssignmentInterface;

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Title from "../../../components/Title";
-import CreateAssignmentForm from "../../../components/CreateAssignmentForm";
+import Title from "../../../components/general/Title";
+import CreateAssignmentForm from "../../../components/create-assignment/CreateAssignmentForm";
 
 const CreateAssignmentPage: React.FC = () => {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import { signOut } from "firebase/auth";
 import Head from "next/head";
-import Title from "../components/Title";
-import ProfileDetails from "../components/ProfileDetails";
+import Title from "../components/general/Title";
+import ProfileDetails from "../components/profile/ProfileDetails";
 import { auth } from "../firebaseConfig";
 import { useRouter } from "next/router";
 

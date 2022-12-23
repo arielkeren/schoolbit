@@ -1,4 +1,4 @@
-import { RequestInterface } from "../types";
+import { RequestInterface } from "../../types";
 import Request from "./Request";
 
 interface Props {

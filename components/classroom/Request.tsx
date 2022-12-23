@@ -1,6 +1,6 @@
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
-import { auth, database } from "../firebaseConfig";
-import { RequestInterface } from "../types";
+import { auth, database } from "../../firebaseConfig";
+import { RequestInterface } from "../../types";
 
 interface Props {
   request: RequestInterface;

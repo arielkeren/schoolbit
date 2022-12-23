@@ -1,6 +1,6 @@
 import Head from "next/head";
-import ClassroomList from "../components/ClassroomList";
-import Title from "../components/Title";
+import ClassroomList from "../components/home/ClassroomList";
+import Title from "../components/general/Title";
 import { ClassroomInterface } from "../types";
 
 interface Props {

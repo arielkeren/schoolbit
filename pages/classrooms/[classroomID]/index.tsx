@@ -5,15 +5,15 @@ import { auth, database } from "../../../firebaseConfig";
 import { ClassroomInterface } from "../../../types";
 import { useState, useEffect } from "react";
 import { AssignmentInterface } from "../../../types";
-import Title from "../../../components/Title";
-import Subtitle from "../../../components/Subtitle";
-import AssignmentList from "../../../components/AssignmentList";
-import CreateAssignmentButton from "../../../components/CreateAssignmentButton";
-import OpenScreenButton from "../../../components/OpenScreenButton";
-import ParticipantsScreen from "../../../components/ParticipantsScreen";
-import ClassroomCodeText from "../../../components/ClassroomCodeText";
+import Title from "../../../components/general/Title";
+import Subtitle from "../../../components/classroom/Subtitle";
+import AssignmentList from "../../../components/classroom/AssignmentList";
+import CreateAssignmentButton from "../../../components/classroom/CreateAssignmentButton";
+import OpenScreenButton from "../../../components/classroom/OpenScreenButton";
+import ParticipantsScreen from "../../../components/classroom/ParticipantsScreen";
+import ClassroomCodeText from "../../../components/classroom/ClassroomCodeText";
 import { RequestInterface } from "../../..//types";
-import RequestsScreen from "../../../components/RequestsScreen";
+import RequestsScreen from "../../../components/classroom/RequestsScreen";
 
 interface Props {
   ownedClassrooms: ClassroomInterface[];

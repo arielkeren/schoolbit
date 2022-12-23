@@ -1,5 +1,5 @@
 import { IoMdClose } from "react-icons/io";
-import { RequestInterface } from "../types";
+import { RequestInterface } from "../../types";
 import RequestList from "./RequestList";
 
 interface Props {

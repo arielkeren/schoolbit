@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { auth } from "../firebaseConfig";
+import { auth } from "../../firebaseConfig";
 import { FiLogIn } from "react-icons/fi";
 import { RiUser3Fill } from "react-icons/ri";
 import Image from "next/image";

@@ -1,7 +1,7 @@
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
-import { auth, database } from "../firebaseConfig";
-import { RequestInterface } from "../types";
+import { auth, database } from "../../firebaseConfig";
+import { RequestInterface } from "../../types";
 
 const JoinClassroomForm: React.FC = () => {
   const [classroomCode, setClassroomCode] = useState("");

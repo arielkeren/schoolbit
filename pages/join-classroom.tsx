@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Title from "../components/Title";
-import JoinClassroomForm from "../components/JoinClassroomForm";
+import Title from "../components/general/Title";
+import JoinClassroomForm from "../components/join-classroom/JoinClassroomForm";
 
 const JoinClassroomPage: React.FC = () => {
   return (

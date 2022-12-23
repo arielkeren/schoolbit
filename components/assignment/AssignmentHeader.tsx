@@ -1,7 +1,7 @@
 import { FaTrashAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { TbChecklist } from "react-icons/tb";
-import Title from "./Title";
+import Title from "../general/Title";
 
 interface Props {
   assignmentName: string;

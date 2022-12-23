@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { database } from "../firebaseConfig";
+import { database } from "../../firebaseConfig";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
-import { AssignmentInterface } from "../types";
+import { AssignmentInterface } from "../../types";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
 

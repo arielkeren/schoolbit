@@ -1,6 +1,6 @@
 import Head from "next/head";
-import LoginForm from "../components/LoginForm";
-import Title from "../components/Title";
+import LoginForm from "../components/login/LoginForm";
+import Title from "../components/general/Title";
 
 const LoginPage: React.FC = () => {
   return (

@@ -1,15 +1,17 @@
-import { auth, signInWithGoogle } from "../firebaseConfig";
-import { FcGoogle } from "react-icons/fc";
+import { auth } from "../../firebaseConfig";
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import Link from "next/link";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRouter } from "next/router";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
 
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const changeUsername = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setUsername(event.target.value);
 
   const changeEmail = (event: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(event.target.value);
@@ -17,35 +19,39 @@ const LoginForm: React.FC = () => {
   const changePassword = (event: React.ChangeEvent<HTMLInputElement>) =>
     setPassword(event.target.value);
 
-  const emailAndPasswordLogin = async (
-    event: React.MouseEvent<HTMLInputElement>
-  ) => {
+  const signUp = async (event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
+      if (auth.currentUser !== null)
+        await updateProfile(auth.currentUser, { displayName: username });
       router.push("/");
     } catch {
-      alert("Error logging in with email and password... Try again later");
-    }
-  };
-
-  const googleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    try {
-      await signInWithGoogle();
-      router.push("/");
-    } catch {
-      alert("Error logging in with Google... Try again later");
+      alert("Error signing up... Try again later");
     }
   };
 
   return (
     <>
       {auth.currentUser === null ? (
-        <form className="flex flex-col items-center">
+        <form className="flex justify-center">
           <div className="w-1/2 flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center w-full">
+              <div className="flex justify-start w-4/5">
+                <label htmlFor="username" className="text-2xl font-bold">
+                  Username
+                </label>
+              </div>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                value={username}
+                onChange={changeUsername}
+                className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
+              />
+            </div>
             <div className="flex flex-col items-center w-full">
               <div className="flex justify-start w-4/5">
                 <label htmlFor="email" className="text-2xl font-bold">
@@ -78,29 +84,14 @@ const LoginForm: React.FC = () => {
             </div>
             <input
               type="submit"
-              value="LOG IN"
-              onClick={emailAndPasswordLogin}
+              value="SIGN UP"
+              onClick={signUp}
               className="my-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
             />
           </div>
-          <p className="font-bold text-2xl">
-            Don&apos;t have an account?{" "}
-            <Link
-              href="/sign-up"
-              className="text-blue-600 font-extrabold hover:underline"
-            >
-              SIGN UP
-            </Link>
-          </p>
-          <button
-            onClick={googleLogin}
-            className="mt-10 flex items-center text-2xl font-bold text-white shadow-xl py-5 px-12 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors"
-          >
-            <FcGoogle className="text-5xl mr-2" /> CONTINUE WITH GOOGLE
-          </button>
         </form>
       ) : (
-        <p className="text-center text-3xl font-bold">
+        <p className="text-3xl font-bold text-center">
           You&apos;re already logged in...
         </p>
       )}

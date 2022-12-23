@@ -1,12 +1,12 @@
 import { AssignmentInterface, ClassroomInterface } from "../../../../types";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Title from "../../../../components/Title";
-import Question from "../../../../components/Question";
+import Title from "../../../../components/general/Title";
+import Question from "../../../../components/assignment/Question";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { database } from "../../../../firebaseConfig";
-import AssignmentHeader from "../../../../components/AssignmentHeader";
+import AssignmentHeader from "../../../../components/assignment/AssignmentHeader";
 
 interface Props {
   assignments: AssignmentInterface[] | null;

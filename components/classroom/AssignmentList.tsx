@@ -1,4 +1,4 @@
-import { AssignmentInterface } from "../types";
+import { AssignmentInterface } from "../../types";
 import Assignment from "./Assignment";
 
 interface Props {

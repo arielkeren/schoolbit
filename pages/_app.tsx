@@ -5,7 +5,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { auth, database } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { ClassroomInterface, AssignmentInterface } from "../types";
-import Header from "../components/Header";
+import Header from "../components/general/Header";
 import { Poppins } from "@next/font/google";
 
 const poppins = Poppins({
