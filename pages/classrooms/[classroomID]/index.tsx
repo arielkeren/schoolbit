@@ -98,7 +98,7 @@ const ClassroomPage: React.FC<Props> = ({
 
           <Title title={classroomName} />
 
-          <Subtitle subtitle={`${ownerName}'s Classroom`} />
+          <Subtitle subtitle={ownerName} />
 
           <AssignmentList assignments={assignments} classroomID={classroomID} />
 
