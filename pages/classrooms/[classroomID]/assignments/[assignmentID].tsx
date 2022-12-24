@@ -71,13 +71,16 @@ const AssignmentPage: React.FC<Props> = ({
 
   return (
     <>
-      {assignment !== null ? (
+      {assignment !== null && assignments !== null ? (
         <>
           <Head>
             <title>Coding Classroom | {assignment.name}</title>
           </Head>
 
-          <AssignmentHeader assignmentName={assignment.name} />
+          <AssignmentHeader
+            assignmentName={assignment.name}
+            assignments={assignments}
+          />
 
           <Question question={assignment.question} />
         </>
