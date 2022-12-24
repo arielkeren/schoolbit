@@ -89,6 +89,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
             id="name"
             value={name}
             onChange={changeName}
+            autoFocus
             className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
           />
         </div>
