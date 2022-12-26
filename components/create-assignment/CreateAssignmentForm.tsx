@@ -69,9 +69,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
     } else if (question.replaceAll(" ", "") === "") {
       alert("Cannot create an assignment without a question");
       setQuestion("");
-    } else {
-      createAssignment();
-    }
+    } else createAssignment();
   };
 
   return (

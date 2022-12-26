@@ -8,14 +8,21 @@ import { doc, updateDoc } from "firebase/firestore";
 import { database } from "../../firebaseConfig";
 
 interface Props {
-  assignmentName: string;
   assignments: AssignmentInterface[];
 }
 
-const AssignmentHeader: React.FC<Props> = ({ assignmentName, assignments }) => {
+const AssignmentHeader: React.FC<Props> = ({ assignments }) => {
   const router = useRouter();
 
   const { classroomID, assignmentID } = router.query;
+
+  const assignment =
+    assignments.find(
+      (currentAssignmnet) => currentAssignmnet.id === assignmentID
+    ) ?? null;
+
+  const setUpEdit = () =>
+    router.push(`/classrooms/${classroomID}/assignments/${assignmentID}/edit`);
 
   const removeAssignment = async () => {
     const newAssignments = assignments.filter(
@@ -41,14 +48,18 @@ const AssignmentHeader: React.FC<Props> = ({ assignmentName, assignments }) => {
   return (
     <div className="flex flex-col items-center w-4/5 mx-auto">
       <div className="flex justify-between items-center w-full">
-        <Title title={assignmentName} />
+        <Title
+          title={
+            assignment === null ? "Error loading assignment" : assignment.name
+          }
+        />
 
         <div className="flex">
           <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
             <TbChecklist className="text-gray-500 text-3xl" />
           </button>
           <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
-            <MdEdit className="text-gray-500 text-3xl" />
+            <MdEdit onClick={setUpEdit} className="text-gray-500 text-3xl" />
           </button>
           <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
             <FaTrashAlt

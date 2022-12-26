@@ -1,12 +1,12 @@
-import { AssignmentInterface, ClassroomInterface } from "../../../../types";
+import { AssignmentInterface, ClassroomInterface } from "../../../../../types";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Title from "../../../../components/general/Title";
-import Question from "../../../../components/assignment/Question";
+import Title from "../../../../../components/general/Title";
+import Question from "../../../../../components/assignment/Question";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
-import { database } from "../../../../firebaseConfig";
-import AssignmentHeader from "../../../../components/assignment/AssignmentHeader";
+import { database } from "../../../../../firebaseConfig";
+import AssignmentHeader from "../../../../../components/assignment/AssignmentHeader";
 
 interface Props {
   assignments: AssignmentInterface[] | null;
@@ -77,10 +77,7 @@ const AssignmentPage: React.FC<Props> = ({
             <title>Coding Classroom | {assignment.name}</title>
           </Head>
 
-          <AssignmentHeader
-            assignmentName={assignment.name}
-            assignments={assignments}
-          />
+          <AssignmentHeader assignments={assignments} />
 
           <Question question={assignment.question} />
         </>
