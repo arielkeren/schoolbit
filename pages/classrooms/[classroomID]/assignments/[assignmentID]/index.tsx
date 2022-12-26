@@ -12,14 +12,18 @@ interface Props {
   assignments: AssignmentInterface[] | null;
   ownedClassrooms: ClassroomInterface[];
   attendedClassrooms: ClassroomInterface[];
+  ownerID: string;
   changeAssignments: (assignmentArray: AssignmentInterface[]) => void;
+  changeOwnerID: (newOwnerID: string) => void;
 }
 
 const AssignmentPage: React.FC<Props> = ({
   assignments,
   ownedClassrooms,
   attendedClassrooms,
+  ownerID,
   changeAssignments,
+  changeOwnerID,
 }) => {
   const router = useRouter();
 
@@ -30,7 +34,7 @@ const AssignmentPage: React.FC<Props> = ({
   const { classroomID, assignmentID } = router.query;
 
   useEffect(() => {
-    const getAssignmentData = async () => {
+    const getAssignmentDataAndOwnerID = async () => {
       const classroomDocumentReference = doc(
         database,
         `classrooms/${classroomID}`
@@ -40,6 +44,7 @@ const AssignmentPage: React.FC<Props> = ({
         classroomDocumentReference
       );
 
+      changeOwnerID(classroomDocumentSnapshot.data()?.ownerID ?? null);
       changeAssignments(classroomDocumentSnapshot.data()?.assignments ?? []);
     };
 
@@ -53,7 +58,7 @@ const AssignmentPage: React.FC<Props> = ({
     )
       return;
 
-    if (assignments === null) getAssignmentData();
+    if (assignments === null) getAssignmentDataAndOwnerID();
     else
       setAssignment(
         assignments.find(
@@ -63,6 +68,7 @@ const AssignmentPage: React.FC<Props> = ({
   }, [
     assignments,
     changeAssignments,
+    changeOwnerID,
     assignmentID,
     classroomID,
     attendedClassrooms,
@@ -71,13 +77,13 @@ const AssignmentPage: React.FC<Props> = ({
 
   return (
     <>
-      {assignment !== null && assignments !== null ? (
+      {assignment !== null && assignments !== null && ownerID !== null ? (
         <>
           <Head>
             <title>Coding Classroom | {assignment.name}</title>
           </Head>
 
-          <AssignmentHeader assignments={assignments} />
+          <AssignmentHeader assignments={assignments} ownerID={ownerID} />
 
           <Question question={assignment.question} />
         </>

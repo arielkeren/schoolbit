@@ -19,20 +19,23 @@ interface Props {
   ownedClassrooms: ClassroomInterface[];
   attendedClassrooms: ClassroomInterface[];
   assignments: AssignmentInterface[];
+  ownerID: string;
   changeAssignments: (assignmentArray: AssignmentInterface[]) => void;
+  changeOwnerID: (ownerID: string) => void;
 }
 
 const ClassroomPage: React.FC<Props> = ({
   ownedClassrooms,
   attendedClassrooms,
   assignments,
+  ownerID,
   changeAssignments,
+  changeOwnerID,
 }) => {
   const router = useRouter();
 
   const [classroomName, setClassroomName] = useState<string | null>(null);
   const [ownerName, setOwnerName] = useState<string | null>(null);
-  const [ownerID, setOwnerID] = useState<string | null>(null);
   const [participants, setParticipants] = useState<string[] | null>(null);
   const [requests, setRequests] = useState<RequestInterface[] | null>(null);
   const [isParticipantsScreenOpen, setIsParticipantsScreenOpen] =
@@ -63,16 +66,21 @@ const ClassroomPage: React.FC<Props> = ({
 
         setClassroomName(classroomDocumentSnapshot.data()?.classroomName ?? "");
         setOwnerName(classroomDocumentSnapshot.data()?.ownerName ?? "");
-        setOwnerID(classroomDocumentSnapshot.data()?.ownerID ?? "");
         setParticipants(classroomDocumentSnapshot.data()?.participants ?? []);
         setRequests(classroomDocumentSnapshot.data()?.requests ?? []);
-
+        changeOwnerID(classroomDocumentSnapshot.data()?.ownerID ?? "");
         changeAssignments(classroomDocumentSnapshot.data()?.assignments ?? []);
       }
     };
 
     getClassroomData();
-  }, [classroomID, changeAssignments, ownedClassrooms, attendedClassrooms]);
+  }, [
+    classroomID,
+    changeAssignments,
+    changeOwnerID,
+    ownedClassrooms,
+    attendedClassrooms,
+  ]);
 
   const openRequestsScreen = () => setIsRequestsScreenOpen(true);
 

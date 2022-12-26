@@ -24,6 +24,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [assignments, setAssignments] = useState<AssignmentInterface[] | null>(
     null
   );
+  const [ownerID, setOwnerID] = useState<string | null>(null);
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -55,6 +56,11 @@ const App = ({ Component, pageProps }: AppProps) => {
     []
   );
 
+  const changeOwnerID = useCallback(
+    (newOwnerID: string) => setOwnerID(newOwnerID),
+    []
+  );
+
   return (
     <div className={poppins.className}>
       <Header />
@@ -63,7 +69,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         ownedClassrooms={ownedClassrooms}
         attendedClassrooms={attendedClassrooms}
         assignments={assignments}
+        ownerID={ownerID}
         changeAssignments={changeAssignments}
+        changeOwnerID={changeOwnerID}
       />
     </div>
   );

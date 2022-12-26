@@ -5,16 +5,19 @@ import Title from "../general/Title";
 import { useRouter } from "next/router";
 import { AssignmentInterface } from "../../types";
 import { doc, updateDoc } from "firebase/firestore";
-import { database } from "../../firebaseConfig";
+import { auth, database } from "../../firebaseConfig";
 
 interface Props {
   assignments: AssignmentInterface[];
+  ownerID: string;
 }
 
-const AssignmentHeader: React.FC<Props> = ({ assignments }) => {
+const AssignmentHeader: React.FC<Props> = ({ assignments, ownerID }) => {
   const router = useRouter();
 
   const { classroomID, assignmentID } = router.query;
+
+  const isOwner = auth.currentUser?.uid === ownerID;
 
   const assignment =
     assignments.find(
@@ -54,20 +57,22 @@ const AssignmentHeader: React.FC<Props> = ({ assignments }) => {
           }
         />
 
-        <div className="flex">
-          <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
-            <TbChecklist className="text-gray-500 text-3xl" />
-          </button>
-          <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
-            <MdEdit onClick={setUpEdit} className="text-gray-500 text-3xl" />
-          </button>
-          <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
-            <FaTrashAlt
-              onClick={removeAssignment}
-              className="text-gray-500 text-2xl"
-            />
-          </button>
-        </div>
+        {isOwner && (
+          <div className="flex">
+            <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
+              <TbChecklist className="text-gray-500 text-3xl" />
+            </button>
+            <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
+              <MdEdit onClick={setUpEdit} className="text-gray-500 text-3xl" />
+            </button>
+            <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
+              <FaTrashAlt
+                onClick={removeAssignment}
+                className="text-gray-500 text-2xl"
+              />
+            </button>
+          </div>
+        )}
       </div>
 
       <hr className="w-full border-2 border-gray-100" />
