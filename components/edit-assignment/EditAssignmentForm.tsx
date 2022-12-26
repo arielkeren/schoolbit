@@ -36,7 +36,7 @@ const EditAssignmentForm: React.FC<Props> = ({
 
         const data = classroomDocumentSnapshot.data() ?? null;
 
-        if (data !== null) changeAssignments(data.assignments);
+        changeAssignments(data?.assignments ?? []);
       } catch {
         alert("Error loading assignment");
       }
