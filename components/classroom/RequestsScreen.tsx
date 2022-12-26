@@ -5,15 +5,21 @@ import RequestList from "./RequestList";
 interface Props {
   requests: RequestInterface[];
   closeRequestsScreen: () => void;
-  classroomName: string;
   classroomID: string;
+  classroomName: string;
+  ownerName: string;
+  description: string;
+  color: string;
 }
 
 const ParticipantsScreen: React.FC<Props> = ({
   requests,
   closeRequestsScreen,
-  classroomName,
   classroomID,
+  classroomName,
+  ownerName,
+  description,
+  color,
 }) => {
   const stopPropagation = (event: React.MouseEvent<HTMLDivElement>) =>
     event.stopPropagation();
@@ -38,8 +44,11 @@ const ParticipantsScreen: React.FC<Props> = ({
         </button>
         <RequestList
           requests={requests}
-          classroomName={classroomName}
           classroomID={classroomID}
+          classroomName={classroomName}
+          ownerName={ownerName}
+          description={description}
+          color={color}
         />
       </div>
     </div>

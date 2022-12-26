@@ -35,6 +35,8 @@ const ClassroomPage: React.FC<Props> = ({
   const router = useRouter();
 
   const [classroomName, setClassroomName] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+  const [color, setColor] = useState<string | null>(null);
   const [ownerName, setOwnerName] = useState<string | null>(null);
   const [participants, setParticipants] = useState<string[] | null>(null);
   const [requests, setRequests] = useState<RequestInterface[] | null>(null);
@@ -65,6 +67,8 @@ const ClassroomPage: React.FC<Props> = ({
         );
 
         setClassroomName(classroomDocumentSnapshot.data()?.classroomName ?? "");
+        setDescription(classroomDocumentSnapshot.data()?.description ?? "");
+        setColor(classroomDocumentSnapshot.data()?.color ?? "");
         setOwnerName(classroomDocumentSnapshot.data()?.ownerName ?? "");
         setParticipants(classroomDocumentSnapshot.data()?.participants ?? []);
         setRequests(classroomDocumentSnapshot.data()?.requests ?? []);
@@ -98,6 +102,8 @@ const ClassroomPage: React.FC<Props> = ({
       assignments !== null &&
       requests !== null &&
       participants !== null &&
+      description !== null &&
+      color !== null &&
       typeof classroomID === "string" ? (
         <>
           <Head>
@@ -125,8 +131,11 @@ const ClassroomPage: React.FC<Props> = ({
             <RequestsScreen
               requests={requests}
               closeRequestsScreen={closeRequestsScreen}
-              classroomName={classroomName}
               classroomID={classroomID}
+              classroomName={classroomName}
+              ownerName={ownerName}
+              description={description}
+              color={color}
             />
           )}
 

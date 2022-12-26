@@ -1,19 +1,25 @@
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, database } from "../../firebaseConfig";
-import { RequestInterface } from "../../types";
+import { ClassroomInterface, RequestInterface } from "../../types";
 
 interface Props {
   request: RequestInterface;
   requests: RequestInterface[];
-  classroomName: string;
   classroomID: string;
+  classroomName: string;
+  ownerName: string;
+  description: string;
+  color: string;
 }
 
 const Request: React.FC<Props> = ({
   request,
   requests,
-  classroomName,
   classroomID,
+  classroomName,
+  ownerName,
+  description,
+  color,
 }) => {
   const acceptRequest = async () => {
     const newRequests = requests.filter(
@@ -34,7 +40,13 @@ const Request: React.FC<Props> = ({
       alert("Error removing the request and adding the participant");
     }
 
-    const newAttendedClassroom = { classroomName, classroomID };
+    const newAttendedClassroom: ClassroomInterface = {
+      classroomID,
+      classroomName,
+      ownerName,
+      description,
+      color,
+    };
 
     const userDocumentReference = doc(database, `users/${request.senderID}`);
 

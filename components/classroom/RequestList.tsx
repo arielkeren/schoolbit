@@ -3,14 +3,20 @@ import Request from "./Request";
 
 interface Props {
   requests: RequestInterface[];
-  classroomName: string;
   classroomID: string;
+  classroomName: string;
+  ownerName: string;
+  description: string;
+  color: string;
 }
 
 const RequestList: React.FC<Props> = ({
   requests,
-  classroomName,
   classroomID,
+  classroomName,
+  ownerName,
+  description,
+  color,
 }) => {
   return (
     <div className="flex flex-col gap-3">
@@ -24,8 +30,11 @@ const RequestList: React.FC<Props> = ({
             <Request
               request={request}
               requests={requests}
-              classroomName={classroomName}
               classroomID={classroomID}
+              classroomName={classroomName}
+              ownerName={ownerName}
+              description={description}
+              color={color}
               key={index}
             />
           ))}
