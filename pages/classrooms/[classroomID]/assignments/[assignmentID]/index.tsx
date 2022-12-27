@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { database } from "../../../../../firebaseConfig";
 import AssignmentHeader from "../../../../../components/assignment/AssignmentHeader";
+import ToggleCodeViewButton from "../../../../../components/assignment/ToggleCodeViewButton";
+import CodeEditor from "../../../../../components/assignment/CodeEditor";
 
 interface Props {
   assignments: AssignmentInterface[] | null;
@@ -30,6 +32,8 @@ const AssignmentPage: React.FC<Props> = ({
   const [assignment, setAssignment] = useState<AssignmentInterface | null>(
     null
   );
+  const [isCodeView, setIsCodeView] = useState(false);
+  const [code, setCode] = useState("");
 
   const { classroomID, assignmentID } = router.query;
 
@@ -75,6 +79,11 @@ const AssignmentPage: React.FC<Props> = ({
     ownedClassrooms,
   ]);
 
+  const toggleCodeView = () =>
+    setIsCodeView((previousCodeView) => !previousCodeView);
+
+  const changeCode = (newCode: string) => setCode(newCode);
+
   return (
     <>
       {assignment !== null && assignments !== null && ownerID !== null ? (
@@ -85,7 +94,16 @@ const AssignmentPage: React.FC<Props> = ({
 
           <AssignmentHeader assignments={assignments} ownerID={ownerID} />
 
-          <Question question={assignment.question} />
+          {isCodeView ? (
+            <CodeEditor code={code} changeCode={changeCode} />
+          ) : (
+            <Question question={assignment.question} />
+          )}
+
+          <ToggleCodeViewButton
+            isCodeView={isCodeView}
+            toggleCodeView={toggleCodeView}
+          />
         </>
       ) : (
         <>
