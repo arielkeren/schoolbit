@@ -4,9 +4,9 @@ export interface RequestInterface {
 }
 
 export interface AnswerInterface {
-  text: string;
+  code: string;
   senderName: string;
-  id: string;
+  senderID: string;
 }
 
 export interface AssignmentInterface {

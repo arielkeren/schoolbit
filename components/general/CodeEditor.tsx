@@ -1,23 +1,22 @@
-import { useState } from "react";
 import Editor, { OnChange } from "@monaco-editor/react";
 
 interface Props {
   code: string;
-  changeCode: (newCode: string) => void;
+  height: string;
+  width: string;
+  changeCode?: (newCode: string) => void;
 }
 
-const CodeEditor: React.FC<Props> = ({ code, changeCode }) => {
-  const onChangeCode: OnChange = (newCode: string | undefined) =>
-    changeCode(newCode ?? "");
+const CodeEditor: React.FC<Props> = ({ code, height, width, changeCode }) => {
+  const onChangeCode: OnChange | undefined = changeCode
+    ? (newCode: string | undefined) => changeCode(newCode ?? "")
+    : undefined;
 
   return (
-    <div
-      className="flex justify-center"
-      style={{ height: "calc(100vh - 136px - 92px)" }}
-    >
+    <div className="flex justify-center">
       <Editor
-        height="80%"
-        width="80%"
+        height={height}
+        width={width}
         language="javascript"
         value={code}
         theme="vs-dark"
@@ -26,6 +25,7 @@ const CodeEditor: React.FC<Props> = ({ code, changeCode }) => {
           fontSize: "25px",
           minimap: { renderCharacters: false },
           scrollBeyondLastLine: false,
+          readOnly: !changeCode,
         }}
       />
     </div>

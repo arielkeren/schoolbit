@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { AssignmentInterface } from "../../types";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, database } from "../../firebaseConfig";
+import Link from "next/link";
 
 interface Props {
   assignments: AssignmentInterface[];
@@ -23,9 +24,6 @@ const AssignmentHeader: React.FC<Props> = ({ assignments, ownerID }) => {
     assignments.find(
       (currentAssignmnet) => currentAssignmnet.id === assignmentID
     ) ?? null;
-
-  const setUpEdit = () =>
-    router.push(`/classrooms/${classroomID}/assignments/${assignmentID}/edit`);
 
   const removeAssignment = async () => {
     const newAssignments = assignments.filter(
@@ -59,12 +57,18 @@ const AssignmentHeader: React.FC<Props> = ({ assignments, ownerID }) => {
 
         {isOwner && (
           <div className="flex">
-            <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
+            <Link
+              href={`/classrooms/${classroomID}/assignments/${assignmentID}/answers`}
+              className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100"
+            >
               <TbChecklist className="text-gray-500 text-3xl" />
-            </button>
-            <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
-              <MdEdit onClick={setUpEdit} className="text-gray-500 text-3xl" />
-            </button>
+            </Link>
+            <Link
+              href={`/classrooms/${classroomID}/assignments/${assignmentID}/edit`}
+              className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100"
+            >
+              <MdEdit className="text-gray-500 text-3xl" />
+            </Link>
             <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
               <FaTrashAlt
                 onClick={removeAssignment}
