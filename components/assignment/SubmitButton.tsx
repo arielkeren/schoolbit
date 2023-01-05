@@ -46,6 +46,7 @@ const SubmitButton: React.FC<Props> = ({ code }) => {
       code,
       senderName: username,
       senderID: userID,
+      checked: false,
     };
     assignment?.answers.push(newAnswer);
 

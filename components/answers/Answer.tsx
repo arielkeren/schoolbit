@@ -4,6 +4,7 @@ import CodeEditor from "../general/CodeEditor";
 import { FaPenAlt } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { ImCheckmark } from "react-icons/im";
 
 interface Props {
   answer: AnswerInterface;
@@ -26,19 +27,22 @@ const Answer: React.FC<Props> = ({ answer }) => {
     <div>
       <div
         onClick={toggleIsCodeOpen}
-        className={
-          "flex justify-between items-center bg-gray-800 p-5 cursor-pointer " +
-          (isCodeOpen ? "rounded-t-md" : "rounded-md")
-        }
+        className={`flex justify-between items-center p-5 cursor-pointer ${
+          answer.checked ? "bg-gray-600" : "bg-gray-800"
+        } ${isCodeOpen ? "rounded-t-md" : "rounded-md"}`}
       >
         <h2 className="text-white text-2xl">{answer.senderName}</h2>
-        <Link
-          href={`/classrooms/${classroomID}/assignments/${assignmentID}/answers/${answer.senderID}`}
-          className="p-3 rounded-full hover:bg-gray-700 transition-colors"
-          onClick={stopPropagation}
-        >
-          <FaPenAlt className="text-white text-3xl" />
-        </Link>
+
+        {answer.checked ? (
+          <ImCheckmark className="text-gray-300 text-3xl" />
+        ) : (
+          <Link
+            href={`/classrooms/${classroomID}/assignments/${assignmentID}/answers/${answer.senderID}`}
+            onClick={stopPropagation}
+          >
+            <FaPenAlt className="text-gray-300 text-3xl hover:text-gray-50 transition-colors" />
+          </Link>
+        )}
       </div>
 
       {isCodeOpen && (

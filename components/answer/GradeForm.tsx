@@ -1,8 +1,16 @@
+import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
+import { database } from "../../firebaseConfig";
+import { useRouter } from "next/router";
+import { AssignmentInterface } from "../../types";
 
 const GradeForm: React.FC = () => {
+  const router = useRouter();
+
   const [grade, setGrade] = useState("");
   const [message, setMessage] = useState("");
+
+  const { classroomID, assignmentID, studentID } = router.query;
 
   const changeGrade = (event: React.ChangeEvent<HTMLInputElement>) =>
     setGrade(event.target.value);
@@ -18,7 +26,64 @@ const GradeForm: React.FC = () => {
     } else sendGrade();
   };
 
-  const sendGrade = async () => {};
+  const sendGrade = async () => {
+    const classroomDocumentReference = doc(
+      database,
+      `classrooms/${classroomID}`
+    );
+
+    let classroomDocumentSnapshot = null;
+
+    try {
+      classroomDocumentSnapshot = await getDoc(classroomDocumentReference);
+    } catch {
+      alert("Couldn't get the current state of the answers");
+    }
+
+    const data = classroomDocumentSnapshot?.data();
+    const assignments: AssignmentInterface[] = data?.assignments;
+    const assignment = assignments.find(
+      (currentAssignment) => currentAssignment.id === assignmentID
+    );
+    const answers = assignment?.answers;
+    const answer = answers?.find(
+      (currentAnswer) => currentAnswer.senderID === studentID
+    );
+
+    if (!answer) return;
+
+    answer.checked = true;
+
+    try {
+      await updateDoc(classroomDocumentReference, {
+        assignments,
+      });
+    } catch {
+      alert("Couldn't set the answer's state to checked");
+    }
+
+    if (!assignment) return;
+
+    const userDocumentReference = doc(database, `users/${studentID}`);
+    const newGrade = {
+      name: assignment.name,
+      grade,
+      message,
+      id: assignmentID,
+    };
+
+    try {
+      await updateDoc(userDocumentReference, {
+        grades: arrayUnion(newGrade),
+      });
+
+      router.push(
+        `/classrooms/${classroomID}/assignments/${assignmentID}/answers`
+      );
+    } catch {
+      alert("Couldn't send the grade to the student");
+    }
+  };
 
   return (
     <form onSubmit={validateData} className="flex justify-center mb-10">

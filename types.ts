@@ -7,6 +7,7 @@ export interface AnswerInterface {
   code: string;
   senderName: string;
   senderID: string;
+  checked: boolean;
 }
 
 export interface AssignmentInterface {
