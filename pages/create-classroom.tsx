@@ -1,8 +1,13 @@
 import Head from "next/head";
 import Title from "../components/general/Title";
 import CreateClassroomForm from "../components/create-classroom/CreateClassroomForm";
+import { ClassroomInterface } from "../types";
 
-const CreateClassroomPage: React.FC = () => {
+interface Props {
+  addOwnedClassroom: (newClassroom: ClassroomInterface) => void;
+}
+
+const CreateClassroomPage: React.FC<Props> = ({ addOwnedClassroom }) => {
   return (
     <>
       <Head>
@@ -11,7 +16,7 @@ const CreateClassroomPage: React.FC = () => {
 
       <Title title="Create Classroom" />
 
-      <CreateClassroomForm />
+      <CreateClassroomForm addOwnedClassroom={addOwnedClassroom} />
     </>
   );
 };

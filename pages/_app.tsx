@@ -61,6 +61,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     []
   );
 
+  const addOwnedClassroom = (newClassroom: ClassroomInterface) =>
+    setOwnedClassrooms([...ownedClassrooms, newClassroom]);
+
   return (
     <div className={poppins.className}>
       <Header />
@@ -72,6 +75,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         ownerID={ownerID}
         changeAssignments={changeAssignments}
         changeOwnerID={changeOwnerID}
+        addOwnedClassroom={addOwnedClassroom}
       />
     </div>
   );

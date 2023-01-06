@@ -9,8 +9,15 @@ import { useState } from "react";
 import { auth, database } from "../../firebaseConfig";
 import { ClassroomDataInterface, ClassroomInterface } from "../../types";
 import { HexColorPicker } from "react-colorful";
+import { useRouter } from "next/router";
 
-const CreateClassroomForm: React.FC = () => {
+interface Props {
+  addOwnedClassroom: (newClassroom: ClassroomInterface) => void;
+}
+
+const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState("#aabbcc");
@@ -26,56 +33,64 @@ const CreateClassroomForm: React.FC = () => {
 
     const user = auth.currentUser;
 
-    if (user !== null && user.displayName !== null) {
-      const classroomData: ClassroomDataInterface = {
-        classroomName: name,
-        description,
-        color,
-        ownerName: user.displayName,
-        ownerID: user.uid,
-        assignments: [],
-        participants: [],
-        requests: [],
-      };
+    if (!user?.displayName) {
+      alert("Error handling the user's data... Try again later");
+      return;
+    }
 
-      let classroomDocumentID: string | null = null;
-      try {
-        classroomDocumentID = (
-          await addDoc(classroomsCollectionReference, classroomData)
-        ).id;
-      } catch {
-        alert("Error creating the classroom... Try again later");
-      }
+    const classroomData: ClassroomDataInterface = {
+      classroomName: name,
+      description,
+      color,
+      ownerName: user.displayName,
+      ownerID: user.uid,
+      assignments: [],
+      participants: [],
+      requests: [],
+    };
 
-      if (classroomDocumentID !== null) {
-        const userClassroomData: ClassroomInterface = {
-          classroomName: name,
-          ownerName: user.displayName,
-          description,
-          color,
-          classroomID: classroomDocumentID,
-        };
+    let classroomDocumentID: string | null = null;
+    try {
+      classroomDocumentID = (
+        await addDoc(classroomsCollectionReference, classroomData)
+      ).id;
+    } catch {
+      alert("Error creating the classroom... Try again later");
+      return;
+    }
 
-        const userDocumentReference = doc(database, `users/${user.uid}`);
+    if (!classroomDocumentID) {
+      alert(
+        "Error getting the classroom's data to link it with the user... Try again later"
+      );
+      return;
+    }
 
-        try {
-          await setDoc(
-            userDocumentReference,
-            {
-              ownedClassrooms: arrayUnion(userClassroomData),
-            },
-            { merge: true }
-          );
-        } catch {
-          alert(
-            "Error linking the classroom with the user... Try again later "
-          );
-        }
-      } else
-        alert(
-          "Error getting the classroom's data to link it with the user... Try again later"
-        );
-    } else alert("Error handling the user's data... Try again later");
+    const userClassroomData: ClassroomInterface = {
+      classroomName: name,
+      ownerName: user.displayName,
+      description,
+      color,
+      classroomID: classroomDocumentID,
+    };
+
+    const userDocumentReference = doc(database, `users/${user.uid}`);
+
+    try {
+      await setDoc(
+        userDocumentReference,
+        {
+          ownedClassrooms: arrayUnion(userClassroomData),
+        },
+        { merge: true }
+      );
+    } catch {
+      alert("Error linking the classroom with the user... Try again later ");
+      return;
+    }
+
+    addOwnedClassroom(userClassroomData);
+    router.push("/");
   };
 
   const validateData = () => {
@@ -87,7 +102,6 @@ const CreateClassroomForm: React.FC = () => {
 
   const preventDefault = (event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
-
     validateData();
   };
 
