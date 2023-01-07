@@ -2,8 +2,11 @@ import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { auth, database } from "../../firebaseConfig";
 import { RequestInterface } from "../../types";
+import { useRouter } from "next/router";
 
 const JoinClassroomForm: React.FC = () => {
+  const router = useRouter();
+
   const [classroomCode, setClassroomCode] = useState("");
 
   const user = auth.currentUser;
@@ -30,22 +33,20 @@ const JoinClassroomForm: React.FC = () => {
       });
     } catch {
       alert("Classroom doesn't exist");
+      return;
     }
+
+    router.push("/");
   };
 
   const preventDefault = (event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
-
     validateClassroomCode();
   };
 
   const validateClassroomCode = () => {
-    if (classroomCode.length !== 20) {
-      alert("Invalid classroom code");
-      return;
-    }
-
-    sendClassroomJoinRequest();
+    if (classroomCode.length === 20) sendClassroomJoinRequest();
+    else alert("Invalid classroom code");
   };
 
   const detectEnterKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
