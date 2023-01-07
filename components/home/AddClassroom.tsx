@@ -7,7 +7,7 @@ interface Props {
 
 const AddClassroom: React.FC<Props> = ({ link }) => (
   <Link href={link}>
-    <div className="h-96 rounded-md flex justify-center items-center cursor-pointer bg-gray-900 hover:scale-105 hover:shadow-xl transition-all duration-300">
+    <div className="h-56 rounded-md flex justify-center items-center cursor-pointer bg-gray-900 hover:scale-105 transition-transform">
       <AiOutlinePlus className="text-7xl text-white" />
     </div>
   </Link>
