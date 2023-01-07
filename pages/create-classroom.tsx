@@ -11,7 +11,7 @@ const CreateClassroomPage: React.FC<Props> = ({ addOwnedClassroom }) => {
   return (
     <>
       <Head>
-        <title>Coding Classroom | Create Classroom</title>
+        <title>Create Classroom | SchoolBit</title>
       </Head>
 
       <Title title="Create Classroom" />

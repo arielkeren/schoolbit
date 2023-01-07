@@ -9,11 +9,11 @@ import Title from "../../../components/general/Title";
 import Subtitle from "../../../components/classroom/Subtitle";
 import AssignmentList from "../../../components/classroom/AssignmentList";
 import CreateAssignmentButton from "../../../components/classroom/CreateAssignmentButton";
-import OpenScreenButton from "../../../components/classroom/OpenScreenButton";
-import ParticipantsScreen from "../../../components/classroom/ParticipantsScreen";
+import OpenModalButton from "../../../components/classroom/OpenModalButton";
+import ParticipantsModal from "../../../components/classroom/ParticipantsModal";
 import ClassroomCodeText from "../../../components/classroom/ClassroomCodeText";
 import { RequestInterface } from "../../..//types";
-import RequestsScreen from "../../../components/classroom/RequestsScreen";
+import RequestsModal from "../../../components/classroom/RequestsModal";
 
 interface Props {
   ownedClassrooms: ClassroomInterface[];
@@ -32,49 +32,49 @@ const ClassroomPage: React.FC<Props> = ({
   changeAssignments,
   changeOwnerID,
 }) => {
-  const router = useRouter();
-
   const [classroomName, setClassroomName] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [color, setColor] = useState<string | null>(null);
   const [ownerName, setOwnerName] = useState<string | null>(null);
   const [participants, setParticipants] = useState<string[] | null>(null);
   const [requests, setRequests] = useState<RequestInterface[] | null>(null);
-  const [isParticipantsScreenOpen, setIsParticipantsScreenOpen] =
-    useState(false);
-  const [isRequestsScreenOpen, setIsRequestsScreenOpen] = useState(false);
+  const [isParticipantsModalOpen, setIsParticipantsModalOpen] = useState(false);
+  const [isRequestsModalOpen, setIsRequestsModalOpen] = useState(false);
 
-  const user = auth.currentUser;
+  const router = useRouter();
   const { classroomID } = router.query;
 
   useEffect(() => {
     const getClassroomData = async () => {
       if (
-        ownedClassrooms.some(
+        !ownedClassrooms.some(
           (classroom) => classroom.classroomID === classroomID
-        ) ||
-        attendedClassrooms.some(
+        ) &&
+        !attendedClassrooms.some(
           (classroom) => classroom.classroomID === classroomID
         )
-      ) {
-        const classroomDocumentReference = doc(
-          database,
-          `classrooms/${classroomID}`
-        );
+      )
+        return;
 
-        const classroomDocumentSnapshot = await getDoc(
-          classroomDocumentReference
-        );
+      const classroomDocumentReference = doc(
+        database,
+        `classrooms/${classroomID}`
+      );
 
-        setClassroomName(classroomDocumentSnapshot.data()?.classroomName ?? "");
-        setDescription(classroomDocumentSnapshot.data()?.description ?? "");
-        setColor(classroomDocumentSnapshot.data()?.color ?? "");
-        setOwnerName(classroomDocumentSnapshot.data()?.ownerName ?? "");
-        setParticipants(classroomDocumentSnapshot.data()?.participants ?? []);
-        setRequests(classroomDocumentSnapshot.data()?.requests ?? []);
-        changeOwnerID(classroomDocumentSnapshot.data()?.ownerID ?? "");
-        changeAssignments(classroomDocumentSnapshot.data()?.assignments ?? []);
-      }
+      const classroomDocumentSnapshot = await getDoc(
+        classroomDocumentReference
+      );
+
+      const data = classroomDocumentSnapshot.data();
+
+      setClassroomName(data?.classroomName ?? "");
+      setDescription(data?.description ?? "");
+      setColor(data?.color ?? "");
+      setOwnerName(data?.ownerName ?? "");
+      setParticipants(data?.participants ?? []);
+      setRequests(data?.requests ?? []);
+      changeOwnerID(data?.ownerID ?? "");
+      changeAssignments(data?.assignments ?? []);
     };
 
     getClassroomData();
@@ -86,28 +86,28 @@ const ClassroomPage: React.FC<Props> = ({
     attendedClassrooms,
   ]);
 
-  const openRequestsScreen = () => setIsRequestsScreenOpen(true);
+  const openRequestsModal = () => setIsRequestsModalOpen(true);
 
-  const closeRequestsScreen = () => setIsRequestsScreenOpen(false);
+  const closeRequestsModal = () => setIsRequestsModalOpen(false);
 
-  const openParticipantsScreen = () => setIsParticipantsScreenOpen(true);
+  const openParticipantsModal = () => setIsParticipantsModalOpen(true);
 
-  const closeParticipantsScreen = () => setIsParticipantsScreenOpen(false);
+  const closeParticipantsModal = () => setIsParticipantsModalOpen(false);
 
   return (
     <>
-      {user !== null &&
-      classroomName !== null &&
-      ownerName !== null &&
-      assignments !== null &&
-      requests !== null &&
-      participants !== null &&
-      description !== null &&
-      color !== null &&
+      {auth.currentUser &&
+      classroomName &&
+      ownerName &&
+      assignments &&
+      requests &&
+      participants &&
+      description &&
+      color &&
       typeof classroomID === "string" ? (
         <>
           <Head>
-            <title>Coding Classroom | {classroomName}</title>
+            <title>{classroomName} | SchoolBit</title>
           </Head>
 
           <Title title={classroomName} />
@@ -118,19 +118,19 @@ const ClassroomPage: React.FC<Props> = ({
 
           <ClassroomCodeText code={classroomID} />
 
-          {user.uid === ownerID && (
-            <OpenScreenButton openScreen={openRequestsScreen} icon="requests" />
+          {auth.currentUser.uid === ownerID && (
+            <OpenModalButton openModal={openRequestsModal} icon="requests" />
           )}
 
-          <OpenScreenButton
-            openScreen={openParticipantsScreen}
+          <OpenModalButton
+            openModal={openParticipantsModal}
             icon="participants"
           />
 
-          {isRequestsScreenOpen && (
-            <RequestsScreen
+          {isRequestsModalOpen && (
+            <RequestsModal
               requests={requests}
-              closeRequestsScreen={closeRequestsScreen}
+              closeRequestsModal={closeRequestsModal}
               classroomID={classroomID}
               classroomName={classroomName}
               ownerName={ownerName}
@@ -139,26 +139,29 @@ const ClassroomPage: React.FC<Props> = ({
             />
           )}
 
-          {isParticipantsScreenOpen && (
-            <ParticipantsScreen
+          {isParticipantsModalOpen && (
+            <ParticipantsModal
               participants={participants}
               ownerName={ownerName}
-              closeParticipantsScreen={closeParticipantsScreen}
+              closeParticipantsModal={closeParticipantsModal}
             />
           )}
 
-          {user.uid === ownerID && (
+          {auth.currentUser.uid === ownerID && (
             <CreateAssignmentButton classroomID={classroomID} />
           )}
         </>
       ) : (
         <>
           <Head>
-            <title>Coding Classroom | Classroom Not Found</title>
+            <title>Classroom Not Found | SchoolBit</title>
           </Head>
-          <p>
+
+          <Title title="Classroom Not Found" />
+
+          <p className="text-center text-2xl">
             This classroom either doesn&apos;t exist or isn&apos;t one of your
-            own or attended classrooms...
+            own or attended classrooms
           </p>
         </>
       )}

@@ -4,11 +4,11 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRouter } from "next/router";
 
 const LoginForm: React.FC = () => {
-  const router = useRouter();
-
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const changeUsername = (event: React.ChangeEvent<HTMLInputElement>) =>
     setUsername(event.target.value);
@@ -24,17 +24,19 @@ const LoginForm: React.FC = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      if (auth.currentUser !== null)
+      if (auth.currentUser)
         await updateProfile(auth.currentUser, { displayName: username });
-      router.push("/");
     } catch {
-      alert("Error signing up... Try again later");
+      alert("Failed to sign up");
+      return;
     }
+
+    router.push("/");
   };
 
   return (
     <>
-      {auth.currentUser === null ? (
+      {!auth.currentUser ? (
         <form className="flex justify-center">
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">
@@ -84,16 +86,14 @@ const LoginForm: React.FC = () => {
             </div>
             <input
               type="submit"
-              value="SIGN UP"
+              value="Sign up"
               onClick={signUp}
-              className="my-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
+              className="my-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl uppercase cursor-pointer hover:bg-gray-800 transition-colors"
             />
           </div>
         </form>
       ) : (
-        <p className="text-3xl font-bold text-center">
-          You&apos;re already logged in...
-        </p>
+        <p className="text-center text-3xl">Already logged in</p>
       )}
     </>
   );

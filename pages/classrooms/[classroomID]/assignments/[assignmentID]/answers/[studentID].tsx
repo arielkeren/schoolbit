@@ -7,13 +7,13 @@ import Title from "../../../../../../components/general/Title";
 import CodeEditor from "../../../../../../components/general/CodeEditor";
 import GradeForm from "../../../../../../components/answer/GradeForm";
 import ScrollButton from "../../../../../../components/answer/ScrollButton";
+import Head from "next/head";
 
 const AnswerPage: React.FC = () => {
   const [studentName, setStudentName] = useState<string | null>(null);
   const [submittedCode, setSubmittedCode] = useState<string | null>(null);
 
   const router = useRouter();
-
   const { classroomID, assignmentID, studentID } = router.query;
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const AnswerPage: React.FC = () => {
         setStudentName(answer?.senderName ?? null);
         setSubmittedCode(answer?.code ?? null);
       } catch {
-        alert("Error loading the answer");
+        alert("Failed to get the answer");
       }
     };
 
@@ -53,7 +53,12 @@ const AnswerPage: React.FC = () => {
     <>
       {studentName && submittedCode ? (
         <>
+          <Head>
+            <title>{studentName}&apos;s Answer | SchoolBit</title>
+          </Head>
+
           <Title title={`${studentName}'s Answer`} />
+
           <div className="mb-14">
             <CodeEditor
               code={submittedCode}
@@ -61,15 +66,16 @@ const AnswerPage: React.FC = () => {
               width="95vw"
             />
           </div>
+
           <GradeForm />
+
           <ScrollButton />
         </>
       ) : (
         <>
-          <Title title="Answer" />
-          <p className="text-center text-2xl">
-            Couldn&apos;t load the answer...
-          </p>
+          <Title title="Answer Not Found" />
+
+          <p className="text-center text-2xl">Failed to get the answer</p>
         </>
       )}
     </>

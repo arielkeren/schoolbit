@@ -1,47 +1,20 @@
-import { signOut } from "firebase/auth";
 import Head from "next/head";
 import Title from "../components/general/Title";
+import LogOutButton from "../components/profile/LogOutButton";
 import ProfileDetails from "../components/profile/ProfileDetails";
-import { auth } from "../firebaseConfig";
-import { useRouter } from "next/router";
 
-const ProfilePage: React.FC = () => {
-  const router = useRouter();
+const ProfilePage: React.FC = () => (
+  <>
+    <Head>
+      <title>Profile | SchoolBit</title>
+    </Head>
 
-  const user = auth.currentUser;
+    <Title title="Profile" />
 
-  const logOut = async () => {
-    try {
-      await signOut(auth);
+    <ProfileDetails />
 
-      router.push("/");
-    } catch {
-      alert("Error logging out... Try again later");
-    }
-  };
-
-  return (
-    <>
-      <Head>
-        <title>Coding Classroom | Profile</title>
-      </Head>
-
-      <Title title="Profile" />
-
-      <ProfileDetails />
-
-      {user !== null && (
-        <div className="flex justify-center m-14">
-          <button
-            onClick={logOut}
-            className="bg-gray-900 text-white py-2 px-5 rounded-lg font-bold text-2xl uppercase hover:bg-gray-800 transition-colors"
-          >
-            Log out
-          </button>
-        </div>
-      )}
-    </>
-  );
-};
+    <LogOutButton />
+  </>
+);
 
 export default ProfilePage;

@@ -37,7 +37,8 @@ const Request: React.FC<Props> = ({
         participants: arrayUnion(request.senderName),
       });
     } catch {
-      alert("Error removing the request and adding the participant");
+      alert("Failed to remove the request and add the student");
+      return;
     }
 
     const newAttendedClassroom: ClassroomInterface = {
@@ -59,7 +60,7 @@ const Request: React.FC<Props> = ({
         { merge: true }
       );
     } catch {
-      alert("Error connecting the classroom with the requesting user");
+      alert("Failed to connect the classroom with the student");
     }
   };
 
@@ -76,7 +77,7 @@ const Request: React.FC<Props> = ({
     try {
       await updateDoc(classroomDocumentReference, { requests: newRequests });
     } catch {
-      alert("Error removing the request");
+      alert("Failed to remove the request");
     }
   };
 

@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { AnswerInterface, AssignmentInterface } from "../../../../../../types";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  DocumentData,
+  DocumentSnapshot,
+  getDoc,
+} from "firebase/firestore";
 import { database } from "../../../../../../firebaseConfig";
 import Title from "../../../../../../components/general/Title";
 import AnswerList from "../../../../../../components/answers/AnswerList";
 import Head from "next/head";
 
 const AnswersPage: React.FC = () => {
-  const router = useRouter();
-
   const [answers, setAnswers] = useState<AnswerInterface[] | null>(null);
 
+  const router = useRouter();
   const { classroomID, assignmentID } = router.query;
 
   useEffect(() => {
@@ -24,21 +28,26 @@ const AnswersPage: React.FC = () => {
         `classrooms/${classroomID}`
       );
 
-      try {
-        const classroomDocumentSnapshot = await getDoc(
-          classroomDocumentReference
-        );
+      let classroomDocumentSnapshot: DocumentSnapshot<DocumentData> | null =
+        null;
 
-        const assignments: AssignmentInterface[] =
-          classroomDocumentSnapshot.data()?.assignments;
-        if (!assignments) return;
-        const assignment = assignments.find(
-          (currentAssignment) => currentAssignment.id === assignmentID
-        );
-        setAnswers(assignment?.answers ?? null);
+      try {
+        classroomDocumentSnapshot = await getDoc(classroomDocumentReference);
       } catch {
-        alert("Error loading the assignments");
+        alert("Failed to get the answers");
+        return;
       }
+
+      const data = classroomDocumentSnapshot.data();
+      const assignments: AssignmentInterface[] = data?.assignments;
+
+      if (!assignments) return;
+
+      const assignment = assignments.find(
+        (currentAssignment) => currentAssignment.id === assignmentID
+      );
+
+      setAnswers(assignment?.answers ?? null);
     };
 
     getAnswers();
@@ -47,13 +56,15 @@ const AnswersPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>SchoolBit | Answers</title>
+        <title>Answers | SchoolBit</title>
       </Head>
+
       <Title title="Answers" />
+
       {answers ? (
         <AnswerList answers={answers} />
       ) : (
-        <p className="text-center text-2xl">Couldn&apos;t load the answers</p>
+        <p className="text-center text-2xl">Failed to get the answers</p>
       )}
     </>
   );

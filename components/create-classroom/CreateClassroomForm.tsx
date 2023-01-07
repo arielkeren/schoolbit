@@ -16,11 +16,11 @@ interface Props {
 }
 
 const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
-  const router = useRouter();
-
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState("#aabbcc");
+
+  const router = useRouter();
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -33,10 +33,7 @@ const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
 
     const user = auth.currentUser;
 
-    if (!user?.displayName) {
-      alert("Error handling the user's data... Try again later");
-      return;
-    }
+    if (!user?.displayName) return;
 
     const classroomData: ClassroomDataInterface = {
       classroomName: name,
@@ -55,14 +52,7 @@ const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
         await addDoc(classroomsCollectionReference, classroomData)
       ).id;
     } catch {
-      alert("Error creating the classroom... Try again later");
-      return;
-    }
-
-    if (!classroomDocumentID) {
-      alert(
-        "Error getting the classroom's data to link it with the user... Try again later"
-      );
+      alert("Failed to create the classroom");
       return;
     }
 
@@ -85,7 +75,7 @@ const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
         { merge: true }
       );
     } catch {
-      alert("Error linking the classroom with the user... Try again later ");
+      alert("Failed to connect the classroom");
       return;
     }
 
@@ -96,7 +86,7 @@ const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
   const validateData = () => {
     if (name.replaceAll(" ", "") === "") {
       setName("");
-      alert("Cannot create a classroom without a name...");
+      alert("Cannot create a classroom without a name");
     } else createClassroom();
   };
 
@@ -107,7 +97,7 @@ const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
 
   return (
     <>
-      {auth.currentUser !== null ? (
+      {auth.currentUser ? (
         <form className="flex justify-center mb-10">
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">
@@ -164,7 +154,7 @@ const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
         </form>
       ) : (
         <p className="text-3xl font-bold text-center">
-          Log in to create a classroom...
+          Log in to create a classroom
         </p>
       )}
     </>

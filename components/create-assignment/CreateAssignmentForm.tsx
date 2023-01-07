@@ -11,11 +11,11 @@ interface Props {
 }
 
 const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
-  const router = useRouter();
-
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
   const [date, setDate] = useState(new Date());
+
+  const router = useRouter();
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -54,7 +54,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
 
       router.push(`/classrooms/${classroomID}`);
     } catch {
-      alert("Error creating the assignment... Try again later");
+      alert("Failed to create the assignment");
     }
   };
 
@@ -101,6 +101,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
             calendarType="US"
             minDate={new Date()}
             view="month"
+            locale="en-US"
           />
         </div>
 
@@ -121,9 +122,9 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
 
         <input
           type="submit"
-          value="CREATE"
+          value="Create"
           onClick={validateAssignment}
-          className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
+          className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl uppercase cursor-pointer hover:bg-gray-800 transition-colors"
         />
       </div>
     </form>

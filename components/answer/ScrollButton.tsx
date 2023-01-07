@@ -13,9 +13,9 @@ const ScrollButton: React.FC = () => {
   return (
     <button onClick={scroll} className="fixed bottom-5 right-5">
       <FaLongArrowAltDown
-        className={
-          "text-4xl transition-transform " + (scrollUp ? "rotate-180" : "")
-        }
+        className={`text-4xl transition-transform ${
+          scrollUp ? "rotate-180" : ""
+        }`}
       />
     </button>
   );

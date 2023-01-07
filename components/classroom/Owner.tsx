@@ -1,19 +1,16 @@
 import Participant from "./Participant";
+import ParticipantTypeTitle from "./ParticipantTypeTitle";
 
 interface Props {
   ownerName: string;
 }
 
-const Owner: React.FC<Props> = ({ ownerName }) => {
-  return (
-    <>
-      <h4 className="text-2xl font-bold text-slate-300 uppercase mb-2">
-        Teacher
-      </h4>
+const Owner: React.FC<Props> = ({ ownerName }) => (
+  <>
+    <ParticipantTypeTitle title="Teacher" />
 
-      <Participant name={ownerName} />
-    </>
-  );
-};
+    <Participant name={ownerName} />
+  </>
+);
 
 export default Owner;

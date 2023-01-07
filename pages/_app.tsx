@@ -13,7 +13,7 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [user, setUser] = useState<User | null>(null);
   const [ownedClassrooms, setOwnedClassrooms] = useState<ClassroomInterface[]>(
     []
@@ -29,7 +29,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
 
-    if (currentUser === null) {
+    if (!currentUser) {
       setOwnedClassrooms([]);
       setAttendedClassrooms([]);
     }
@@ -37,7 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   useEffect(() => {
     const getUserData = async () => {
-      if (user === null) return;
+      if (!user) return;
 
       const userDocumentReference = doc(database, `users/${user.uid}`);
       const userDocumentSnapshot = await getDoc(userDocumentReference);

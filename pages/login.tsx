@@ -2,18 +2,16 @@ import Head from "next/head";
 import LoginForm from "../components/login/LoginForm";
 import Title from "../components/general/Title";
 
-const LoginPage: React.FC = () => {
-  return (
-    <>
-      <Head>
-        <title>Coding Classroom | Login</title>
-      </Head>
+const LoginPage: React.FC = () => (
+  <>
+    <Head>
+      <title>Login | SchoolBit</title>
+    </Head>
 
-      <Title title="Login" />
+    <Title title="Login" />
 
-      <LoginForm />
-    </>
-  );
-};
+    <LoginForm />
+  </>
+);
 
 export default LoginPage;

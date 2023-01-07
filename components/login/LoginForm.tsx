@@ -6,10 +6,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const LoginForm: React.FC = () => {
-  const router = useRouter();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const changeEmail = (event: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(event.target.value);
@@ -24,10 +24,12 @@ const LoginForm: React.FC = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/");
     } catch {
-      alert("Error logging in with email and password... Try again later");
+      alert("Failed to log in");
+      return;
     }
+
+    router.push("/");
   };
 
   const googleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -35,15 +37,17 @@ const LoginForm: React.FC = () => {
 
     try {
       await signInWithGoogle();
-      router.push("/");
     } catch {
-      alert("Error logging in with Google... Try again later");
+      alert("Failed to log in with Google");
+      return;
     }
+
+    router.push("/");
   };
 
   return (
     <>
-      {auth.currentUser === null ? (
+      {!auth.currentUser ? (
         <form className="flex flex-col items-center">
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">
@@ -87,22 +91,20 @@ const LoginForm: React.FC = () => {
             Don&apos;t have an account?{" "}
             <Link
               href="/sign-up"
-              className="text-blue-600 font-extrabold hover:underline"
+              className="text-blue-600 font-extrabold uppercase hover:underline"
             >
-              SIGN UP
+              Sign up
             </Link>
           </p>
           <button
             onClick={googleLogin}
-            className="mt-10 flex items-center text-2xl font-bold text-white shadow-xl py-5 px-12 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors"
+            className="mt-10 flex items-center text-2xl font-bold text-white shadow-xl py-5 px-12 rounded-lg bg-gray-900 uppercase hover:bg-gray-800 transition-colors"
           >
-            <FcGoogle className="text-5xl mr-2" /> CONTINUE WITH GOOGLE
+            <FcGoogle className="text-5xl mr-2" /> Continue with Google
           </button>
         </form>
       ) : (
-        <p className="text-center text-3xl font-bold">
-          You&apos;re already logged in...
-        </p>
+        <p className="text-center text-3xl">Already logged in</p>
       )}
     </>
   );

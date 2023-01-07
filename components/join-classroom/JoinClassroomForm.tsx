@@ -5,17 +5,16 @@ import { RequestInterface } from "../../types";
 import { useRouter } from "next/router";
 
 const JoinClassroomForm: React.FC = () => {
-  const router = useRouter();
-
   const [classroomCode, setClassroomCode] = useState("");
 
-  const user = auth.currentUser;
+  const router = useRouter();
 
   const changeClassroomCode = (event: React.ChangeEvent<HTMLInputElement>) =>
     setClassroomCode(event.target.value);
 
   const sendClassroomJoinRequest = async () => {
-    if (user === null || user.displayName === null) return;
+    const user = auth.currentUser;
+    if (!user || !user.displayName) return;
 
     const classroomDocumentReference = doc(
       database,
@@ -32,7 +31,7 @@ const JoinClassroomForm: React.FC = () => {
         requests: arrayUnion(newJoinRequest),
       });
     } catch {
-      alert("Classroom doesn't exist");
+      alert("Failed to send a join request\nClassroom possibly doesn't exist");
       return;
     }
 
@@ -46,7 +45,7 @@ const JoinClassroomForm: React.FC = () => {
 
   const validateClassroomCode = () => {
     if (classroomCode.length === 20) sendClassroomJoinRequest();
-    else alert("Invalid classroom code");
+    else alert("Invalid classroom code\nCode needs to be 20 characters long");
   };
 
   const detectEnterKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -80,15 +79,15 @@ const JoinClassroomForm: React.FC = () => {
             </div>
             <input
               type="submit"
-              value="SEND REQUEST"
+              value="Send request"
               onClick={preventDefault}
-              className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
+              className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl uppercase cursor-pointer hover:bg-gray-800 transition-colors"
             />
           </div>
         </form>
       ) : (
         <p className="text-3xl font-bold text-center">
-          Log in to join a classroom...
+          Log in to join a classroom
         </p>
       )}
     </>

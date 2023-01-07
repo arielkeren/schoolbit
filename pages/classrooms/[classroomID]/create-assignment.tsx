@@ -2,31 +2,33 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Title from "../../../components/general/Title";
 import CreateAssignmentForm from "../../../components/create-assignment/CreateAssignmentForm";
+import { ClassroomInterface } from "../../../types";
 
-const CreateAssignmentPage: React.FC = () => {
+interface Props {
+  ownedClassrooms: ClassroomInterface[];
+}
+
+const CreateAssignmentPage: React.FC<Props> = ({ ownedClassrooms }) => {
   const router = useRouter();
-
   const { classroomID } = router.query;
 
   return (
     <>
-      {typeof classroomID === "string" ? (
-        <>
-          <Head>
-            <title>Coding Classroom | Create Assignment</title>
-          </Head>
+      <Head>
+        <title>Create Assignment | SchoolBit</title>
+      </Head>
 
-          <Title title="Create Assignment" />
+      <Title title="Create Assignment" />
 
-          <CreateAssignmentForm classroomID={classroomID} />
-        </>
+      {typeof classroomID === "string" &&
+      ownedClassrooms.some(
+        (classroom) => classroom.classroomID === classroomID
+      ) ? (
+        <CreateAssignmentForm classroomID={classroomID} />
       ) : (
-        <>
-          <Title title="Create Assignment" />
-          <p className="text-white text-center font-bold text-3xl">
-            Error loading the assignment...
-          </p>
-        </>
+        <p className="text-center text-2xl">
+          Failed to get a possible classroom to add an assignment to
+        </p>
       )}
     </>
   );

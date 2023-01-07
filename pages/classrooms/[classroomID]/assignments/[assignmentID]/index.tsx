@@ -28,14 +28,13 @@ const AssignmentPage: React.FC<Props> = ({
   changeAssignments,
   changeOwnerID,
 }) => {
-  const router = useRouter();
-
   const [assignment, setAssignment] = useState<AssignmentInterface | null>(
     null
   );
   const [isCodeView, setIsCodeView] = useState(false);
   const [code, setCode] = useState("");
 
+  const router = useRouter();
   const { classroomID, assignmentID } = router.query;
 
   useEffect(() => {
@@ -63,7 +62,7 @@ const AssignmentPage: React.FC<Props> = ({
     )
       return;
 
-    if (assignments === null) getAssignmentDataAndOwnerID();
+    if (!assignments) getAssignmentDataAndOwnerID();
     else
       setAssignment(
         assignments.find(
@@ -80,8 +79,6 @@ const AssignmentPage: React.FC<Props> = ({
     ownedClassrooms,
   ]);
 
-  const isStudent = auth.currentUser?.uid !== ownerID;
-
   const toggleCodeView = () =>
     setIsCodeView((previousCodeView) => !previousCodeView);
 
@@ -89,10 +86,10 @@ const AssignmentPage: React.FC<Props> = ({
 
   return (
     <>
-      {assignment !== null && assignments !== null && ownerID !== null ? (
+      {assignment && assignments && ownerID ? (
         <>
           <Head>
-            <title>Coding Classroom | {assignment.name}</title>
+            <title>{assignment.name} | SchoolBit</title>
           </Head>
 
           <AssignmentHeader assignments={assignments} ownerID={ownerID} />
@@ -108,7 +105,7 @@ const AssignmentPage: React.FC<Props> = ({
             <Question question={assignment.question} />
           )}
 
-          {isStudent && (
+          {auth.currentUser?.uid !== ownerID && (
             <>
               <SubmitButton code={code} />
 
@@ -121,10 +118,13 @@ const AssignmentPage: React.FC<Props> = ({
         </>
       ) : (
         <>
-          <Title title="Assignment" />
-          <p className="text-center text-2xl">
-            Couldn&apos;t find this assignment...
-          </p>
+          <Head>
+            <title>Assignment Not Found | SchoolBit</title>
+          </Head>
+
+          <Title title="Assignment Not Found" />
+
+          <p className="text-center text-2xl">Failed to get the assignment</p>
         </>
       )}
     </>

@@ -11,10 +11,9 @@ interface Props {
 }
 
 const Answer: React.FC<Props> = ({ answer }) => {
-  const router = useRouter();
-
   const [isCodeOpen, setIsCodeOpen] = useState(false);
 
+  const router = useRouter();
   const { classroomID, assignmentID } = router.query;
 
   const toggleIsCodeOpen = () =>

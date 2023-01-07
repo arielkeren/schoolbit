@@ -14,13 +14,12 @@ const EditAssignmentForm: React.FC<Props> = ({
   assignments,
   changeAssignments,
 }) => {
-  const router = useRouter();
-
-  const { classroomID, assignmentID } = router.query;
-
   const [name, setName] = useState<string | null>(null);
   const [question, setQuestion] = useState<string | null>(null);
   const [date, setDate] = useState<Date | null>(null);
+
+  const router = useRouter();
+  const { classroomID, assignmentID } = router.query;
 
   useEffect(() => {
     const getAssignmentData = async () => {
@@ -34,23 +33,21 @@ const EditAssignmentForm: React.FC<Props> = ({
           classroomDocumentReference
         );
 
-        const data = classroomDocumentSnapshot.data() ?? null;
+        const data = classroomDocumentSnapshot.data();
 
         changeAssignments(data?.assignments ?? []);
       } catch {
-        alert("Error loading assignment");
+        alert("Failed to load the assignment");
       }
     };
 
-    if (assignments === null) {
-      getAssignmentData();
-    } else {
-      const assignment =
-        assignments.find(
-          (currentAssignment) => currentAssignment.id === assignmentID
-        ) ?? null;
+    if (!assignments) getAssignmentData();
+    else {
+      const assignment = assignments.find(
+        (currentAssignment) => currentAssignment.id === assignmentID
+      );
 
-      if (assignment !== null) {
+      if (assignment) {
         const currentYear = new Date().getFullYear();
         const assignmentMonth = assignment.until.slice(0, 3);
         const assignmentDate = assignment.until.slice(4);
@@ -72,14 +69,8 @@ const EditAssignmentForm: React.FC<Props> = ({
   const changeQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
     setQuestion(event.target.value);
 
-  const changeAssignment = async () => {
-    if (
-      name === null ||
-      question === null ||
-      date === null ||
-      typeof assignmentID !== "string"
-    )
-      return;
+  const editAssignment = async () => {
+    if (!name || !question || !date || typeof assignmentID !== "string") return;
 
     const noUnnecessarySpacesName = name.trim().replace(/\s{2,}/g, " ");
     if (noUnnecessarySpacesName === "" || question.replaceAll(" ", "") === "")
@@ -113,34 +104,33 @@ const EditAssignmentForm: React.FC<Props> = ({
       await updateDoc(classroomDocumentReference, {
         assignments: newAssignments,
       });
-
-      changeAssignments(newAssignments);
-
-      router.push(`/classrooms/${classroomID}/assignments/${assignmentID}`);
     } catch {
-      alert("Error changing the assignment");
+      alert("Failed to edit the assignment");
     }
+
+    changeAssignments(newAssignments);
+    router.push(`/classrooms/${classroomID}/assignments/${assignmentID}`);
   };
 
   const validateAssignment = (event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
 
-    if (name === null || question === null || date === null) return;
+    if (!name || !question || !date) return;
 
     const noUnnecessarySpacesName = name.trim().replace(/\s{2,}/g, " ");
 
     if (noUnnecessarySpacesName === "") {
-      alert("Cannot create an assignment without a name");
+      alert("Cannot edit the assignment to not have a name");
       setName("");
     } else if (question.replaceAll(" ", "") === "") {
-      alert("Cannot create an assignment without a question");
+      alert("Cannot edit the assignment to not have a question");
       setQuestion("");
-    } else changeAssignment();
+    } else editAssignment();
   };
 
   return (
     <>
-      {name !== null && date !== null && question !== null ? (
+      {name && date && question ? (
         <form className="flex justify-center mb-10">
           <div className="w-1/2 flex flex-col items-center gap-8">
             <div className="flex flex-col items-center w-full">
@@ -169,6 +159,7 @@ const EditAssignmentForm: React.FC<Props> = ({
                 calendarType="US"
                 minDate={new Date()}
                 view="month"
+                locale="en-US"
               />
             </div>
 
@@ -189,16 +180,14 @@ const EditAssignmentForm: React.FC<Props> = ({
 
             <input
               type="submit"
-              value="SAVE"
+              value="Save"
               onClick={validateAssignment}
-              className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
+              className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl uppercase cursor-pointer hover:bg-gray-800 transition-colors"
             />
           </div>
         </form>
       ) : (
-        <p className="text-center text-2xl">
-          Could&apos;nt load the assignment
-        </p>
+        <p className="text-center text-2xl">Failed to load the assignment</p>
       )}
     </>
   );

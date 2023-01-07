@@ -8,28 +8,26 @@ interface Props {
   attendedClassrooms: ClassroomInterface[];
 }
 
-const Home: React.FC<Props> = ({ ownedClassrooms, attendedClassrooms }) => {
-  return (
-    <>
-      <Head>
-        <title>Coding Classroom</title>
-      </Head>
+const Homepage: React.FC<Props> = ({ ownedClassrooms, attendedClassrooms }) => (
+  <>
+    <Head>
+      <title>SchoolBit</title>
+    </Head>
 
-      <Title title="My Classrooms" />
+    <Title title="My Classrooms" />
 
-      <ClassroomList
-        classrooms={ownedClassrooms}
-        addClassroomLink="/create-classroom"
-      />
+    <ClassroomList
+      classrooms={ownedClassrooms}
+      addClassroomLink="/create-classroom"
+    />
 
-      <Title title="Attended Classrooms" />
+    <Title title="Attended Classrooms" />
 
-      <ClassroomList
-        classrooms={attendedClassrooms}
-        addClassroomLink="/join-classroom"
-      />
-    </>
-  );
-};
+    <ClassroomList
+      classrooms={attendedClassrooms}
+      addClassroomLink="/join-classroom"
+    />
+  </>
+);
 
-export default Home;
+export default Homepage;

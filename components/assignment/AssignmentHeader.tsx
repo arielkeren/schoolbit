@@ -15,7 +15,6 @@ interface Props {
 
 const AssignmentHeader: React.FC<Props> = ({ assignments, ownerID }) => {
   const router = useRouter();
-
   const { classroomID, assignmentID } = router.query;
 
   const isOwner = auth.currentUser?.uid === ownerID;
@@ -42,7 +41,7 @@ const AssignmentHeader: React.FC<Props> = ({ assignments, ownerID }) => {
 
       router.push(`/classrooms/${classroomID}`);
     } catch {
-      alert("Error removing the assignment");
+      alert("Failed to remove the assignment");
     }
   };
 
@@ -50,9 +49,7 @@ const AssignmentHeader: React.FC<Props> = ({ assignments, ownerID }) => {
     <div className="flex flex-col items-center w-4/5 mx-auto">
       <div className="flex justify-between items-center w-full">
         <Title
-          title={
-            assignment === null ? "Error loading assignment" : assignment.name
-          }
+          title={!assignment ? "Couldn't Load Assignment" : assignment.name}
         />
 
         {isOwner && (

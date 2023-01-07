@@ -5,11 +5,10 @@ import { useRouter } from "next/router";
 import { AssignmentInterface } from "../../types";
 
 const GradeForm: React.FC = () => {
-  const router = useRouter();
-
   const [grade, setGrade] = useState("");
   const [message, setMessage] = useState("");
 
+  const router = useRouter();
   const { classroomID, assignmentID, studentID } = router.query;
 
   const changeGrade = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -37,7 +36,7 @@ const GradeForm: React.FC = () => {
     try {
       classroomDocumentSnapshot = await getDoc(classroomDocumentReference);
     } catch {
-      alert("Couldn't get the current state of the answers");
+      alert("Failed to get the current state of the answers");
     }
 
     const data = classroomDocumentSnapshot?.data();
@@ -59,7 +58,8 @@ const GradeForm: React.FC = () => {
         assignments,
       });
     } catch {
-      alert("Couldn't set the answer's state to checked");
+      alert("Failed to set the answer's state to checked");
+      return;
     }
 
     if (!assignment) return;
@@ -81,7 +81,7 @@ const GradeForm: React.FC = () => {
         `/classrooms/${classroomID}/assignments/${assignmentID}/answers`
       );
     } catch {
-      alert("Couldn't send the grade to the student");
+      alert("Failed to send the grade to the student");
     }
   };
 

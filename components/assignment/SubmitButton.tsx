@@ -33,10 +33,11 @@ const SubmitButton: React.FC<Props> = ({ code }) => {
     try {
       classroomDocumentSnapshot = await getDoc(classroomDocumentReference);
     } catch {
-      alert("Error getting the assignment");
+      alert("Failed to get the assignment");
+      return;
     }
 
-    const data = classroomDocumentSnapshot?.data();
+    const data = classroomDocumentSnapshot.data();
     const assignments: AssignmentInterface[] = data?.assignments;
     const assignment = assignments.find(
       (currentAssignment) => currentAssignment.id === assignmentID
@@ -53,7 +54,7 @@ const SubmitButton: React.FC<Props> = ({ code }) => {
     try {
       await updateDoc(classroomDocumentReference, { assignments });
     } catch {
-      alert("Error updating the assignment with the answer");
+      alert("Failed to send the answer");
     }
   };
 

@@ -2,18 +2,16 @@ import Head from "next/head";
 import Title from "../components/general/Title";
 import SignUpForm from "../components/sign-up/SignUpForm";
 
-const SignUpPage: React.FC = () => {
-  return (
-    <>
-      <Head>
-        <title>Coding Classroom | Sign up</title>
-      </Head>
+const SignUpPage: React.FC = () => (
+  <>
+    <Head>
+      <title>Sign Up | SchoolBit</title>
+    </Head>
 
-      <Title title="Sign Up" />
+    <Title title="Sign Up" />
 
-      <SignUpForm />
-    </>
-  );
-};
+    <SignUpForm />
+  </>
+);
 
 export default SignUpPage;
