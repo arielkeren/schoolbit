@@ -30,7 +30,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
 
     const assignmentID = uuidv4();
 
-    const shortenedDate = `${date.toLocaleString("default", {
+    const shortenedDate = `${date.toLocaleString("en-US", {
       month: "short",
     })} ${date.getDate()}`;
 
