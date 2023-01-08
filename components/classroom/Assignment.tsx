@@ -4,16 +4,22 @@ import { AssignmentInterface } from "../../types";
 interface Props {
   assignment: AssignmentInterface;
   classroomID: string;
+  isOwner: boolean;
 }
 
-const Assignment: React.FC<Props> = ({ assignment, classroomID }) => (
-  <Link href={`/classrooms/${classroomID}/assignments/${assignment.id}`}>
-    <div className="flex flex-col items-center gap-3 h-36 p-1 rounded bg-gray-900 hover:scale-105 transition-transform">
-      <h3 className="text-white font-bold text-lg">{assignment.name}</h3>
-      <div className="flex flex-col items-center">
-        <h4 className="text-white text-2xl">Until</h4>
-        <p className="text-white text-2xl">{assignment.until}</p>
-      </div>
+const Assignment: React.FC<Props> = ({ assignment, classroomID, isOwner }) => (
+  <Link
+    href={`/classrooms/${classroomID}/assignments/${assignment.id}`}
+    className="flex justify-center"
+  >
+    <div className="bg-gray-900 p-3 rounded-sm w-full lg:w-3/4 2xl:w-1/2">
+      <h3 className="text-gray-200 text-lg hover:underline">
+        {assignment.name}
+      </h3>
+      <p className="text-slate-500">until {assignment.until}</p>
+      {isOwner && (
+        <p className="text-gray-400">{assignment.answers.length} submitted</p>
+      )}
     </div>
   </Link>
 );

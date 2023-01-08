@@ -94,10 +94,11 @@ const ClassroomPage: React.FC<Props> = ({
 
   const closeParticipantsModal = () => setIsParticipantsModalOpen(false);
 
+  const isOwner = auth.currentUser?.uid === ownerID;
+
   return (
     <>
-      {auth.currentUser &&
-      classroomName &&
+      {classroomName &&
       ownerName &&
       assignments &&
       requests &&
@@ -114,11 +115,15 @@ const ClassroomPage: React.FC<Props> = ({
 
           <Subtitle subtitle={ownerName} />
 
-          <AssignmentList assignments={assignments} classroomID={classroomID} />
+          <AssignmentList
+            assignments={assignments}
+            classroomID={classroomID}
+            isOwner={isOwner}
+          />
 
           <ClassroomCodeText code={classroomID} />
 
-          {auth.currentUser.uid === ownerID && (
+          {isOwner && (
             <OpenModalButton openModal={openRequestsModal} icon="requests" />
           )}
 
@@ -147,9 +152,7 @@ const ClassroomPage: React.FC<Props> = ({
             />
           )}
 
-          {auth.currentUser.uid === ownerID && (
-            <CreateAssignmentButton classroomID={classroomID} />
-          )}
+          {isOwner && <CreateAssignmentButton classroomID={classroomID} />}
         </>
       ) : (
         <>
