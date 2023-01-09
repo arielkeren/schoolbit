@@ -62,7 +62,15 @@ const AnswersPage: React.FC = () => {
       <Title title="Answers" />
 
       {answers ? (
-        <AnswerList answers={answers} />
+        <>
+          {answers.length === 0 ? (
+            <p className="text-center text-2xl">
+              There are no submitted answers yet
+            </p>
+          ) : (
+            <AnswerList answers={answers} />
+          )}
+        </>
       ) : (
         <p className="text-center text-2xl">Failed to get the answers</p>
       )}
