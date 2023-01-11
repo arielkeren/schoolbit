@@ -36,3 +36,10 @@ export interface ClassroomInterface {
   color: string;
   classroomID: string;
 }
+
+export interface GradeInterface {
+  assignmentName: string;
+  grade: string;
+  message: string;
+  assignmentID: string;
+}

@@ -4,7 +4,11 @@ import { useEffect, useState, useCallback } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth, database } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-import { ClassroomInterface, AssignmentInterface } from "../types";
+import {
+  ClassroomInterface,
+  AssignmentInterface,
+  GradeInterface,
+} from "../types";
 import Header from "../components/general/Header";
 import { Poppins } from "@next/font/google";
 
@@ -22,6 +26,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [attendedClassrooms, setAttendedClassrooms] = useState<
     ClassroomInterface[]
   >([]);
+  const [grades, setGrades] = useState<GradeInterface[]>([]);
   const [assignments, setAssignments] = useState<AssignmentInterface[] | null>(
     null
   );
@@ -43,10 +48,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
       const userDocumentReference = doc(database, `users/${user.uid}`);
       const userDocumentSnapshot = await getDoc(userDocumentReference);
 
-      setOwnedClassrooms(userDocumentSnapshot.data()?.ownedClassrooms ?? []);
-      setAttendedClassrooms(
-        userDocumentSnapshot.data()?.attendedClassrooms ?? []
-      );
+      const data = userDocumentSnapshot.data();
+
+      setOwnedClassrooms(data?.ownedClassrooms ?? []);
+      setAttendedClassrooms(data?.attendedClassrooms ?? []);
+      setGrades(data?.grades ?? []);
     };
 
     getUserData();
@@ -72,6 +78,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         {...pageProps}
         ownedClassrooms={ownedClassrooms}
         attendedClassrooms={attendedClassrooms}
+        grades={grades}
         assignments={assignments}
         ownerID={ownerID}
         changeAssignments={changeAssignments}

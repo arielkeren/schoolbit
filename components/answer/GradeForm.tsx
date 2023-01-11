@@ -2,7 +2,7 @@ import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { database } from "../../firebaseConfig";
 import { useRouter } from "next/router";
-import { AssignmentInterface } from "../../types";
+import { AssignmentInterface, GradeInterface } from "../../types";
 
 const GradeForm: React.FC = () => {
   const [grade, setGrade] = useState("");
@@ -26,6 +26,8 @@ const GradeForm: React.FC = () => {
   };
 
   const sendGrade = async () => {
+    if (typeof assignmentID !== "string") return;
+
     const classroomDocumentReference = doc(
       database,
       `classrooms/${classroomID}`
@@ -65,7 +67,7 @@ const GradeForm: React.FC = () => {
     if (!assignment) return;
 
     const userDocumentReference = doc(database, `users/${studentID}`);
-    const newGrade = {
+    const newGrade: GradeInterface = {
       assignmentName: assignment.name,
       grade,
       message,
