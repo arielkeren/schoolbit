@@ -58,7 +58,7 @@ const GradeForm: React.FC = () => {
         assignments,
       });
     } catch {
-      alert("Failed to set the answer's state to checked");
+      alert("Failed to mark the answer as checked");
       return;
     }
 
@@ -66,10 +66,10 @@ const GradeForm: React.FC = () => {
 
     const userDocumentReference = doc(database, `users/${studentID}`);
     const newGrade = {
-      name: assignment.name,
+      assignmentName: assignment.name,
       grade,
       message,
-      id: assignmentID,
+      assignmentID,
     };
 
     try {
