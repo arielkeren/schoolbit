@@ -2,7 +2,7 @@ import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { database } from "../../firebaseConfig";
 import { useRouter } from "next/router";
-import { AssignmentInterface, GradeInterface } from "../../types";
+import { AssignmentInterface, GradeInterface } from "../../types/types";
 
 const GradeForm: React.FC = () => {
   const [grade, setGrade] = useState("");

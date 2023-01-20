@@ -1,27 +1,42 @@
-import { AssignmentInterface } from "../../types";
+import { useRouter } from "next/router";
+import useAppContext from "../../hooks/useAppContext";
 import Assignment from "./Assignment";
 
-interface Props {
-  assignments: AssignmentInterface[];
-  classroomID: string;
-  isOwner: boolean;
-}
+const AssignmentList: React.FC = () => {
+  const { user, classroom } = useAppContext();
 
-const AssignmentList: React.FC<Props> = ({
-  assignments,
-  classroomID,
-  isOwner,
-}) => (
-  <div className="flex flex-col gap-2 m-3">
-    {assignments.map((assignment) => (
-      <Assignment
-        assignment={assignment}
-        classroomID={classroomID}
-        isOwner={isOwner}
-        key={assignment.id}
-      />
-    ))}
-  </div>
-);
+  const router = useRouter();
+  const { classroomID } = router.query;
+
+  const ownerID = classroom?.ownerID;
+  const isOwner = user?.uid === ownerID;
+
+  return (
+    <>
+      {classroom && typeof classroomID === "string" ? (
+        <>
+          {classroom.assignments.length !== 0 ? (
+            <div className="flex flex-col gap-2 m-3">
+              {classroom.assignments.map((assignment) => (
+                <Assignment
+                  assignment={assignment}
+                  classroomID={classroomID}
+                  isOwner={isOwner}
+                  key={assignment.id}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-2xl">
+              Looks like there are no assignments yet
+            </p>
+          )}
+        </>
+      ) : (
+        <p className="text-center text-2xl">Failed to load the assignments</p>
+      )}
+    </>
+  );
+};
 
 export default AssignmentList;

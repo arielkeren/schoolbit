@@ -1,26 +1,33 @@
+import useAppContext from "../../hooks/useAppContext";
 import Participant from "./Participant";
 import ParticipantTypeTitle from "./ParticipantTypeTitle";
 
-interface Props {
-  students: string[];
-}
+const StudentList: React.FC = () => {
+  const { classroom } = useAppContext();
 
-const StudentList: React.FC<Props> = ({ students }) => (
-  <>
-    <ParticipantTypeTitle title="Students" />
+  return (
+    <>
+      <ParticipantTypeTitle title="Students" />
 
-    {students.length === 0 ? (
-      <p className="text-gray-500 font-bold text-2xl text-center">
-        There are no students currently
-      </p>
-    ) : (
-      <>
-        {students.map((student, index) => (
-          <Participant name={student} key={index} />
-        ))}
-      </>
-    )}
-  </>
-);
+      {classroom ? (
+        <>
+          {classroom.participants.length > 0 ? (
+            <>
+              {classroom.participants.map((participant, index) => (
+                <Participant name={participant} key={index} />
+              ))}
+            </>
+          ) : (
+            <p className="text-gray-500 font-bold text-2xl text-center">
+              There are no students currently
+            </p>
+          )}
+        </>
+      ) : (
+        <p className="text-gray-500 font-bold text-2xl text-center">Loading</p>
+      )}
+    </>
+  );
+};
 
 export default StudentList;

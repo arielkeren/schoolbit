@@ -1,28 +1,23 @@
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { useRouter } from "next/router";
 import { auth, database } from "../../firebaseConfig";
-import { ClassroomInterface, RequestInterface } from "../../types";
+import useAppContext from "../../hooks/useAppContext";
+import { ClassroomInterface, RequestInterface } from "../../types/types";
 
 interface Props {
   request: RequestInterface;
-  requests: RequestInterface[];
-  classroomID: string;
-  classroomName: string;
-  ownerName: string;
-  description: string;
-  color: string;
 }
 
-const Request: React.FC<Props> = ({
-  request,
-  requests,
-  classroomID,
-  classroomName,
-  ownerName,
-  description,
-  color,
-}) => {
+const Request: React.FC<Props> = ({ request }) => {
+  const { classroom } = useAppContext();
+
+  const router = useRouter();
+  const { classroomID } = router.query;
+
   const acceptRequest = async () => {
-    const newRequests = requests.filter(
+    if (!classroom || typeof classroomID !== "string") return;
+
+    const newRequests = classroom.requests.filter(
       (currentRequest) => currentRequest.senderID !== request.senderID
     );
 
@@ -43,10 +38,10 @@ const Request: React.FC<Props> = ({
 
     const newAttendedClassroom: ClassroomInterface = {
       classroomID,
-      classroomName,
-      ownerName,
-      description,
-      color,
+      classroomName: classroom.classroomName,
+      ownerName: classroom.ownerName,
+      description: classroom.description,
+      color: classroom.color,
     };
 
     const userDocumentReference = doc(database, `users/${request.senderID}`);
@@ -65,7 +60,9 @@ const Request: React.FC<Props> = ({
   };
 
   const removeRequest = async () => {
-    const newRequests = requests.filter(
+    if (!classroom) return;
+
+    const newRequests = classroom.requests.filter(
       (currentRequest) => currentRequest.senderID !== request.senderID
     );
 

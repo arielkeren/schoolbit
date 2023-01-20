@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ClassroomInterface } from "../../types";
+import { ClassroomInterface } from "../../types/types";
 
 interface Props {
   classroom: ClassroomInterface;

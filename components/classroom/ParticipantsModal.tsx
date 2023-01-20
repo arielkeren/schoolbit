@@ -3,16 +3,10 @@ import Owner from "./Owner";
 import StudentList from "./StudentList";
 
 interface Props {
-  participants: string[];
-  ownerName: string;
   closeParticipantsModal: () => void;
 }
 
-const ParticipantsModal: React.FC<Props> = ({
-  participants,
-  ownerName,
-  closeParticipantsModal,
-}) => {
+const ParticipantsModal: React.FC<Props> = ({ closeParticipantsModal }) => {
   const stopPropagation = (event: React.MouseEvent<HTMLDivElement>) =>
     event.stopPropagation();
 
@@ -35,11 +29,11 @@ const ParticipantsModal: React.FC<Props> = ({
           <IoMdClose className="text-4xl text-slate-500 hover:text-slate-400 transition-colors" />
         </button>
 
-        <Owner ownerName={ownerName} />
+        <Owner />
 
         <hr className="border-2 border-slate-400 my-5" />
 
-        <StudentList students={participants} />
+        <StudentList />
       </div>
     </div>
   );

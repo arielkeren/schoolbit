@@ -1,67 +1,57 @@
-import { doc, getDoc } from "firebase/firestore";
-import { useState, useEffect } from "react";
-import { database } from "../../../../../../firebaseConfig";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { AssignmentInterface } from "../../../../../../types";
+import { AssignmentInterface } from "../../../../../../types/types";
 import Title from "../../../../../../components/general/Title";
 import CodeEditor from "../../../../../../components/general/CodeEditor";
 import GradeForm from "../../../../../../components/answer/GradeForm";
 import ScrollButton from "../../../../../../components/answer/ScrollButton";
 import Head from "next/head";
+import useAppContext from "../../../../../../hooks/useAppContext";
 
 const AnswerPage: React.FC = () => {
-  const [studentName, setStudentName] = useState<string | null>(null);
-  const [submittedCode, setSubmittedCode] = useState<string | null>(null);
+  const { classroom, getClassroom } = useAppContext();
 
   const router = useRouter();
   const { classroomID, assignmentID, studentID } = router.query;
 
   useEffect(() => {
-    const getAnswer = async () => {
-      const classroomDocumentReference = doc(
-        database,
-        `classrooms/${classroomID}`
-      );
+    if (typeof classroomID === "string") getClassroom(classroomID);
+  }, [getClassroom, classroomID]);
 
-      try {
-        const classroomDocumentSnapshot = await getDoc(
-          classroomDocumentReference
-        );
-        const data = classroomDocumentSnapshot.data();
+  if (!classroom)
+    return (
+      <>
+        <Head>
+          <title>Answer Not Found | SchoolBit</title>
+        </Head>
 
-        const assignments: AssignmentInterface[] = data?.assignments;
-        const assignment = assignments.find(
-          (currentAssignment) => currentAssignment.id === assignmentID
-        );
+        <Title title="Answer Not Found" />
+      </>
+    );
 
-        const answers = assignment?.answers;
-        const answer = answers?.find(
-          (currentAnswer) => currentAnswer.senderID === studentID
-        );
+  const assignments: AssignmentInterface[] = classroom?.assignments;
+  const assignment = assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
 
-        setStudentName(answer?.senderName ?? null);
-        setSubmittedCode(answer?.code ?? null);
-      } catch {
-        alert("Failed to get the answer");
-      }
-    };
-
-    getAnswer();
-  }, [classroomID, assignmentID, studentID]);
+  const answers = assignment?.answers;
+  const answer = answers?.find(
+    (currentAnswer) => currentAnswer.senderID === studentID
+  );
 
   return (
     <>
-      {studentName && submittedCode ? (
+      {answer?.senderName && answer?.code ? (
         <>
           <Head>
-            <title>{studentName}&apos;s Answer | SchoolBit</title>
+            <title>{answer.senderName}&apos;s Answer | SchoolBit</title>
           </Head>
 
-          <Title title={`${studentName}'s Answer`} />
+          <Title title={`${answer.senderName}'s Answer`} />
 
           <div className="mb-14">
             <CodeEditor
-              code={submittedCode}
+              code={answer.code}
               height="calc(100vh - 136px - 48px - 100px)"
               width="95vw"
             />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnswerInterface } from "../../types";
+import { AnswerInterface } from "../../types/types";
 import CodeEditor from "../general/CodeEditor";
 import { FaPenAlt } from "react-icons/fa";
 import Link from "next/link";

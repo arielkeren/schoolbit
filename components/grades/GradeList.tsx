@@ -1,17 +1,21 @@
-import { GradeInterface } from "../../types";
+import useAppContext from "../../hooks/useAppContext";
 import Grade from "./Grade";
 
-interface Props {
-  grades: GradeInterface[];
-}
+const GradeList: React.FC = () => {
+  const { grades } = useAppContext();
 
-const GradeList: React.FC<Props> = ({ grades }) => {
   return (
-    <div className="flex flex-col gap-1 m-3">
-      {grades.map((grade) => (
-        <Grade grade={grade} key={grade.assignmentID} />
-      ))}
-    </div>
+    <>
+      {grades && grades.length !== 0 ? (
+        <div className="flex flex-col gap-1 m-3">
+          {grades.map((grade) => (
+            <Grade grade={grade} key={grade.assignmentID} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-2xl">You have no grades currently</p>
+      )}
+    </>
   );
 };
 

@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
 import { database } from "../../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { AssignmentInterface } from "../../types";
+import { AssignmentInterface, ClassroomDataInterface } from "../../types/types";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
+import useAppContext from "../../hooks/useAppContext";
 
-interface Props {
-  assignments: AssignmentInterface[];
-  changeAssignments: (assignmentArray: AssignmentInterface[]) => void;
-}
+const EditAssignmentForm: React.FC = () => {
+  const { classroom, changeClassroom } = useAppContext();
 
-const EditAssignmentForm: React.FC<Props> = ({
-  assignments,
-  changeAssignments,
-}) => {
   const [name, setName] = useState<string | null>(null);
   const [question, setQuestion] = useState<string | null>(null);
   const [date, setDate] = useState<Date | null>(null);
@@ -35,15 +30,15 @@ const EditAssignmentForm: React.FC<Props> = ({
 
         const data = classroomDocumentSnapshot.data();
 
-        changeAssignments(data?.assignments ?? []);
+        changeClassroom(data as ClassroomDataInterface);
       } catch {
         alert("Failed to load the assignment");
       }
     };
 
-    if (!assignments) getAssignmentData();
+    if (!classroom) getAssignmentData();
     else {
-      const assignment = assignments.find(
+      const assignment = classroom.assignments.find(
         (currentAssignment) => currentAssignment.id === assignmentID
       );
 
@@ -61,7 +56,7 @@ const EditAssignmentForm: React.FC<Props> = ({
         setDate(dateFormat);
       }
     }
-  }, [classroomID, assignmentID, assignments, changeAssignments]);
+  }, []);
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -70,7 +65,14 @@ const EditAssignmentForm: React.FC<Props> = ({
     setQuestion(event.target.value);
 
   const editAssignment = async () => {
-    if (!name || !question || !date || typeof assignmentID !== "string") return;
+    if (
+      !name ||
+      !question ||
+      !date ||
+      typeof assignmentID !== "string" ||
+      !classroom
+    )
+      return;
 
     const noUnnecessarySpacesName = name.trim().replace(/\s{2,}/g, " ");
     if (noUnnecessarySpacesName === "" || question.replaceAll(" ", "") === "")
@@ -93,11 +95,11 @@ const EditAssignmentForm: React.FC<Props> = ({
       id: assignmentID,
     };
 
-    const assignmentIndex = assignments.findIndex(
+    const assignmentIndex = classroom.assignments.findIndex(
       (currentAssignment) => currentAssignment.id === assignmentID
     );
 
-    const newAssignments = [...assignments];
+    const newAssignments = [...classroom.assignments];
     newAssignments[assignmentIndex] = newAssignment;
 
     try {
@@ -108,7 +110,7 @@ const EditAssignmentForm: React.FC<Props> = ({
       alert("Failed to edit the assignment");
     }
 
-    changeAssignments(newAssignments);
+    changeClassroom({ ...classroom, assignments: newAssignments });
     router.push(`/classrooms/${classroomID}/assignments/${assignmentID}`);
   };
 

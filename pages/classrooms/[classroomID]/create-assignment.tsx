@@ -2,13 +2,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Title from "../../../components/general/Title";
 import CreateAssignmentForm from "../../../components/create-assignment/CreateAssignmentForm";
-import { ClassroomInterface } from "../../../types";
+import useAppContext from "../../../hooks/useAppContext";
 
-interface Props {
-  ownedClassrooms: ClassroomInterface[];
-}
+const CreateAssignmentPage: React.FC = () => {
+  const { ownedClassrooms } = useAppContext();
 
-const CreateAssignmentPage: React.FC<Props> = ({ ownedClassrooms }) => {
   const router = useRouter();
   const { classroomID } = router.query;
 
@@ -21,7 +19,7 @@ const CreateAssignmentPage: React.FC<Props> = ({ ownedClassrooms }) => {
       <Title title="Create Assignment" />
 
       {typeof classroomID === "string" &&
-      ownedClassrooms.some(
+      ownedClassrooms?.some(
         (classroom) => classroom.classroomID === classroomID
       ) ? (
         <CreateAssignmentForm classroomID={classroomID} />

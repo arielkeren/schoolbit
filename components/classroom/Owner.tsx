@@ -1,16 +1,17 @@
+import useAppContext from "../../hooks/useAppContext";
 import Participant from "./Participant";
 import ParticipantTypeTitle from "./ParticipantTypeTitle";
 
-interface Props {
-  ownerName: string;
-}
+const Owner: React.FC = () => {
+  const { classroom } = useAppContext();
 
-const Owner: React.FC<Props> = ({ ownerName }) => (
-  <>
-    <ParticipantTypeTitle title="Teacher" />
+  return (
+    <>
+      <ParticipantTypeTitle title="Teacher" />
 
-    <Participant name={ownerName} />
-  </>
-);
+      <Participant name={classroom?.ownerName ?? "Loading"} />
+    </>
+  );
+};
 
 export default Owner;

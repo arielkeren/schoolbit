@@ -3,28 +3,26 @@ import { MdEdit } from "react-icons/md";
 import { TbChecklist } from "react-icons/tb";
 import Title from "../general/Title";
 import { useRouter } from "next/router";
-import { AssignmentInterface } from "../../types";
 import { doc, updateDoc } from "firebase/firestore";
-import { auth, database } from "../../firebaseConfig";
+import { database } from "../../firebaseConfig";
 import Link from "next/link";
+import useAppContext from "../../hooks/useAppContext";
 
-interface Props {
-  assignments: AssignmentInterface[];
-  ownerID: string;
-}
+const AssignmentHeader: React.FC = () => {
+  const { user, classroom, changeClassroom } = useAppContext();
 
-const AssignmentHeader: React.FC<Props> = ({ assignments, ownerID }) => {
   const router = useRouter();
   const { classroomID, assignmentID } = router.query;
 
-  const isOwner = auth.currentUser?.uid === ownerID;
-
-  const assignment =
-    assignments.find(
-      (currentAssignmnet) => currentAssignmnet.id === assignmentID
-    ) ?? null;
+  const isOwner = user?.uid === classroom?.ownerID;
+  const assignments = classroom?.assignments;
+  const assignment = assignments?.find(
+    (currentAssignmnet) => currentAssignmnet.id === assignmentID
+  );
 
   const removeAssignment = async () => {
+    if (!assignments) return;
+
     const newAssignments = assignments.filter(
       (assignment) => assignment.id !== assignmentID
     );
@@ -38,11 +36,14 @@ const AssignmentHeader: React.FC<Props> = ({ assignments, ownerID }) => {
       await updateDoc(classroomDocumentReference, {
         assignments: newAssignments,
       });
-
-      router.push(`/classrooms/${classroomID}`);
     } catch {
       alert("Failed to remove the assignment");
+      return;
     }
+
+    changeClassroom({ ...classroom, assignments: newAssignments });
+
+    router.push(`/classrooms/${classroomID}`);
   };
 
   return (

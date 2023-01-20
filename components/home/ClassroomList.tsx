@@ -1,4 +1,4 @@
-import { ClassroomInterface } from "../../types";
+import { ClassroomInterface } from "../../types/types";
 import AddClassroom from "./AddClassroom";
 import Classroom from "./Classroom";
 

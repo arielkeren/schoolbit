@@ -1,16 +1,9 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { useEffect, useState, useCallback } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth, database } from "../firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
-import {
-  ClassroomInterface,
-  AssignmentInterface,
-  GradeInterface,
-} from "../types";
 import Header from "../components/general/Header";
 import { Poppins } from "@next/font/google";
+import AppContextProvider from "../context/AppContext";
+import ContextSetter from "../components/general/ContextSetter";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -18,75 +11,15 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const App: React.FC<AppProps> = ({ Component, pageProps }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [ownedClassrooms, setOwnedClassrooms] = useState<ClassroomInterface[]>(
-    []
-  );
-  const [attendedClassrooms, setAttendedClassrooms] = useState<
-    ClassroomInterface[]
-  >([]);
-  const [grades, setGrades] = useState<GradeInterface[]>([]);
-  const [assignments, setAssignments] = useState<AssignmentInterface[] | null>(
-    null
-  );
-  const [ownerID, setOwnerID] = useState<string | null>(null);
-
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-
-    if (!currentUser) {
-      setOwnedClassrooms([]);
-      setAttendedClassrooms([]);
-    }
-  });
-
-  useEffect(() => {
-    const getUserData = async () => {
-      if (!user) return;
-
-      const userDocumentReference = doc(database, `users/${user.uid}`);
-      const userDocumentSnapshot = await getDoc(userDocumentReference);
-
-      const data = userDocumentSnapshot.data();
-
-      setOwnedClassrooms(data?.ownedClassrooms ?? []);
-      setAttendedClassrooms(data?.attendedClassrooms ?? []);
-      setGrades(data?.grades ?? []);
-    };
-
-    getUserData();
-  }, [user]);
-
-  const changeAssignments = useCallback(
-    (assignmentArray: AssignmentInterface[]) => setAssignments(assignmentArray),
-    []
-  );
-
-  const changeOwnerID = useCallback(
-    (newOwnerID: string) => setOwnerID(newOwnerID),
-    []
-  );
-
-  const addOwnedClassroom = (newClassroom: ClassroomInterface) =>
-    setOwnedClassrooms([...ownedClassrooms, newClassroom]);
-
-  return (
-    <div className={poppins.className}>
-      <Header />
-      <Component
-        {...pageProps}
-        ownedClassrooms={ownedClassrooms}
-        attendedClassrooms={attendedClassrooms}
-        grades={grades}
-        assignments={assignments}
-        ownerID={ownerID}
-        changeAssignments={changeAssignments}
-        changeOwnerID={changeOwnerID}
-        addOwnedClassroom={addOwnedClassroom}
-      />
-    </div>
-  );
-};
+const App: React.FC<AppProps> = ({ Component, pageProps }) => (
+  <div className={poppins.className}>
+    <AppContextProvider>
+      <ContextSetter>
+        <Header />
+        <Component {...pageProps} />
+      </ContextSetter>
+    </AppContextProvider>
+  </div>
+);
 
 export default App;

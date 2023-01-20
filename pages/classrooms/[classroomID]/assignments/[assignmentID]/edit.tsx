@@ -1,20 +1,12 @@
 import Head from "next/head";
 import Title from "../../../../../components/general/Title";
 import EditAssignmentForm from "../../../../../components/edit-assignment/EditAssignmentForm";
-import { AssignmentInterface, ClassroomInterface } from "../../../../../types";
 import { useRouter } from "next/router";
+import useAppContext from "../../../../../hooks/useAppContext";
 
-interface Props {
-  ownedClassrooms: ClassroomInterface[];
-  assignments: AssignmentInterface[];
-  changeAssignments: (assignmentArray: AssignmentInterface[]) => void;
-}
+const EditAssignmentPage: React.FC = () => {
+  const { ownedClassrooms } = useAppContext();
 
-const EditAssignmentPage: React.FC<Props> = ({
-  ownedClassrooms,
-  assignments,
-  changeAssignments,
-}) => {
   const router = useRouter();
   const { classroomID } = router.query;
 
@@ -26,13 +18,10 @@ const EditAssignmentPage: React.FC<Props> = ({
 
       <Title title="Edit Assignment" />
 
-      {ownedClassrooms.some(
+      {ownedClassrooms?.some(
         (classroom) => classroom.classroomID === classroomID
       ) ? (
-        <EditAssignmentForm
-          assignments={assignments}
-          changeAssignments={changeAssignments}
-        />
+        <EditAssignmentForm />
       ) : (
         <p className="text-center text-2xl">
           Failed to get an assignment to edit

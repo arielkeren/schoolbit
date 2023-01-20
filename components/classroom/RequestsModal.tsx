@@ -1,26 +1,12 @@
 import { IoMdClose } from "react-icons/io";
-import { RequestInterface } from "../../types";
+import { RequestInterface } from "../../types/types";
 import RequestList from "./RequestList";
 
 interface Props {
-  requests: RequestInterface[];
   closeRequestsModal: () => void;
-  classroomID: string;
-  classroomName: string;
-  ownerName: string;
-  description: string;
-  color: string;
 }
 
-const RequestsModal: React.FC<Props> = ({
-  requests,
-  closeRequestsModal,
-  classroomID,
-  classroomName,
-  ownerName,
-  description,
-  color,
-}) => {
+const RequestsModal: React.FC<Props> = ({ closeRequestsModal }) => {
   const stopPropagation = (event: React.MouseEvent<HTMLDivElement>) =>
     event.stopPropagation();
 
@@ -39,14 +25,7 @@ const RequestsModal: React.FC<Props> = ({
         <button onClick={closeRequestsModal} className="absolute top-3 right-3">
           <IoMdClose className="text-4xl text-slate-500 hover:text-slate-400 transition-colors" />
         </button>
-        <RequestList
-          requests={requests}
-          classroomID={classroomID}
-          classroomName={classroomName}
-          ownerName={ownerName}
-          description={description}
-          color={color}
-        />
+        <RequestList />
       </div>
     </div>
   );

@@ -7,15 +7,14 @@ import {
 } from "firebase/firestore";
 import { useState } from "react";
 import { auth, database } from "../../firebaseConfig";
-import { ClassroomDataInterface, ClassroomInterface } from "../../types";
+import { ClassroomDataInterface, ClassroomInterface } from "../../types/types";
 import { HexColorPicker } from "react-colorful";
 import { useRouter } from "next/router";
+import useAppContext from "../../hooks/useAppContext";
 
-interface Props {
-  addOwnedClassroom: (newClassroom: ClassroomInterface) => void;
-}
+const CreateClassroomForm: React.FC = () => {
+  const { addOwnedClassroom } = useAppContext();
 
-const CreateClassroomForm: React.FC<Props> = ({ addOwnedClassroom }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState("#aabbcc");

@@ -7,17 +7,19 @@ import {
 } from "firebase/firestore";
 import { auth, database } from "../../firebaseConfig";
 import { useRouter } from "next/router";
-import { AnswerInterface, AssignmentInterface } from "../../types";
+import { AnswerInterface, AssignmentInterface } from "../../types/types";
+import useAppContext from "../../hooks/useAppContext";
 
 interface Props {
   code: string;
 }
 
 const SubmitButton: React.FC<Props> = ({ code }) => {
+  const { user } = useAppContext();
+
   const router = useRouter();
   const { classroomID, assignmentID } = router.query;
 
-  const user = auth.currentUser;
   const username = user?.displayName;
   const userID = user?.uid;
 

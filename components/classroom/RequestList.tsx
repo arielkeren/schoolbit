@@ -1,45 +1,32 @@
-import { RequestInterface } from "../../types";
+import useAppContext from "../../hooks/useAppContext";
 import Request from "./Request";
 
-interface Props {
-  requests: RequestInterface[];
-  classroomID: string;
-  classroomName: string;
-  ownerName: string;
-  description: string;
-  color: string;
-}
+const RequestList: React.FC = () => {
+  const { classroom } = useAppContext();
 
-const RequestList: React.FC<Props> = ({
-  requests,
-  classroomID,
-  classroomName,
-  ownerName,
-  description,
-  color,
-}) => (
-  <div className="flex flex-col gap-3">
-    {requests.length === 0 ? (
-      <p className="text-gray-500 font-bold text-2xl text-center">
-        There are no join requests currently
-      </p>
-    ) : (
-      <>
-        {requests.map((request, index) => (
-          <Request
-            request={request}
-            requests={requests}
-            classroomID={classroomID}
-            classroomName={classroomName}
-            ownerName={ownerName}
-            description={description}
-            color={color}
-            key={index}
-          />
-        ))}
-      </>
-    )}
-  </div>
-);
+  return (
+    <>
+      {classroom ? (
+        <div className="flex flex-col gap-3">
+          {classroom.requests.length > 0 ? (
+            <>
+              {classroom.requests.map((request, index) => (
+                <Request request={request} key={index} />
+              ))}
+            </>
+          ) : (
+            <p className="text-gray-500 font-bold text-2xl text-center">
+              There are no join requests currently
+            </p>
+          )}
+        </div>
+      ) : (
+        <p className="text-gray-500 font-bold text-2xl text-center">
+          Failed to get the requests
+        </p>
+      )}
+    </>
+  );
+};
 
 export default RequestList;

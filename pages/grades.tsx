@@ -1,13 +1,8 @@
 import Head from "next/head";
 import Title from "../components/general/Title";
 import GradeList from "../components/grades/GradeList";
-import { GradeInterface } from "../types";
 
-interface Props {
-  grades: GradeInterface[];
-}
-
-const GradesPage: React.FC<Props> = ({ grades }) => {
+const GradesPage: React.FC = () => {
   return (
     <>
       <Head>
@@ -16,7 +11,7 @@ const GradesPage: React.FC<Props> = ({ grades }) => {
 
       <Title title="Grades" />
 
-      <GradeList grades={grades} />
+      <GradeList />
     </>
   );
 };

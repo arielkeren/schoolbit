@@ -1,4 +1,4 @@
-import { GradeInterface } from "../../types";
+import { GradeInterface } from "../../types/types";
 
 interface Props {
   grade: GradeInterface;
