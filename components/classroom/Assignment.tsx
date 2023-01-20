@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { AssignmentInterface } from "../../types/types";
+import { IAssignment } from "../../types/types";
 
 interface Props {
-  assignment: AssignmentInterface;
+  assignment: IAssignment;
   classroomID: string;
   isOwner: boolean;
 }

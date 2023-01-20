@@ -2,26 +2,20 @@ import { User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { createContext, useState, ReactNode, useCallback } from "react";
 import { database } from "../firebaseConfig";
-import {
-  ClassroomDataInterface,
-  ClassroomInterface,
-  GradeInterface,
-} from "../types/types";
+import { IClassroomData, IClassroom, IGrade } from "../types/types";
 
 interface StateInterface {
   user: User | null;
-  classroom: ClassroomDataInterface | null;
-  ownedClassrooms: ClassroomInterface[] | null;
-  attendedClassrooms: ClassroomInterface[] | null;
-  grades: GradeInterface[] | null;
+  classroom: IClassroomData | null;
+  ownedClassrooms: IClassroom[] | null;
+  attendedClassrooms: IClassroom[] | null;
+  grades: IGrade[] | null;
   changeUser: (newUser: User | null) => void;
-  changeClassroom: (newClassroom: ClassroomDataInterface) => void;
-  changeOwnedClassrooms: (newOwnedClassrooms: ClassroomInterface[]) => void;
-  changeAttendedClassrooms: (
-    newAttendedClassrooms: ClassroomInterface[]
-  ) => void;
-  changeGrades: (newGrades: GradeInterface[]) => void;
-  addOwnedClassroom: (newOwnedClassroom: ClassroomInterface) => void;
+  changeClassroom: (newClassroom: IClassroomData) => void;
+  changeOwnedClassrooms: (newOwnedClassrooms: IClassroom[]) => void;
+  changeAttendedClassrooms: (IGrade: IClassroom[]) => void;
+  changeGrades: (newGrades: IGrade[]) => void;
+  addOwnedClassroom: (newOwnedClassroom: IClassroom) => void;
   getClassroom: (classroomID: string) => void;
 }
 
@@ -62,16 +56,14 @@ export const AppContext = createContext(defaultState);
 
 const AppContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [classroom, setClassroom] = useState<ClassroomDataInterface | null>(
+  const [classroom, setClassroom] = useState<IClassroomData | null>(null);
+  const [ownedClassrooms, setOwnedClassrooms] = useState<IClassroom[] | null>(
     null
   );
-  const [ownedClassrooms, setOwnedClassrooms] = useState<
-    ClassroomInterface[] | null
-  >(null);
   const [attendedClassrooms, setAttendedClassrooms] = useState<
-    ClassroomInterface[] | null
+    IClassroom[] | null
   >(null);
-  const [grades, setGrades] = useState<GradeInterface[] | null>(null);
+  const [grades, setGrades] = useState<IGrade[] | null>(null);
   const [currentClassroomID, setCurrentClassroomID] = useState<string | null>(
     null
   );
@@ -82,29 +74,29 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   );
 
   const changeClassroom = useCallback(
-    (newClassroom: ClassroomDataInterface) => setClassroom(newClassroom),
+    (newClassroom: IClassroomData) => setClassroom(newClassroom),
     []
   );
 
   const changeOwnedClassrooms = useCallback(
-    (newOwnedClassrooms: ClassroomInterface[]) =>
+    (newOwnedClassrooms: IClassroom[]) =>
       setOwnedClassrooms(newOwnedClassrooms),
     []
   );
 
   const changeAttendedClassrooms = useCallback(
-    (newAttendedClassrooms: ClassroomInterface[]) =>
+    (newAttendedClassrooms: IClassroom[]) =>
       setAttendedClassrooms(newAttendedClassrooms),
     []
   );
 
   const changeGrades = useCallback(
-    (newGrades: GradeInterface[]) => setGrades(newGrades),
+    (newGrades: IGrade[]) => setGrades(newGrades),
     []
   );
 
   const addOwnedClassroom = useCallback(
-    (newOwnedClassroom: ClassroomInterface) =>
+    (newOwnedClassroom: IClassroom) =>
       setOwnedClassrooms((previousOwnedClassrooms) => [
         ...(previousOwnedClassrooms ?? []),
         newOwnedClassroom,
@@ -134,7 +126,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
       );
       const data = classroomDocumentSnapshot.data();
 
-      changeClassroom(data as ClassroomDataInterface);
+      changeClassroom(data as IClassroomData);
 
       setCurrentClassroomID(classroomID);
     },

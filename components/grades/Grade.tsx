@@ -1,7 +1,7 @@
-import { GradeInterface } from "../../types/types";
+import { IGrade } from "../../types/types";
 
 interface Props {
-  grade: GradeInterface;
+  grade: IGrade;
 }
 
 const Grade: React.FC<Props> = ({ grade }) => {

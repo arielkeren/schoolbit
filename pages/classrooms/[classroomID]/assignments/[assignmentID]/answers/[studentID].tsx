@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { AssignmentInterface } from "../../../../../../types/types";
+import { IAssignment } from "../../../../../../types/types";
 import Title from "../../../../../../components/general/Title";
 import CodeEditor from "../../../../../../components/general/CodeEditor";
 import GradeForm from "../../../../../../components/answer/GradeForm";
@@ -29,7 +29,7 @@ const AnswerPage: React.FC = () => {
       </>
     );
 
-  const assignments: AssignmentInterface[] = classroom?.assignments;
+  const assignments: IAssignment[] = classroom?.assignments;
   const assignment = assignments.find(
     (currentAssignment) => currentAssignment.id === assignmentID
   );

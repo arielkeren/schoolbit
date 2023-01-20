@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { database } from "../../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { AssignmentInterface, ClassroomDataInterface } from "../../types/types";
+import { IAssignment, IClassroomData } from "../../types/types";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
 import useAppContext from "../../hooks/useAppContext";
@@ -30,7 +30,7 @@ const EditAssignmentForm: React.FC = () => {
 
         const data = classroomDocumentSnapshot.data();
 
-        changeClassroom(data as ClassroomDataInterface);
+        changeClassroom(data as IClassroomData);
       } catch {
         alert("Failed to load the assignment");
       }
@@ -87,7 +87,7 @@ const EditAssignmentForm: React.FC = () => {
       `classrooms/${classroomID}`
     );
 
-    const newAssignment: AssignmentInterface = {
+    const newAssignment: IAssignment = {
       name: noUnnecessarySpacesName,
       question,
       until: shortenedDate,

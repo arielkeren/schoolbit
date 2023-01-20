@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import useAppContext from "../../hooks/useAppContext";
-import { AnswerInterface } from "../../types/types";
 import Answer from "./Answer";
 
 const AnswerList: React.FC = () => {

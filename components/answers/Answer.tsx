@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnswerInterface } from "../../types/types";
+import { IAnswer } from "../../types/types";
 import CodeEditor from "../general/CodeEditor";
 import { FaPenAlt } from "react-icons/fa";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { ImCheckmark } from "react-icons/im";
 
 interface Props {
-  answer: AnswerInterface;
+  answer: IAnswer;
 }
 
 const Answer: React.FC<Props> = ({ answer }) => {

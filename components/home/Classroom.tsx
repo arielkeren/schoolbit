@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { ClassroomInterface } from "../../types/types";
+import { IClassroom } from "../../types/types";
 
 interface Props {
-  classroom: ClassroomInterface;
+  classroom: IClassroom;
 }
 
 const Classroom: React.FC<Props> = ({ classroom }) => (

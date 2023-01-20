@@ -2,10 +2,10 @@ import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { auth, database } from "../../firebaseConfig";
 import useAppContext from "../../hooks/useAppContext";
-import { ClassroomInterface, RequestInterface } from "../../types/types";
+import { IClassroom, IRequest } from "../../types/types";
 
 interface Props {
-  request: RequestInterface;
+  request: IRequest;
 }
 
 const Request: React.FC<Props> = ({ request }) => {
@@ -36,7 +36,7 @@ const Request: React.FC<Props> = ({ request }) => {
       return;
     }
 
-    const newAttendedClassroom: ClassroomInterface = {
+    const newAttendedClassroom: IClassroom = {
       classroomID,
       classroomName: classroom.classroomName,
       ownerName: classroom.ownerName,

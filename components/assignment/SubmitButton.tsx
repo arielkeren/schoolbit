@@ -5,9 +5,9 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-import { auth, database } from "../../firebaseConfig";
+import { database } from "../../firebaseConfig";
 import { useRouter } from "next/router";
-import { AnswerInterface, AssignmentInterface } from "../../types/types";
+import { IAnswer, IAssignment } from "../../types/types";
 import useAppContext from "../../hooks/useAppContext";
 
 interface Props {
@@ -40,12 +40,12 @@ const SubmitButton: React.FC<Props> = ({ code }) => {
     }
 
     const data = classroomDocumentSnapshot.data();
-    const assignments: AssignmentInterface[] = data?.assignments;
+    const assignments: IAssignment[] = data?.assignments;
     const assignment = assignments.find(
       (currentAssignment) => currentAssignment.id === assignmentID
     );
 
-    const newAnswer: AnswerInterface = {
+    const newAnswer: IAnswer = {
       code,
       senderName: username,
       senderID: userID,

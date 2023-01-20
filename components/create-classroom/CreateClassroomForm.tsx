@@ -7,7 +7,7 @@ import {
 } from "firebase/firestore";
 import { useState } from "react";
 import { auth, database } from "../../firebaseConfig";
-import { ClassroomDataInterface, ClassroomInterface } from "../../types/types";
+import { IClassroomData, IClassroom } from "../../types/types";
 import { HexColorPicker } from "react-colorful";
 import { useRouter } from "next/router";
 import useAppContext from "../../hooks/useAppContext";
@@ -34,7 +34,7 @@ const CreateClassroomForm: React.FC = () => {
 
     if (!user?.displayName) return;
 
-    const classroomData: ClassroomDataInterface = {
+    const classroomData: IClassroomData = {
       classroomName: name,
       description,
       color,
@@ -55,7 +55,7 @@ const CreateClassroomForm: React.FC = () => {
       return;
     }
 
-    const userClassroomData: ClassroomInterface = {
+    const userClassroomData: IClassroom = {
       classroomName: name,
       ownerName: user.displayName,
       description,

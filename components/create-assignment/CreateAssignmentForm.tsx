@@ -2,7 +2,7 @@ import { useState } from "react";
 import { database } from "../../firebaseConfig";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
-import { AssignmentInterface } from "../../types/types";
+import { IAssignment } from "../../types/types";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
 
@@ -39,7 +39,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
       `classrooms/${classroomID}`
     );
 
-    const assignmentData: AssignmentInterface = {
+    const assignmentData: IAssignment = {
       name: noUnnecessarySpacesName,
       question,
       until: shortenedDate,

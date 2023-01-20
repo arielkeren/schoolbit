@@ -1,9 +1,9 @@
-import { ClassroomInterface } from "../../types/types";
+import { IClassroom } from "../../types/types";
 import AddClassroom from "./AddClassroom";
 import Classroom from "./Classroom";
 
 interface Props {
-  classrooms: ClassroomInterface[];
+  classrooms: IClassroom[];
   addClassroomLink: string;
 }
 

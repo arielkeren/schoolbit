@@ -1,7 +1,7 @@
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { auth, database } from "../../firebaseConfig";
-import { RequestInterface } from "../../types/types";
+import { IRequest } from "../../types/types";
 import { useRouter } from "next/router";
 
 const JoinClassroomForm: React.FC = () => {
@@ -21,7 +21,7 @@ const JoinClassroomForm: React.FC = () => {
       `classrooms/${classroomCode}`
     );
 
-    const newJoinRequest: RequestInterface = {
+    const newJoinRequest: IRequest = {
       senderName: user.displayName,
       senderID: user.uid,
     };
