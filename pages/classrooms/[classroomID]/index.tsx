@@ -10,12 +10,18 @@ import ParticipantsModal from "../../../components/classroom/ParticipantsModal";
 import ClassroomCodeText from "../../../components/classroom/ClassroomCodeText";
 import RequestsModal from "../../../components/classroom/RequestsModal";
 import useAppContext from "../../../hooks/useAppContext";
+import useModal from "../../../hooks/useModal";
 
 const ClassroomPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
-  const [isParticipantsModalOpen, setIsParticipantsModalOpen] = useState(false);
-  const [isRequestsModalOpen, setIsRequestsModalOpen] = useState(false);
+  const [
+    isParticipantsModalOpen,
+    openParticipantsModal,
+    closeParticipantsModal,
+  ] = useModal();
+  const [isRequestsModalOpen, openRequestsModal, closeRequestsModal] =
+    useModal();
 
   const router = useRouter();
   const { classroomID } = router.query;
@@ -23,14 +29,6 @@ const ClassroomPage: React.FC = () => {
   useEffect(() => {
     if (typeof classroomID === "string") getClassroom(classroomID);
   }, [getClassroom, classroomID]);
-
-  const openRequestsModal = () => setIsRequestsModalOpen(true);
-
-  const closeRequestsModal = () => setIsRequestsModalOpen(false);
-
-  const openParticipantsModal = () => setIsParticipantsModalOpen(true);
-
-  const closeParticipantsModal = () => setIsParticipantsModalOpen(false);
 
   return (
     <>
