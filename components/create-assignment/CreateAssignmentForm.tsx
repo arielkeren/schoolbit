@@ -2,20 +2,20 @@ import { useState } from "react";
 import { database } from "../../firebaseConfig";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
-import { IAssignment } from "../../types/types";
+import { IAssignment, IClassroomData } from "../../types/types";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
+import useAppContext from "../../hooks/useAppContext";
 
-interface Props {
-  classroomID: string;
-}
+const CreateAssignmentForm: React.FC = () => {
+  const { classroom, changeClassroom } = useAppContext();
 
-const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
   const [date, setDate] = useState(new Date());
 
   const router = useRouter();
+  const { classroomID } = router.query;
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -25,7 +25,11 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
 
   const createAssignment = async () => {
     const noUnnecessarySpacesName = name.trim().replace(/\s{2,}/g, " ");
-    if (noUnnecessarySpacesName === "" || question.replaceAll(" ", "") === "")
+    if (
+      noUnnecessarySpacesName === "" ||
+      question.replaceAll(" ", "") === "" ||
+      !classroom
+    )
       return;
 
     const assignmentID = uuidv4();
@@ -39,7 +43,7 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
       `classrooms/${classroomID}`
     );
 
-    const assignmentData: IAssignment = {
+    const newAssignment: IAssignment = {
       name: noUnnecessarySpacesName,
       question,
       until: shortenedDate,
@@ -49,13 +53,19 @@ const CreateAssignmentForm: React.FC<Props> = ({ classroomID }) => {
 
     try {
       await updateDoc(classroomDocumentReference, {
-        assignments: arrayUnion(assignmentData),
+        assignments: arrayUnion(newAssignment),
       });
-
-      router.push(`/classrooms/${classroomID}`);
     } catch {
       alert("Failed to create the assignment");
+      return;
     }
+
+    changeClassroom({
+      ...classroom,
+      assignments: [...classroom.assignments, newAssignment],
+    });
+
+    router.push(`/classrooms/${classroomID}`);
   };
 
   const validateAssignment = (event: React.MouseEvent<HTMLInputElement>) => {

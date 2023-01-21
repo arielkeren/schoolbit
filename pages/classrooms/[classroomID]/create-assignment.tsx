@@ -18,11 +18,10 @@ const CreateAssignmentPage: React.FC = () => {
 
       <Title title="Create Assignment" />
 
-      {typeof classroomID === "string" &&
-      ownedClassrooms?.some(
+      {ownedClassrooms?.some(
         (classroom) => classroom.classroomID === classroomID
       ) ? (
-        <CreateAssignmentForm classroomID={classroomID} />
+        <CreateAssignmentForm />
       ) : (
         <p className="text-center text-2xl">
           Failed to get a possible classroom to add an assignment to
