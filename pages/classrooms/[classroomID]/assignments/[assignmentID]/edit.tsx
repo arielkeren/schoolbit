@@ -3,12 +3,17 @@ import Title from "../../../../../components/general/Title";
 import EditAssignmentForm from "../../../../../components/edit-assignment/EditAssignmentForm";
 import { useRouter } from "next/router";
 import useAppContext from "../../../../../hooks/useAppContext";
+import { useEffect } from "react";
 
 const EditAssignmentPage: React.FC = () => {
-  const { ownedClassrooms } = useAppContext();
+  const { ownedClassrooms, getClassroom } = useAppContext();
 
   const router = useRouter();
-  const { classroomID } = router.query;
+  const { classroomID } = router.query as { classroomID: string };
+
+  useEffect(() => {
+    getClassroom(classroomID);
+  }, [classroomID, getClassroom]);
 
   return (
     <>

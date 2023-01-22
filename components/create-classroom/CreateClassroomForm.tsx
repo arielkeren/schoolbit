@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import useAppContext from "../../hooks/useAppContext";
 
 const CreateClassroomForm: React.FC = () => {
-  const { addOwnedClassroom } = useAppContext();
+  const { user, addOwnedClassroom } = useAppContext();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -29,8 +29,6 @@ const CreateClassroomForm: React.FC = () => {
 
   const createClassroom = async () => {
     const classroomsCollectionReference = collection(database, "classrooms");
-
-    const user = auth.currentUser;
 
     if (!user?.displayName) return;
 
@@ -91,6 +89,7 @@ const CreateClassroomForm: React.FC = () => {
 
   const preventDefault = (event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
+
     validateData();
   };
 
@@ -145,9 +144,9 @@ const CreateClassroomForm: React.FC = () => {
 
             <input
               type="submit"
-              value="CREATE"
+              value="Create"
               onClick={preventDefault}
-              className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl cursor-pointer hover:bg-gray-800 transition-colors"
+              className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl uppercase cursor-pointer hover:bg-gray-800 transition-colors"
             />
           </div>
         </form>

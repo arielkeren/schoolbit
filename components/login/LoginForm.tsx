@@ -4,8 +4,11 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import useAppContext from "../../hooks/useAppContext";
 
 const LoginForm: React.FC = () => {
+  const { user } = useAppContext();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -47,7 +50,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <>
-      {!auth.currentUser ? (
+      {!user ? (
         <form className="flex flex-col items-center">
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">

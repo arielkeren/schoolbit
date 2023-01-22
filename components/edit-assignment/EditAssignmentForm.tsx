@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { database } from "../../firebaseConfig";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { IAssignment, IClassroomData } from "../../types/types";
+import { doc, updateDoc } from "firebase/firestore";
+import { IAssignment } from "../../types/types";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
 import useAppContext from "../../hooks/useAppContext";
@@ -9,54 +9,33 @@ import useAppContext from "../../hooks/useAppContext";
 const EditAssignmentForm: React.FC = () => {
   const { classroom, changeClassroom } = useAppContext();
 
-  const [name, setName] = useState<string | null>(null);
-  const [question, setQuestion] = useState<string | null>(null);
-  const [date, setDate] = useState<Date | null>(null);
-
   const router = useRouter();
-  const { classroomID, assignmentID } = router.query;
+  const { classroomID, assignmentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+  };
+
+  const [name, setName] = useState("");
+  const [question, setQuestion] = useState("");
+  const [date, setDate] = useState(new Date());
 
   useEffect(() => {
-    const getAssignmentData = async () => {
-      const classroomDocumentReference = doc(
-        database,
-        `classrooms/${classroomID}`
-      );
+    const assignment = classroom?.assignments.find(
+      (currentAssignment) => currentAssignment.id === assignmentID
+    );
 
-      try {
-        const classroomDocumentSnapshot = await getDoc(
-          classroomDocumentReference
-        );
+    const currentYear = new Date().getFullYear();
+    const assignmentMonth = assignment?.until.slice(0, 3);
+    const assignmentDate = assignment?.until.slice(4);
 
-        const data = classroomDocumentSnapshot.data();
+    const dateFormat = new Date(
+      `${assignmentMonth} ${assignmentDate}, ${currentYear}`
+    );
 
-        changeClassroom(data as IClassroomData);
-      } catch {
-        alert("Failed to load the assignment");
-      }
-    };
-
-    if (!classroom) getAssignmentData();
-    else {
-      const assignment = classroom.assignments.find(
-        (currentAssignment) => currentAssignment.id === assignmentID
-      );
-
-      if (assignment) {
-        const currentYear = new Date().getFullYear();
-        const assignmentMonth = assignment.until.slice(0, 3);
-        const assignmentDate = assignment.until.slice(4);
-
-        const dateFormat = new Date(
-          `${assignmentMonth} ${assignmentDate}, ${currentYear}`
-        );
-
-        setName(assignment.name);
-        setQuestion(assignment.question);
-        setDate(dateFormat);
-      }
-    }
-  }, []);
+    setName(assignment?.name ?? "");
+    setQuestion(assignment?.question ?? "");
+    setDate(dateFormat);
+  }, [classroom, assignmentID]);
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -65,14 +44,7 @@ const EditAssignmentForm: React.FC = () => {
     setQuestion(event.target.value);
 
   const editAssignment = async () => {
-    if (
-      !name ||
-      !question ||
-      !date ||
-      typeof assignmentID !== "string" ||
-      !classroom
-    )
-      return;
+    if (!name || !question || !date || !classroom) return;
 
     const noUnnecessarySpacesName = name.trim().replace(/\s{2,}/g, " ");
     if (noUnnecessarySpacesName === "" || question.replaceAll(" ", "") === "")
@@ -108,6 +80,7 @@ const EditAssignmentForm: React.FC = () => {
       });
     } catch {
       alert("Failed to edit the assignment");
+      return;
     }
 
     changeClassroom({ ...classroom, assignments: newAssignments });
@@ -132,7 +105,7 @@ const EditAssignmentForm: React.FC = () => {
 
   return (
     <>
-      {name && date && question ? (
+      {classroom ? (
         <form className="flex justify-center mb-10">
           <div className="w-1/2 flex flex-col items-center gap-8">
             <div className="flex flex-col items-center w-full">
@@ -189,7 +162,7 @@ const EditAssignmentForm: React.FC = () => {
           </div>
         </form>
       ) : (
-        <p className="text-center text-2xl">Failed to load the assignment</p>
+        <p className="text-center text-2xl">Loading</p>
       )}
     </>
   );

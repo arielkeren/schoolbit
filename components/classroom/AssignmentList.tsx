@@ -6,14 +6,14 @@ const AssignmentList: React.FC = () => {
   const { user, classroom } = useAppContext();
 
   const router = useRouter();
-  const { classroomID } = router.query;
+  const { classroomID } = router.query as { classroomID: string };
 
   const ownerID = classroom?.ownerID;
   const isOwner = user?.uid === ownerID;
 
   return (
     <>
-      {classroom && typeof classroomID === "string" ? (
+      {classroom ? (
         <>
           {classroom.assignments.length !== 0 ? (
             <div className="flex flex-col gap-2 m-3">

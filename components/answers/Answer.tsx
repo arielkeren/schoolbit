@@ -14,7 +14,10 @@ const Answer: React.FC<Props> = ({ answer }) => {
   const [isCodeOpen, setIsCodeOpen] = useState(false);
 
   const router = useRouter();
-  const { classroomID, assignmentID } = router.query;
+  const { classroomID, assignmentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+  };
 
   const toggleIsCodeOpen = () =>
     setIsCodeOpen((previousState) => !previousState);

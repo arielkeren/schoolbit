@@ -16,10 +16,13 @@ const AssignmentPage: React.FC = () => {
   const [code, setCode] = useState("");
 
   const router = useRouter();
-  const { classroomID, assignmentID } = router.query;
+  const { classroomID, assignmentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+  };
 
   useEffect(() => {
-    if (typeof classroomID === "string") getClassroom(classroomID);
+    getClassroom(classroomID);
   }, [getClassroom, classroomID]);
 
   const toggleCodeView = () =>

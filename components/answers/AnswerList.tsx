@@ -6,7 +6,7 @@ const AnswerList: React.FC = () => {
   const { classroom } = useAppContext();
 
   const router = useRouter();
-  const { assignmentID } = router.query;
+  const { assignmentID } = router.query as { assignmentID: string };
 
   const assignments = classroom?.assignments;
   const assignment = assignments?.find(

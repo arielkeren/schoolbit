@@ -9,7 +9,11 @@ const GradeForm: React.FC = () => {
   const [message, setMessage] = useState("");
 
   const router = useRouter();
-  const { classroomID, assignmentID, studentID } = router.query;
+  const { classroomID, assignmentID, studentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+    studentID: string;
+  };
 
   const changeGrade = (event: React.ChangeEvent<HTMLInputElement>) =>
     setGrade(event.target.value);
@@ -19,6 +23,7 @@ const GradeForm: React.FC = () => {
 
   const validateData = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (grade.replaceAll(" ", "") === "") {
       alert("Cannot send without a grade");
       setGrade("");
@@ -26,8 +31,6 @@ const GradeForm: React.FC = () => {
   };
 
   const sendGrade = async () => {
-    if (typeof assignmentID !== "string") return;
-
     const classroomDocumentReference = doc(
       database,
       `classrooms/${classroomID}`
@@ -78,13 +81,14 @@ const GradeForm: React.FC = () => {
       await updateDoc(userDocumentReference, {
         grades: arrayUnion(newGrade),
       });
-
-      router.push(
-        `/classrooms/${classroomID}/assignments/${assignmentID}/answers`
-      );
     } catch {
       alert("Failed to send the grade to the student");
+      return;
     }
+
+    router.push(
+      `/classrooms/${classroomID}/assignments/${assignmentID}/answers`
+    );
   };
 
   return (

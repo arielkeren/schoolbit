@@ -1,6 +1,6 @@
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { auth, database } from "../../firebaseConfig";
+import { database } from "../../firebaseConfig";
 import useAppContext from "../../hooks/useAppContext";
 import { IClassroom, IRequest } from "../../types/types";
 
@@ -9,13 +9,13 @@ interface Props {
 }
 
 const Request: React.FC<Props> = ({ request }) => {
-  const { classroom } = useAppContext();
+  const { user, classroom } = useAppContext();
 
   const router = useRouter();
-  const { classroomID } = router.query;
+  const { classroomID } = router.query as { classroomID: string };
 
   const acceptRequest = async () => {
-    if (!classroom || typeof classroomID !== "string") return;
+    if (!classroom) return;
 
     const newRequests = classroom.requests.filter(
       (currentRequest) => currentRequest.senderID !== request.senderID
@@ -78,8 +78,7 @@ const Request: React.FC<Props> = ({ request }) => {
     }
   };
 
-  if (auth.currentUser !== null && auth.currentUser.uid === request.senderID)
-    removeRequest();
+  if (user?.uid === request.senderID) removeRequest();
 
   return (
     <div className="bg-gray-900 flex flex-col gap-1 justify-between p-5 items-center rounded border-b-4 border-gray-700 md:flex-row">

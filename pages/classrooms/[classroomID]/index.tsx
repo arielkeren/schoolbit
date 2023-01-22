@@ -24,15 +24,15 @@ const ClassroomPage: React.FC = () => {
     useModal();
 
   const router = useRouter();
-  const { classroomID } = router.query;
+  const { classroomID } = router.query as { classroomID: string };
 
   useEffect(() => {
-    if (typeof classroomID === "string") getClassroom(classroomID);
+    getClassroom(classroomID);
   }, [getClassroom, classroomID]);
 
   return (
     <>
-      {classroom && typeof classroomID === "string" ? (
+      {classroom ? (
         <>
           <Head>
             <title>{classroom.classroomName} | SchoolBit</title>

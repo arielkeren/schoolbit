@@ -12,7 +12,10 @@ const AssignmentHeader: React.FC = () => {
   const { user, classroom, changeClassroom } = useAppContext();
 
   const router = useRouter();
-  const { classroomID, assignmentID } = router.query;
+  const { classroomID, assignmentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+  };
 
   const isOwner = user?.uid === classroom?.ownerID;
   const assignments = classroom?.assignments;

@@ -18,7 +18,10 @@ const SubmitButton: React.FC<Props> = ({ code }) => {
   const { user } = useAppContext();
 
   const router = useRouter();
-  const { classroomID, assignmentID } = router.query;
+  const { classroomID, assignmentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+  };
 
   const username = user?.displayName;
   const userID = user?.uid;

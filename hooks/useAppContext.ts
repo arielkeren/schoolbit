@@ -4,7 +4,7 @@ import { useContext } from "react";
 const useAppContext = () => {
   const context = useContext(AppContext);
 
-  if (!context) throw new Error("useAppContext must be inside a provider");
+  if (!context) throw new Error("useAppContext must be used inside a provider");
 
   return context;
 };

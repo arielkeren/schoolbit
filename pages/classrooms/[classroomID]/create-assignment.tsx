@@ -8,7 +8,7 @@ const CreateAssignmentPage: React.FC = () => {
   const { ownedClassrooms } = useAppContext();
 
   const router = useRouter();
-  const { classroomID } = router.query;
+  const { classroomID } = router.query as { classroomID: string };
 
   return (
     <>

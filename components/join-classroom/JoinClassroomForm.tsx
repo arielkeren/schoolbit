@@ -1,10 +1,13 @@
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
-import { auth, database } from "../../firebaseConfig";
+import { database } from "../../firebaseConfig";
 import { IRequest } from "../../types/types";
 import { useRouter } from "next/router";
+import useAppContext from "../../hooks/useAppContext";
 
 const JoinClassroomForm: React.FC = () => {
+  const { user } = useAppContext();
+
   const [classroomCode, setClassroomCode] = useState("");
 
   const router = useRouter();
@@ -13,7 +16,6 @@ const JoinClassroomForm: React.FC = () => {
     setClassroomCode(event.target.value);
 
   const sendClassroomJoinRequest = async () => {
-    const user = auth.currentUser;
     if (!user || !user.displayName) return;
 
     const classroomDocumentReference = doc(
@@ -57,7 +59,7 @@ const JoinClassroomForm: React.FC = () => {
 
   return (
     <>
-      {auth.currentUser !== null ? (
+      {user ? (
         <form className="flex justify-center">
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">

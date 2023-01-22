@@ -9,10 +9,10 @@ const AnswersPage: React.FC = () => {
   const { ownedClassrooms, getClassroom } = useAppContext();
 
   const router = useRouter();
-  const { classroomID } = router.query;
+  const { classroomID } = router.query as { classroomID: string };
 
   useEffect(() => {
-    if (typeof classroomID === "string") getClassroom(classroomID);
+    getClassroom(classroomID);
   }, [getClassroom, classroomID]);
 
   return (

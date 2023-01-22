@@ -15,7 +15,7 @@ const CreateAssignmentForm: React.FC = () => {
   const [date, setDate] = useState(new Date());
 
   const router = useRouter();
-  const { classroomID } = router.query;
+  const { classroomID } = router.query as { classroomID: string };
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
