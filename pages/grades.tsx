@@ -1,5 +1,7 @@
 import Head from "next/head";
-import Title from "../components/general/Title";
+import EmptyArea from "../components/general/EmptyArea";
+import Header from "../components/general/Header";
+import Sidebar from "../components/general/Sidebar";
 import GradeList from "../components/grades/GradeList";
 
 const GradesPage: React.FC = () => (
@@ -8,9 +10,13 @@ const GradesPage: React.FC = () => (
       <title>Grades | SchoolBit</title>
     </Head>
 
-    <Title title="Grades" />
+    <Header title="Grades" />
 
-    <GradeList />
+    <Sidebar />
+
+    <EmptyArea>
+      <GradeList />
+    </EmptyArea>
   </>
 );
 

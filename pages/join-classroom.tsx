@@ -1,5 +1,7 @@
 import Head from "next/head";
-import Title from "../components/general/Title";
+import EmptyArea from "../components/general/EmptyArea";
+import Header from "../components/general/Header";
+import Sidebar from "../components/general/Sidebar";
 import JoinClassroomForm from "../components/join-classroom/JoinClassroomForm";
 
 const JoinClassroomPage: React.FC = () => (
@@ -8,9 +10,13 @@ const JoinClassroomPage: React.FC = () => (
       <title>Join Classroom | SchoolBit</title>
     </Head>
 
-    <Title title="Join Classroom" />
+    <Header title="Join Classroom" />
 
-    <JoinClassroomForm />
+    <Sidebar />
+
+    <EmptyArea>
+      <JoinClassroomForm />
+    </EmptyArea>
   </>
 );
 

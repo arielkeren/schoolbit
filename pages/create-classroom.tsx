@@ -1,6 +1,8 @@
 import Head from "next/head";
-import Title from "../components/general/Title";
 import CreateClassroomForm from "../components/create-classroom/CreateClassroomForm";
+import EmptyArea from "../components/general/EmptyArea";
+import Header from "../components/general/Header";
+import Sidebar from "../components/general/Sidebar";
 
 const CreateClassroomPage: React.FC = () => (
   <>
@@ -8,9 +10,13 @@ const CreateClassroomPage: React.FC = () => (
       <title>Create Classroom | SchoolBit</title>
     </Head>
 
-    <Title title="Create Classroom" />
+    <Header title="Create Classroom" />
 
-    <CreateClassroomForm />
+    <Sidebar />
+
+    <EmptyArea>
+      <CreateClassroomForm />
+    </EmptyArea>
   </>
 );
 

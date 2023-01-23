@@ -1,5 +1,7 @@
 import Head from "next/head";
-import Title from "../components/general/Title";
+import EmptyArea from "../components/general/EmptyArea";
+import Header from "../components/general/Header";
+import Sidebar from "../components/general/Sidebar";
 import LogOutButton from "../components/profile/LogOutButton";
 import ProfileDetails from "../components/profile/ProfileDetails";
 
@@ -9,11 +11,15 @@ const ProfilePage: React.FC = () => (
       <title>Profile | SchoolBit</title>
     </Head>
 
-    <Title title="Profile" />
+    <Header title="Profile" />
 
-    <ProfileDetails />
+    <Sidebar />
 
-    <LogOutButton />
+    <EmptyArea>
+      <ProfileDetails />
+
+      <LogOutButton />
+    </EmptyArea>
   </>
 );
 

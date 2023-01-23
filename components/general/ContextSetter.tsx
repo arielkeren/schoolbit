@@ -18,7 +18,7 @@ const ContextSetter: React.FC<Props> = ({ children }) => {
   } = useAppContext();
 
   useEffect(() => {
-    const getUserData = async () => {
+    const getUser = async () => {
       if (!user) return;
 
       const userDocumentReference = doc(database, `users/${user.uid}`);
@@ -30,17 +30,10 @@ const ContextSetter: React.FC<Props> = ({ children }) => {
       changeGrades(data?.grades ?? []);
     };
 
-    getUserData();
+    getUser();
   }, [user, changeOwnedClassrooms, changeAttendedClassrooms, changeGrades]);
 
-  onAuthStateChanged(auth, (currentUser) => {
-    changeUser(currentUser);
-
-    if (!currentUser) {
-      changeOwnedClassrooms([]);
-      changeAttendedClassrooms([]);
-    }
-  });
+  onAuthStateChanged(auth, (currentUser) => changeUser(currentUser));
 
   return <>{children}</>;
 };

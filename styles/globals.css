@@ -13,9 +13,7 @@
   --blue-600: #2563eb;
 }
 
-* {
-  margin: 0;
-  padding: 0;
+html {
   scroll-behavior: smooth;
 }
 

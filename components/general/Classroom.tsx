@@ -10,7 +10,7 @@ const Classroom: React.FC<Props> = ({ classroom }) => (
     href={`/classrooms/${classroom.classroomID}`}
     className="h-56 flex flex-col cursor-pointer hover:scale-105 transition-transform"
   >
-    <div className="h-5/6 bg-slate-800 rounded-t-md">
+    <div className="h-5/6 bg-gray-900 rounded-t-md">
       <div className="p-3">
         <h2 className="text-white text-lg">{classroom.classroomName}</h2>
         <h3 className="text-gray-400">{classroom.ownerName}</h3>

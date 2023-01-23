@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Header from "../components/general/Header";
 import { Poppins } from "@next/font/google";
 import AppContextProvider from "../context/AppContext";
 import ContextSetter from "../components/general/ContextSetter";
@@ -15,7 +14,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <div className={poppins.className}>
     <AppContextProvider>
       <ContextSetter>
-        <Header />
         <Component {...pageProps} />
       </ContextSetter>
     </AppContextProvider>

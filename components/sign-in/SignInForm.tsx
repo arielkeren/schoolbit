@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import useAppContext from "../../hooks/useAppContext";
 
-const LoginForm: React.FC = () => {
+const SignInForm: React.FC = () => {
   const { user } = useAppContext();
 
   const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    router.push("/");
+    router.push("/classrooms");
   };
 
   const googleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,7 +45,7 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    router.push("/");
+    router.push("/my-classrooms");
   };
 
   return (
@@ -113,4 +113,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default SignInForm;

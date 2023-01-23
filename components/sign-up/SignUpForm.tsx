@@ -2,8 +2,11 @@ import { auth } from "../../firebaseConfig";
 import { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRouter } from "next/router";
+import useAppContext from "../../hooks/useAppContext";
 
 const LoginForm: React.FC = () => {
+  const { user } = useAppContext();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,12 +34,12 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    router.push("/");
+    router.push("/my-classrooms");
   };
 
   return (
     <>
-      {!auth.currentUser ? (
+      {!user ? (
         <form className="flex justify-center">
           <div className="w-1/2 flex flex-col items-center gap-3">
             <div className="flex flex-col items-center w-full">
