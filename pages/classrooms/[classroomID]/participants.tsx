@@ -1,17 +1,17 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import AssignmentList from "../../../components/classroom/AssignmentList";
-import ClassroomCodeText from "../../../components/classroom/ClassroomCodeText";
 import useAppContext from "../../../hooks/useAppContext";
 import Header from "../../../components/general/Header";
 import TeacherSidebar from "../../../components/general/TeacherSidebar";
 import StudentSidebar from "../../../components/general/StudentSidebar";
 import Sidebar from "../../../components/general/Sidebar";
 import EmptyArea from "../../../components/general/EmptyArea";
+import Owner from "../../../components/participants/Owner";
+import StudentList from "../../../components/participants/StudentList";
 import Information from "../../../components/general/Information";
 
-const ClassroomPage: React.FC = () => {
+const ParticipantsPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
   const router = useRouter();
@@ -44,10 +44,10 @@ const ClassroomPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>{classroom.classroomName} | SchoolBit</title>
+        <title>{classroom.classroomName} / Participants | SchoolBit</title>
       </Head>
 
-      <Header title={`${classroom.classroomName} / ${classroom.ownerName}`} />
+      <Header title={`${classroom.classroomName} / Participants`} />
 
       {user?.uid === classroom.ownerID ? (
         <TeacherSidebar />
@@ -56,12 +56,11 @@ const ClassroomPage: React.FC = () => {
       )}
 
       <EmptyArea>
-        <AssignmentList />
+        <Owner />
+        <StudentList />
       </EmptyArea>
-
-      <ClassroomCodeText />
     </>
   );
 };
 
-export default ClassroomPage;
+export default ParticipantsPage;

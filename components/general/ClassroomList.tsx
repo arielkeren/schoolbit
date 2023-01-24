@@ -1,5 +1,6 @@
 import { IClassroom } from "../../types/types";
 import Classroom from "./Classroom";
+import Information from "./Information";
 
 interface Props {
   classrooms: IClassroom[];
@@ -8,12 +9,10 @@ interface Props {
 const ClassroomList: React.FC<Props> = ({ classrooms }) => {
   if (classrooms.length === 0)
     return (
-      <>
-        <p className="text-3xl font-medium">
-          Looks like there are no classrooms here
-        </p>
-        <p className="text-xl">Click the + icon on the left to add some</p>
-      </>
+      <Information
+        primary="Looks like there are no classrooms here"
+        secondary="Click the + icon on the left to add some"
+      />
     );
 
   return (

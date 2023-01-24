@@ -77,7 +77,7 @@ const CreateClassroomForm: React.FC = () => {
     }
 
     addOwnedClassroom(userClassroomData);
-    router.push("/");
+    router.push("/my-classrooms");
   };
 
   const validateData = () => {

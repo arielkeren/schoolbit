@@ -37,7 +37,7 @@ const JoinClassroomForm: React.FC = () => {
       return;
     }
 
-    router.push("/");
+    router.push("/attended-classrooms");
   };
 
   const preventDefault = (event: React.MouseEvent<HTMLInputElement>) => {

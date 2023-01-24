@@ -32,7 +32,7 @@ const SignInForm: React.FC = () => {
       return;
     }
 
-    router.push("/classrooms");
+    router.push("/my-classrooms");
   };
 
   const googleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
