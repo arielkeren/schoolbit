@@ -9,12 +9,12 @@ import Link from "next/link";
 
 const StudentSidebar: React.FC = () => {
   return (
-    <div className="fixed top-0 left-0 p-5 flex flex-col bg-gray-900 items-center h-screen">
+    <div className="fixed top-0 left-0 w-[100px] py-5 flex flex-col items-center bg-gray-900 h-screen">
       <Link href="/my-classrooms">
         <Image src={Logo} alt="" height="60" priority />
       </Link>
 
-      <hr className="border-2 w-full border-gray-800 mt-4" />
+      <hr className="border-2 w-2/3 border-gray-800 mt-4" />
 
       <div className="flex flex-col gap-5 mt-3">
         <Link href="/my-classrooms">
