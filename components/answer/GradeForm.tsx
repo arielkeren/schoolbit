@@ -1,10 +1,13 @@
-import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { database } from "../../firebaseConfig";
 import { useRouter } from "next/router";
-import { IAssignment, IGrade } from "../../types/types";
+import { IGrade } from "../../types/types";
+import useAppContext from "../../hooks/useAppContext";
 
 const GradeForm: React.FC = () => {
+  const { classroom } = useAppContext();
+
   const [grade, setGrade] = useState("");
   const [message, setMessage] = useState("");
 
@@ -31,45 +34,49 @@ const GradeForm: React.FC = () => {
   };
 
   const sendGrade = async () => {
-    const classroomDocumentReference = doc(
-      database,
-      `classrooms/${classroomID}`
-    );
+    if (!classroom) return;
 
-    let classroomDocumentSnapshot = null;
-
-    try {
-      classroomDocumentSnapshot = await getDoc(classroomDocumentReference);
-    } catch {
-      alert("Failed to get the current state of the answers");
-    }
-
-    const data = classroomDocumentSnapshot?.data();
-    const assignments: IAssignment[] = data?.assignments;
-    const assignment = assignments.find(
+    const assignment = classroom.assignments.find(
       (currentAssignment) => currentAssignment.id === assignmentID
     );
-    const answers = assignment?.answers;
-    const answer = answers?.find(
+
+    if (!assignment) return;
+
+    const answer = assignment.answers?.find(
       (currentAnswer) => currentAnswer.senderID === studentID
     );
 
     if (!answer) return;
 
-    answer.checked = true;
+    const newAnswers = assignment.answers.filter(
+      (currentAnswer) => currentAnswer.senderID !== studentID
+    );
+    newAnswers.push({
+      ...answer,
+      checked: true,
+    });
+
+    const newAssignments = {
+      ...classroom.assignments,
+      answers: newAnswers,
+    };
+
+    const classroomDocumentReference = doc(
+      database,
+      `classrooms/${classroomID}`
+    );
 
     try {
       await updateDoc(classroomDocumentReference, {
-        assignments,
+        newAssignments,
       });
     } catch {
       alert("Failed to mark the answer as checked");
       return;
     }
 
-    if (!assignment) return;
-
     const userDocumentReference = doc(database, `users/${studentID}`);
+
     const newGrade: IGrade = {
       assignmentName: assignment.name,
       grade,

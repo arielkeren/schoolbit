@@ -1,15 +1,19 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { IAssignment } from "../../../../../../types/types";
 import Title from "../../../../../../components/general/Title";
 import CodeEditor from "../../../../../../components/general/CodeEditor";
 import GradeForm from "../../../../../../components/answer/GradeForm";
-import ScrollButton from "../../../../../../components/answer/ScrollButton";
 import Head from "next/head";
 import useAppContext from "../../../../../../hooks/useAppContext";
+import Header from "../../../../../../components/general/Header";
+import Sidebar from "../../../../../../components/general/Sidebar";
+import EmptyArea from "../../../../../../components/general/EmptyArea";
+import Information from "../../../../../../components/general/Information";
+import TeacherSidebar from "../../../../../../components/general/TeacherSidebar";
+import StudentSidebar from "../../../../../../components/general/StudentSidebar";
 
 const AnswerPage: React.FC = () => {
-  const { classroom, getClassroom } = useAppContext();
+  const { user, classroom, getClassroom } = useAppContext();
 
   const router = useRouter();
   const { classroomID, assignmentID, studentID } = router.query as {
@@ -22,54 +26,115 @@ const AnswerPage: React.FC = () => {
     getClassroom(classroomID);
   }, [getClassroom, classroomID]);
 
+  const assignment = classroom?.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
+  const answer = assignment?.answers?.find(
+    (currentAnswer) => currentAnswer.senderID === studentID
+  );
+
   if (!classroom)
+    return (
+      <>
+        <Head>
+          <title>Classroom Not Found | SchoolBit</title>
+        </Head>
+
+        <Header title="Classroom Not Found" />
+
+        <Sidebar />
+
+        <EmptyArea>
+          <Information
+            primary="This classroom couldn't be accessed"
+            secondary="Check with your teacher if you were accepted into the classroom"
+          />
+        </EmptyArea>
+      </>
+    );
+
+  if (!assignment)
+    return (
+      <>
+        <Head>
+          <title>Assignment Not Found | SchoolBit</title>
+        </Head>
+
+        <Header title="Assignment Not Found" />
+
+        {user?.uid === classroom.ownerID ? (
+          <TeacherSidebar />
+        ) : (
+          <StudentSidebar />
+        )}
+
+        <EmptyArea>
+          <Information
+            primary="This assignment doesn't exist"
+            secondary="Make sure you didn't change anything in the link"
+          />
+        </EmptyArea>
+      </>
+    );
+
+  if (!answer)
     return (
       <>
         <Head>
           <title>Answer Not Found | SchoolBit</title>
         </Head>
 
-        <Title title="Answer Not Found" />
+        <Header title="Answer Not Found" />
+
+        {user?.uid === classroom.ownerID ? (
+          <TeacherSidebar />
+        ) : (
+          <StudentSidebar />
+        )}
+
+        <EmptyArea>
+          <Information
+            primary="This answer doesn't exist"
+            secondary="Make sure you didn't change anything in the link"
+          />
+        </EmptyArea>
       </>
     );
 
-  const assignments: IAssignment[] = classroom?.assignments;
-  const assignment = assignments.find(
-    (currentAssignment) => currentAssignment.id === assignmentID
-  );
-
-  const answers = assignment?.answers;
-  const answer = answers?.find(
-    (currentAnswer) => currentAnswer.senderID === studentID
-  );
-
   return (
     <>
-      {answer?.senderName && answer?.code ? (
+      <Head>
+        <title>{answer.senderName}&apos;s Answer | SchoolBit</title>
+      </Head>
+
+      <Header title={`${answer.senderName}'s Answer`} />
+
+      {user?.uid === classroom.ownerID ? (
         <>
-          <Head>
-            <title>{answer.senderName}&apos;s Answer | SchoolBit</title>
-          </Head>
+          <TeacherSidebar />
 
-          <Title title={`${answer.senderName}'s Answer`} />
+          <EmptyArea>
+            <div className="mb-14">
+              <CodeEditor
+                code={answer.code}
+                height="calc(100vh - 136px - 48px - 100px)"
+                width="95vw"
+              />
+            </div>
 
-          <div className="mb-14">
-            <CodeEditor
-              code={answer.code}
-              height="calc(100vh - 136px - 48px - 100px)"
-              width="95vw"
-            />
-          </div>
-
-          <GradeForm />
-
-          <ScrollButton />
+            <GradeForm />
+          </EmptyArea>
         </>
       ) : (
         <>
-          <Title title="Answer Not Found" />
+          <StudentSidebar />
 
-          <p className="text-center text-2xl">Failed to get the answer</p>
+          <EmptyArea>
+            <Information
+              primary="You're not eligible for seeing other students' answers"
+              secondary="Only the teacher can see students' answers"
+            />
+          </EmptyArea>
         </>
       )}
     </>

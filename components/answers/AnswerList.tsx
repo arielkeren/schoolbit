@@ -1,39 +1,26 @@
-import { useRouter } from "next/router";
-import useAppContext from "../../hooks/useAppContext";
+import IAnswer from "../../types/IAnswer";
+import Information from "../general/Information";
 import Answer from "./Answer";
 
-const AnswerList: React.FC = () => {
-  const { classroom } = useAppContext();
+interface Props {
+  answers: IAnswer[];
+}
 
-  const router = useRouter();
-  const { assignmentID } = router.query as { assignmentID: string };
-
-  const assignments = classroom?.assignments;
-  const assignment = assignments?.find(
-    (currentAssignment) => currentAssignment.id === assignmentID
-  );
-  const answers = assignment?.answers;
+const AnswerList: React.FC<Props> = ({ answers }) => {
+  if (answers.length === 0)
+    return (
+      <Information
+        primary="Looks like no students have submitted any answers yet"
+        secondary="Come back here later and see if this changed"
+      />
+    );
 
   return (
-    <>
-      {answers ? (
-        <>
-          {answers.length !== 0 ? (
-            <div className="flex flex-col gap-3 mx-10">
-              {answers.map((answer) => (
-                <Answer answer={answer} key={answer.senderID} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-2xl">
-              There are no submitted answers currently
-            </p>
-          )}
-        </>
-      ) : (
-        <p className="text-center text-2xl">Failed to get the answers</p>
-      )}
-    </>
+    <div className="flex flex-col gap-3 mx-10">
+      {answers.map((answer) => (
+        <Answer answer={answer} key={answer.senderID} />
+      ))}
+    </div>
   );
 };
 

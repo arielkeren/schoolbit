@@ -1,36 +1,102 @@
 import Head from "next/head";
 import Title from "../../../../../components/general/Title";
-import EditAssignmentForm from "../../../../../components/edit-assignment/EditAssignmentForm";
+import EditAssignmentForm from "../../../../../components/edit/EditAssignmentForm";
 import { useRouter } from "next/router";
 import useAppContext from "../../../../../hooks/useAppContext";
 import { useEffect } from "react";
+import Header from "../../../../../components/general/Header";
+import Sidebar from "../../../../../components/general/Sidebar";
+import EmptyArea from "../../../../../components/general/EmptyArea";
+import Information from "../../../../../components/general/Information";
+import TeacherSidebar from "../../../../../components/general/TeacherSidebar";
+import StudentSidebar from "../../../../../components/general/StudentSidebar";
 
 const EditAssignmentPage: React.FC = () => {
-  const { ownedClassrooms, getClassroom } = useAppContext();
+  const { user, classroom, getClassroom } = useAppContext();
 
   const router = useRouter();
-  const { classroomID } = router.query as { classroomID: string };
+  const { classroomID, assignmentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+  };
 
   useEffect(() => {
     getClassroom(classroomID);
   }, [classroomID, getClassroom]);
 
+  const assignment = classroom?.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
+
+  if (!classroom)
+    return (
+      <>
+        <Head>
+          <title>Classroom Not Found | SchoolBit</title>
+        </Head>
+
+        <Header title="Classroom Not Found" />
+
+        <Sidebar />
+
+        <EmptyArea>
+          <Information
+            primary="This classroom couldn't be accessed"
+            secondary="Check with your teacher if you were accepted into the classroom"
+          />
+        </EmptyArea>
+      </>
+    );
+
+  if (!assignment)
+    return (
+      <>
+        <Head>
+          <title>Assignment Not Found | SchoolBit</title>
+        </Head>
+
+        <Header title="Assignment Not Found" />
+
+        {user?.uid === classroom.ownerID ? (
+          <TeacherSidebar />
+        ) : (
+          <StudentSidebar />
+        )}
+
+        <EmptyArea>
+          <Information
+            primary="This assignment doesn't exist"
+            secondary="Make sure you didn't change anything in the link"
+          />
+        </EmptyArea>
+      </>
+    );
+
   return (
     <>
       <Head>
-        <title>Edit Assignment | SchoolBit</title>
+        <title>Edit &quot;{assignment.name}&quot; | SchoolBit</title>
       </Head>
 
-      <Title title="Edit Assignment" />
+      <Header title={`Edit "${assignment.name}"`} />
 
-      {ownedClassrooms?.some(
-        (classroom) => classroom.classroomID === classroomID
-      ) ? (
-        <EditAssignmentForm />
+      {user?.uid === classroom.ownerID ? (
+        <>
+          <TeacherSidebar />
+
+          <EmptyArea>
+            <EditAssignmentForm />
+          </EmptyArea>
+        </>
       ) : (
-        <p className="text-center text-2xl">
-          Failed to get an assignment to edit
-        </p>
+        <>
+          <StudentSidebar />
+
+          <Information
+            primary="You're not eligible for editing assignments"
+            secondary="Only the teacher can edit assignments"
+          />
+        </>
       )}
     </>
   );

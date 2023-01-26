@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import AssignmentList from "../../../components/classroom/AssignmentList";
-import ClassroomCodeText from "../../../components/classroom/ClassroomCodeText";
+import ClassroomCode from "../../../components/classroom/ClassroomCode";
 import useAppContext from "../../../hooks/useAppContext";
 import Header from "../../../components/general/Header";
 import TeacherSidebar from "../../../components/general/TeacherSidebar";
@@ -59,7 +59,7 @@ const ClassroomPage: React.FC = () => {
         <AssignmentList />
       </EmptyArea>
 
-      <ClassroomCodeText />
+      <ClassroomCode />
     </>
   );
 };

@@ -4,35 +4,99 @@ import Title from "../../../../../../components/general/Title";
 import AnswerList from "../../../../../../components/answers/AnswerList";
 import Head from "next/head";
 import useAppContext from "../../../../../../hooks/useAppContext";
+import Header from "../../../../../../components/general/Header";
+import Sidebar from "../../../../../../components/general/Sidebar";
+import EmptyArea from "../../../../../../components/general/EmptyArea";
+import Information from "../../../../../../components/general/Information";
+import TeacherSidebar from "../../../../../../components/general/TeacherSidebar";
+import StudentSidebar from "../../../../../../components/general/StudentSidebar";
 
 const AnswersPage: React.FC = () => {
-  const { ownedClassrooms, getClassroom } = useAppContext();
+  const { user, classroom, getClassroom } = useAppContext();
 
   const router = useRouter();
-  const { classroomID } = router.query as { classroomID: string };
+  const { classroomID, assignmentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+  };
 
   useEffect(() => {
     getClassroom(classroomID);
   }, [getClassroom, classroomID]);
 
+  const assignment = classroom?.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
+
+  if (!classroom)
+    return (
+      <>
+        <Head>
+          <title>Classroom Not Found | SchoolBit</title>
+        </Head>
+
+        <Header title="Classroom Not Found" />
+
+        <Sidebar />
+
+        <EmptyArea>
+          <Information
+            primary="This classroom couldn't be accessed"
+            secondary="Check with your teacher if you were accepted into the classroom"
+          />
+        </EmptyArea>
+      </>
+    );
+
+  if (!assignment)
+    return (
+      <>
+        <Head>
+          <title>Assignment Not Found | SchoolBit</title>
+        </Head>
+
+        <Header title="Assignment Not Found" />
+
+        {user?.uid === classroom.ownerID ? (
+          <TeacherSidebar />
+        ) : (
+          <StudentSidebar />
+        )}
+
+        <EmptyArea>
+          <Information
+            primary="This assignment doesn't exist"
+            secondary="Make sure you didn't change anything in the link"
+          />
+        </EmptyArea>
+      </>
+    );
+
   return (
     <>
       <Head>
-        <title>Answers | SchoolBit</title>
+        <title>Answers to &quot;{assignment.name}&quot; | SchoolBit</title>
       </Head>
 
-      <Title title="Answers" />
+      <Header title={`Answers to "${assignment.name}"`} />
 
-      {ownedClassrooms?.some(
-        (classroom) => classroom.classroomID === classroomID
-      ) ? (
+      {user?.uid === classroom.ownerID ? (
         <>
-          <AnswerList />
+          <TeacherSidebar />
+
+          <EmptyArea>
+            <AnswerList answers={assignment.answers} />
+          </EmptyArea>
         </>
       ) : (
-        <p className="text-center text-2xl">
-          You are not allowed to see other answers
-        </p>
+        <>
+          <StudentSidebar />
+
+          <Information
+            primary="You're not eligible for seeing other students' answers"
+            secondary="Only the teacher can see all the students' answers"
+          />
+        </>
       )}
     </>
   );

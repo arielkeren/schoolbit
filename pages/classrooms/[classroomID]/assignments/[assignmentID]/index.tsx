@@ -8,6 +8,12 @@ import ToggleCodeViewButton from "../../../../../components/assignment/ToggleCod
 import CodeEditor from "../../../../../components/general/CodeEditor";
 import SubmitButton from "../../../../../components/assignment/SubmitButton";
 import useAppContext from "../../../../../hooks/useAppContext";
+import Header from "../../../../../components/general/Header";
+import Sidebar from "../../../../../components/general/Sidebar";
+import EmptyArea from "../../../../../components/general/EmptyArea";
+import Information from "../../../../../components/general/Information";
+import TeacherSidebar from "../../../../../components/general/TeacherSidebar";
+import StudentSidebar from "../../../../../components/general/StudentSidebar";
 
 const AssignmentPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
@@ -34,49 +40,87 @@ const AssignmentPage: React.FC = () => {
     (currentAssignment) => currentAssignment.id === assignmentID
   );
 
+  if (!classroom)
+    return (
+      <>
+        <Head>
+          <title>Classroom Not Found | SchoolBit</title>
+        </Head>
+
+        <Header title="Classroom Not Found" />
+
+        <Sidebar />
+
+        <EmptyArea>
+          <Information
+            primary="This classroom couldn't be accessed"
+            secondary="Check with your teacher if you were accepted into the classroom"
+          />
+        </EmptyArea>
+      </>
+    );
+
+  if (!assignment)
+    return (
+      <>
+        <Head>
+          <title>Assignment Not Found | SchoolBit</title>
+        </Head>
+
+        <Header title="Assignment Not Found" />
+
+        {user?.uid === classroom.ownerID ? (
+          <TeacherSidebar />
+        ) : (
+          <StudentSidebar />
+        )}
+
+        <EmptyArea>
+          <Information
+            primary="This assignment doesn't exist"
+            secondary="Make sure you didn't change anything in the link"
+          />
+        </EmptyArea>
+      </>
+    );
+
   return (
     <>
-      {classroom && assignment ? (
-        <>
-          <Head>
-            <title>{assignment.name} | SchoolBit</title>
-          </Head>
+      <Head>
+        <title>{assignment.name} | SchoolBit</title>
+      </Head>
 
-          <AssignmentHeader />
+      <Header title={assignment.name} />
 
-          {isCodeView ? (
-            <CodeEditor
-              code={code}
-              height="calc(calc(100vh - 136px - 92px) * 0.8)"
-              width="80%"
-              changeCode={changeCode}
-            />
-          ) : (
-            <Question question={assignment.question} />
-          )}
-
-          {user?.uid !== classroom.ownerID && (
-            <>
-              <SubmitButton code={code} />
-
-              <ToggleCodeViewButton
-                isCodeView={isCodeView}
-                toggleCodeView={toggleCodeView}
-              />
-            </>
-          )}
-        </>
+      {user?.uid === classroom.ownerID ? (
+        <TeacherSidebar />
       ) : (
         <>
-          <Head>
-            <title>Assignment Not Found | SchoolBit</title>
-          </Head>
+          <StudentSidebar />
 
-          <Title title="Assignment Not Found" />
+          <SubmitButton code={code} />
 
-          <p className="text-center text-2xl">Failed to get the assignment</p>
+          <ToggleCodeViewButton
+            isCodeView={isCodeView}
+            toggleCodeView={toggleCodeView}
+          />
         </>
       )}
+
+      <EmptyArea>
+        <AssignmentHeader />
+
+        {isCodeView ? (
+          <CodeEditor
+            code={code}
+            height="calc(calc(100vh - 136px - 92px) * 0.8)"
+            width="80%"
+            changeCode={changeCode}
+          />
+        ) : (
+          <Question question={assignment.question} />
+        )}
+      </EmptyArea>
     </>
   );
 };
