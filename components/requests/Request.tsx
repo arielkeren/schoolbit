@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Request: React.FC<Props> = ({ request }) => {
-  const { user, classroom } = useAppContext();
+  const { user, classroom, changeClassroom } = useAppContext();
 
   const router = useRouter();
   const { classroomID } = router.query as { classroomID: string };
@@ -56,7 +56,14 @@ const Request: React.FC<Props> = ({ request }) => {
       );
     } catch {
       alert("Failed to connect the classroom with the student");
+      return;
     }
+
+    changeClassroom({
+      ...classroom,
+      requests: newRequests,
+      participants: [...classroom.participants, request.senderName],
+    });
   };
 
   const removeRequest = async () => {
@@ -75,7 +82,10 @@ const Request: React.FC<Props> = ({ request }) => {
       await updateDoc(classroomDocumentReference, { requests: newRequests });
     } catch {
       alert("Failed to remove the request");
+      return;
     }
+
+    changeClassroom({ ...classroom, requests: newRequests });
   };
 
   if (user?.uid === request.senderID) removeRequest();
