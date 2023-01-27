@@ -6,8 +6,22 @@ import { AiFillHome } from "react-icons/ai";
 import { HiUserGroup } from "react-icons/hi";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import CodeViewButton from "./CodeViewButton";
+import SubmitButton from "./SubmitButton";
 
-const StudentSidebar: React.FC = () => {
+interface Props {
+  isCodeView: boolean;
+  toggleCodeView: () => void;
+  closeCodeView: () => void;
+  code: string;
+}
+
+const AssignmentStudentSidebar: React.FC<Props> = ({
+  isCodeView,
+  toggleCodeView,
+  closeCodeView,
+  code,
+}) => {
   const router = useRouter();
   const { classroomID } = router.query as { classroomID: string };
 
@@ -19,7 +33,7 @@ const StudentSidebar: React.FC = () => {
 
       <hr className="border-2 w-2/3 border-gray-800 mt-4" />
 
-      <div className="flex flex-col gap-5 mt-3">
+      <div className="flex flex-col items-center gap-5 mt-3">
         <Link href={`/classrooms/${classroomID}`}>
           <AiFillHome className="text-5xl text-gray-300" />
         </Link>
@@ -27,6 +41,13 @@ const StudentSidebar: React.FC = () => {
         <Link href={`/classrooms/${classroomID}/participants`}>
           <HiUserGroup className="text-5xl text-gray-300" />
         </Link>
+
+        <CodeViewButton
+          isCodeView={isCodeView}
+          toggleCodeView={toggleCodeView}
+        />
+
+        <SubmitButton code={code} closeCodeView={closeCodeView} />
       </div>
 
       <div className="flex flex-col gap-5 mt-auto">
@@ -42,4 +63,4 @@ const StudentSidebar: React.FC = () => {
   );
 };
 
-export default StudentSidebar;
+export default AssignmentStudentSidebar;

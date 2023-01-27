@@ -4,7 +4,7 @@ import Title from "../../../../../components/general/Title";
 import Question from "../../../../../components/assignment/Question";
 import { useEffect, useState } from "react";
 import AssignmentHeader from "../../../../../components/assignment/AssignmentHeader";
-import ToggleCodeViewButton from "../../../../../components/assignment/ToggleCodeViewButton";
+import ToggleCodeViewButton from "../../../../../components/assignment/CodeViewButton";
 import CodeEditor from "../../../../../components/general/CodeEditor";
 import SubmitButton from "../../../../../components/assignment/SubmitButton";
 import useAppContext from "../../../../../hooks/useAppContext";
@@ -14,6 +14,7 @@ import EmptyArea from "../../../../../components/general/EmptyArea";
 import Information from "../../../../../components/general/Information";
 import TeacherSidebar from "../../../../../components/general/TeacherSidebar";
 import StudentSidebar from "../../../../../components/general/StudentSidebar";
+import AssignmentStudentSidebar from "../../../../../components/assignment/AssignmentStudentSidebar";
 
 const AssignmentPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
@@ -33,6 +34,8 @@ const AssignmentPage: React.FC = () => {
 
   const toggleCodeView = () =>
     setIsCodeView((previousCodeView) => !previousCodeView);
+
+  const closeCodeView = () => setIsCodeView(false);
 
   const changeCode = (newCode: string) => setCode(newCode);
 
@@ -84,6 +87,10 @@ const AssignmentPage: React.FC = () => {
       </>
     );
 
+  const didStudentSubmit = assignment.answers.some(
+    (answer) => user?.uid === answer.senderID
+  );
+
   return (
     <>
       <Head>
@@ -96,29 +103,33 @@ const AssignmentPage: React.FC = () => {
         <TeacherSidebar />
       ) : (
         <>
-          <StudentSidebar />
-
-          <SubmitButton code={code} />
-
-          <ToggleCodeViewButton
-            isCodeView={isCodeView}
-            toggleCodeView={toggleCodeView}
-          />
+          {didStudentSubmit ? (
+            <StudentSidebar />
+          ) : (
+            <AssignmentStudentSidebar
+              isCodeView={isCodeView}
+              toggleCodeView={toggleCodeView}
+              closeCodeView={closeCodeView}
+              code={code}
+            />
+          )}
         </>
       )}
 
       <EmptyArea>
-        <AssignmentHeader />
-
         {isCodeView ? (
           <CodeEditor
             code={code}
-            height="calc(calc(100vh - 136px - 92px) * 0.8)"
-            width="80%"
+            height="calc(100vh - 100px - 20px - 20px)"
+            width="100%"
             changeCode={changeCode}
           />
         ) : (
-          <Question question={assignment.question} />
+          <>
+            <AssignmentHeader />
+
+            <Question question={assignment.question} />
+          </>
         )}
       </EmptyArea>
     </>

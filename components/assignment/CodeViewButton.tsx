@@ -9,14 +9,11 @@ const ToggleCodeViewButton: React.FC<Props> = ({
   isCodeView,
   toggleCodeView,
 }) => (
-  <button
-    onClick={toggleCodeView}
-    className="absolute bottom-5 right-5 rounded-full p-2 bg-gray-900 hover:bg-gray-800 transition-colors"
-  >
+  <button onClick={toggleCodeView}>
     {isCodeView ? (
-      <TbCode className="text-white text-6xl" />
+      <TbCode className="text-5xl text-gray-300" />
     ) : (
-      <TbCodeOff className="text-white text-6xl" />
+      <TbCodeOff className="text-5xl text-gray-300" />
     )}
   </button>
 );

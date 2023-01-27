@@ -1,21 +1,16 @@
-import {
-  doc,
-  DocumentData,
-  DocumentSnapshot,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { database } from "../../firebaseConfig";
 import { useRouter } from "next/router";
-import { IAnswer, IAssignment } from "../../types/types";
+import { IAnswer } from "../../types/types";
 import useAppContext from "../../hooks/useAppContext";
 
 interface Props {
   code: string;
+  closeCodeView: () => void;
 }
 
-const SubmitButton: React.FC<Props> = ({ code }) => {
-  const { user } = useAppContext();
+const SubmitButton: React.FC<Props> = ({ code, closeCodeView }) => {
+  const { user, classroom, changeClassroom } = useAppContext();
 
   const router = useRouter();
   const { classroomID, assignmentID } = router.query as {
@@ -27,26 +22,27 @@ const SubmitButton: React.FC<Props> = ({ code }) => {
   const userID = user?.uid;
 
   const submitCode = async () => {
-    if (!username || !userID) return;
+    if (!username || !userID || !classroom) return;
+
+    if (code.replaceAll(" ", "").replace(/[\r\n]+/gm, "") === "") {
+      alert("Cannot submit empty code");
+      return;
+    }
 
     const classroomDocumentReference = doc(
       database,
       `classrooms/${classroomID}`
     );
-    let classroomDocumentSnapshot: DocumentSnapshot<DocumentData> | null = null;
 
-    try {
-      classroomDocumentSnapshot = await getDoc(classroomDocumentReference);
-    } catch {
-      alert("Failed to get the assignment");
-      return;
-    }
-
-    const data = classroomDocumentSnapshot.data();
-    const assignments: IAssignment[] = data?.assignments;
-    const assignment = assignments.find(
+    const newAssignments = [...classroom.assignments];
+    const assignment = newAssignments.find(
       (currentAssignment) => currentAssignment.id === assignmentID
     );
+
+    if (!assignment) {
+      alert("Failed to load the classroom's data");
+      return;
+    }
 
     const newAnswer: IAnswer = {
       code,
@@ -54,19 +50,26 @@ const SubmitButton: React.FC<Props> = ({ code }) => {
       senderID: userID,
       checked: false,
     };
-    assignment?.answers.push(newAnswer);
+    assignment.answers.push(newAnswer);
 
     try {
-      await updateDoc(classroomDocumentReference, { assignments });
+      await updateDoc(classroomDocumentReference, {
+        assignments: newAssignments,
+      });
     } catch {
       alert("Failed to send the answer");
+      return;
     }
+
+    changeClassroom({ ...classroom, assignments: newAssignments });
+
+    closeCodeView();
   };
 
   return (
     <button
       onClick={submitCode}
-      className="absolute bottom-6 right-1/2 translate-x-1/2 text-white bg-gray-900 rounded-md text-4xl font-bold uppercase py-3 px-10"
+      className="uppercase font-semibold text-xl text-gray-300"
     >
       Submit
     </button>
