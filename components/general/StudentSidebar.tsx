@@ -2,12 +2,16 @@ import Image from "next/image";
 import Logo from "../../public/Logo.svg";
 import { BsFillBarChartFill } from "react-icons/bs";
 import { RiUserFill } from "react-icons/ri";
-import { MdSchool } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
-import { HiPlus } from "react-icons/hi";
+import { HiPlus, HiUserGroup } from "react-icons/hi";
+import { IoMdMail } from "react-icons/io";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const StudentSidebar: React.FC = () => {
+  const router = useRouter();
+  const { classroomID } = router.query as { classroomID: string };
+
   return (
     <div className="fixed top-0 left-0 w-[100px] py-5 flex flex-col items-center bg-gray-900 h-screen">
       <Link href="/my-classrooms">
@@ -17,16 +21,12 @@ const StudentSidebar: React.FC = () => {
       <hr className="border-2 w-2/3 border-gray-800 mt-4" />
 
       <div className="flex flex-col gap-5 mt-3">
-        <Link href="/my-classrooms">
+        <Link href={`/classrooms/${classroomID}`}>
           <AiFillHome className="text-5xl text-gray-300" />
         </Link>
 
-        <Link href="/attended-classrooms">
-          <MdSchool className="text-5xl text-gray-300" />
-        </Link>
-
-        <Link href="/create-classroom">
-          <HiPlus className="text-5xl text-gray-300" />
+        <Link href={`/classrooms/${classroomID}/participants`}>
+          <HiUserGroup className="text-5xl text-gray-300" />
         </Link>
       </div>
 
