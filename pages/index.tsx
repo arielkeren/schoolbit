@@ -11,6 +11,10 @@ import { MdCreate } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import useAppContext from "../hooks/useAppContext";
 import { useRouter } from "next/router";
+import useModal from "../hooks/useModal";
+import SignInForm from "../components/home/SignInForm";
+import SignUpForm from "../components/home/SignUpForm";
+import { GrFormClose } from "react-icons/gr";
 
 const Homepage: React.FC = () => {
   const { user } = useAppContext();
@@ -19,6 +23,12 @@ const Homepage: React.FC = () => {
 
   if (user) router.push("/my-classrooms");
 
+  const [isSignInModalOpen, openSignInModal, closeSignInModal] = useModal();
+  const [isSignUpModalOpen, openSignUpModal, closeSignUpModal] = useModal();
+
+  const stopPropagation = (event: React.MouseEvent<HTMLDivElement>) =>
+    event.stopPropagation();
+
   return (
     <>
       <Head>
@@ -26,15 +36,18 @@ const Homepage: React.FC = () => {
       </Head>
 
       <div className="absolute top-0 right-0 p-5 flex gap-4 items-center">
-        <Link href="/sign-in" className="uppercase text-xl text-gray-100">
+        <button
+          onClick={openSignInModal}
+          className="uppercase text-xl text-gray-100"
+        >
           Sign In
-        </Link>
-        <Link
-          href="/sign-up"
+        </button>
+        <button
+          onClick={openSignUpModal}
           className="uppercase bg-gray-100 rounded-sm py-2 px-3 text-xl font-semibold text-gray-900 transition-colors hover:bg-gray-200"
         >
           Sign Up
-        </Link>
+        </button>
       </div>
 
       <section className="p-12 flex flex-col gap-6 justify-center items-center bg-gray-900 h-[550px]">
@@ -164,6 +177,62 @@ const Homepage: React.FC = () => {
           Try It Out
         </Link>
       </section>
+
+      {isSignInModalOpen && (
+        <div
+          onClick={closeSignInModal}
+          className="fixed top-0 h-screen left-0 w-screen backdrop-brightness-90 flex justify-center items-center"
+        >
+          <div
+            onClick={stopPropagation}
+            className="relative w-72 bg-white py-20 flex flex-col justify-center items-center rounded shadow-md sm:w-96"
+          >
+            <button
+              onClick={closeSignInModal}
+              className="absolute top-2 right-2 rounded transition-colors hover:bg-gray-200"
+            >
+              <GrFormClose className="text-4xl" />
+            </button>
+
+            <div className="absolute top-2">
+              <h2 className="uppercase text-3xl font-bold">Sign In</h2>
+            </div>
+
+            <SignInForm
+              closeSignInModal={closeSignInModal}
+              openSignUpModal={openSignUpModal}
+            />
+          </div>
+        </div>
+      )}
+
+      {isSignUpModalOpen && (
+        <div
+          onClick={closeSignUpModal}
+          className="fixed top-0 h-screen left-0 w-screen backdrop-brightness-90 flex justify-center items-center"
+        >
+          <div
+            onClick={stopPropagation}
+            className="relative w-72 bg-white py-20 flex flex-col justify-center items-center rounded shadow-md sm:w-96"
+          >
+            <button
+              onClick={closeSignUpModal}
+              className="absolute top-2 right-2 rounded transition-colors hover:bg-gray-200"
+            >
+              <GrFormClose className="text-4xl" />
+            </button>
+
+            <div className="absolute top-2">
+              <h2 className="uppercase text-3xl font-bold">Sign Up</h2>
+            </div>
+
+            <SignUpForm
+              closeSignUpModal={closeSignUpModal}
+              openSignInModal={openSignInModal}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };
