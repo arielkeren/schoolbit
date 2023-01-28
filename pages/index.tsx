@@ -39,8 +39,10 @@ const Homepage: React.FC = () => {
 
       <section className="p-12 flex flex-col gap-6 justify-center items-center bg-gray-900 h-[550px]">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-gray-100 text-8xl font-bold">SchoolBit</h1>
-          <p className="text-gray-200 text-xl">
+          <h1 className="text-gray-100 text-6xl font-bold sm:text-8xl">
+            SchoolBit
+          </h1>
+          <p className="text-gray-200 text-lg sm:text-xl">
             The modern way of creating digital classrooms for computer science
           </p>
         </div>
@@ -53,10 +55,10 @@ const Homepage: React.FC = () => {
       </section>
 
       <section className="p-12 flex flex-col gap-6 justify-center items-center bg-gray-100 h-[450px]">
-        <h2 className="text-gray-900 text-6xl font-bold">
+        <h2 className="text-gray-900 text-4xl font-bold sm:text-6xl">
           Designed for Computer Science
         </h2>
-        <p className="text-gray-800 text-xl">
+        <p className="text-gray-800 text-lg sm:text-xl">
           Using SchoolBit, you become much more productive with all of our
           unique features
         </p>
@@ -70,91 +72,86 @@ const Homepage: React.FC = () => {
 
       <section
         id="benefits"
-        className="p-12 flex flex-col gap-6 justify-center items-center bg-gray-900 h-[600px]"
+        className="flex flex-col gap-6 justify-center items-center bg-gray-900 h-[1200px] md:h-[900px] xl:h-[550px]"
       >
-        <h2 className="text-gray-100 text-6xl font-bold">
+        <h2 className="text-gray-100 text-3xl font-bold sm:text-5xl">
           Built for <span className="underline">Students</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-8">
-          <div className="bg-gray-100 h-96 flex flex-col gap-2 items-center pt-20 px-5 relative">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="bg-gray-100 h-80 flex flex-col gap-2 items-center pt-20 px-2 relative rounded sm:px-10 md:px-9 lg:px-10">
             <MdCreate className="text-gray-900 text-5xl absolute top-3" />
             <h3 className="text-gray-100 text-2xl bg-gray-900 py-3 px-5 rounded-md uppercase">
               Write Code Faster
             </h3>
-            <p className="text-gray-900 text-lg w-4/5">
+            <p className="text-gray-900 text-lg w-64">
               With our built-in code editor, you can expect an increase in
               productivity.
             </p>
           </div>
 
-          <div className="bg-gray-200 h-96 flex flex-col gap-2 items-center pt-20 px-5 relative">
+          <div className="bg-gray-200 h-80 flex flex-col gap-2 items-center pt-20 px-2 relative rounded sm:px-10 md:px-9 lg:px-10">
             <FaUsers className="text-gray-900 text-5xl absolute top-4" />
             <h3 className="text-gray-100 text-2xl bg-gray-900 py-3 px-5 rounded-md uppercase">
               Join Classrooms
             </h3>
-            <p className="text-gray-900 text-lg w-4/5">
-              Ask your teacher for the classroom code. Then, with one click of a
-              button, send a join request.
+            <p className="text-gray-900 text-lg w-64">
+              Ask your teacher for the classroom code and send a join request.
             </p>
           </div>
 
-          <div className="bg-gray-100 h-96 flex flex-col gap-2 items-center pt-20 px-5 relative">
+          <div className="bg-gray-100 h-80 flex flex-col gap-2 items-center pt-20 px-2 relative rounded sm:px-10 md:px-9 lg:px-10">
             <BsFillBarChartFill className="text-gray-900 text-4xl absolute top-6" />
             <h3 className="text-gray-100 text-2xl bg-gray-900 py-3 px-5 rounded-md uppercase">
               See Your Grades
             </h3>
-            <p className="text-gray-900 text-lg w-4/5">
-              Easily access your grades from the app. With each grade, comes a
-              copy of your submitted code with all your teacher&apos;s comments.
+            <p className="text-gray-900 text-lg w-64">
+              Easily access your grades from the app.
             </p>
           </div>
         </div>
 
         <Link
           href="/sign-up"
-          className="flex items-center gap-1 uppercase rounded-sm py-2 px-3 text-2xl font-bold text-gray-100 transition-colors hover:bg-gray-800"
+          className="flex items-center gap-1 uppercase rounded-sm py-2 px-3 text-2xl font-bold text-gray-100 bg-gray-800 transition-colors hover:bg-gray-700"
         >
           Jump In
         </Link>
       </section>
 
-      <section className="p-12 flex flex-col gap-6 justify-center items-center bg-gray-100 h-[600px]">
-        <h2 className="text-gray-900 text-6xl font-bold">
+      <section className="flex flex-col gap-6 justify-center items-center bg-gray-100 h-[1200px] md:h-[900px] xl:h-[550px]">
+        <h2 className="text-gray-900 text-3xl font-bold sm:text-5xl">
           Built for <span className="underline">Teachers</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-8">
-          <div className="bg-gray-900 h-96 flex flex-col gap-2 items-center pt-20 px-5 relative">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="bg-gray-900 h-80 flex flex-col gap-2 items-center pt-20 px-2 relative rounded sm:px-10 md:px-9 lg:px-10">
             <TbListCheck className="text-gray-100 text-5xl absolute top-4" />
             <h3 className="text-gray-900 text-2xl bg-gray-100 py-3 px-5 rounded-md uppercase">
               Grade Answers
             </h3>
-            <p className="text-gray-100 text-lg w-4/5">
-              Our built-in code editor not only helps students, but also
-              teachers. Open any answer and instantly see the student&apos;s
-              code.
+            <p className="text-gray-100 text-lg w-64">
+              Open any answer and instantly see the student&apos;s code.
             </p>
           </div>
 
-          <div className="bg-gray-800 h-96 flex flex-col gap-2 items-center pt-20 px-5 relative">
+          <div className="bg-gray-800 h-80 flex flex-col gap-2 items-center pt-20 px-2 relative rounded sm:px-10 md:px-9 lg:px-10">
             <IoMdAdd className="text-gray-100 text-5xl absolute top-4" />
             <h3 className="text-gray-900 text-2xl bg-gray-100 py-3 px-5 rounded-md uppercase">
               Create Classrooms
             </h3>
-            <p className="text-gray-100 text-lg w-4/5">
+            <p className="text-gray-100 text-lg w-64">
               Easily create classrooms for your computer science students.
             </p>
           </div>
 
-          <div className="bg-gray-900 h-96 flex flex-col gap-2 items-center pt-20 px-5 relative">
+          <div className="bg-gray-900 h-80 flex flex-col gap-2 items-center pt-20 px-2 relative rounded sm:px-10 md:px-9 lg:px-10">
             <BsFileEarmarkCode className="text-gray-100 text-5xl absolute top-4" />
             <h3 className="text-gray-900 text-2xl bg-gray-100 py-3 px-5 rounded-md uppercase">
               Add Comments
             </h3>
-            <p className="text-gray-100 text-lg w-4/5">
-              Put comments in your student&apos;s code before sending it. Help
-              that student improve for the next time by pointing out some
+            <p className="text-gray-100 text-lg w-64">
+              Help your students improve for the next time by pointing out some
               mistakes.
             </p>
           </div>
@@ -162,7 +159,7 @@ const Homepage: React.FC = () => {
 
         <Link
           href="/sign-up"
-          className="flex items-center gap-1 uppercase rounded-sm py-2 px-3 text-2xl font-bold text-gray-900 transition-colors hover:bg-gray-200"
+          className="flex items-center gap-1 uppercase rounded-sm py-2 px-3 text-2xl font-bold text-gray-900 bg-gray-200 transition-colors hover:bg-gray-300"
         >
           Try It Out
         </Link>
