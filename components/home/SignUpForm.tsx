@@ -49,8 +49,8 @@ const SignUpForm: React.FC<Props> = ({ closeSignUpModal, openSignInModal }) => {
   return (
     <form className="flex flex-col items-center">
       <div className="flex flex-col items-center gap-3">
-        <div className="flex flex-col items-center w-full">
-          <div className="flex justify-start w-full">
+        <div className="flex flex-col items-center w-11/12">
+          <div className="flex justify-start w-11/12">
             <label htmlFor="username" className="text-xl font-semibold">
               Username
             </label>
@@ -61,11 +61,11 @@ const SignUpForm: React.FC<Props> = ({ closeSignUpModal, openSignInModal }) => {
             id="username"
             value={username}
             onChange={changeUsername}
-            className="w-full p-3 rounded outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
+            className="w-11/12 p-3 rounded outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
           />
         </div>
-        <div className="flex flex-col items-center w-full">
-          <div className="flex justify-start w-full">
+        <div className="flex flex-col items-center w-11/12">
+          <div className="flex justify-start w-11/12">
             <label htmlFor="email" className="text-xl font-semibold">
               Email
             </label>
@@ -76,11 +76,11 @@ const SignUpForm: React.FC<Props> = ({ closeSignUpModal, openSignInModal }) => {
             id="email"
             value={email}
             onChange={changeEmail}
-            className="w-full p-3 rounded outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
+            className="w-11/12 p-3 rounded outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
           />
         </div>
-        <div className="flex flex-col items-center w-full">
-          <div className="flex justify-start w-full">
+        <div className="flex flex-col items-center w-11/12">
+          <div className="flex justify-start w-11/12">
             <label htmlFor="password" className="text-xl font-semibold">
               Password
             </label>
@@ -91,7 +91,7 @@ const SignUpForm: React.FC<Props> = ({ closeSignUpModal, openSignInModal }) => {
             id="password"
             value={password}
             onChange={changePassword}
-            className="w-full p-3 rounded outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
+            className="w-11/12 p-3 rounded outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
           />
         </div>
         <input
