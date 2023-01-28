@@ -59,12 +59,12 @@ const Homepage: React.FC = () => {
             The modern way of creating digital classrooms for computer science
           </p>
         </div>
-        <Link
-          href="/sign-up"
+        <button
+          onClick={openSignUpModal}
           className="flex items-center gap-1 uppercase bg-gray-100 rounded-sm py-2 px-3 text-xl font-semibold text-gray-900 transition-colors hover:bg-gray-200"
         >
           Get Started <BsArrowRight className="text-2xl" />
-        </Link>
+        </button>
       </section>
 
       <section className="p-12 flex flex-col gap-6 justify-center items-center bg-gray-100 h-[450px]">
@@ -124,12 +124,12 @@ const Homepage: React.FC = () => {
           </div>
         </div>
 
-        <Link
-          href="/sign-up"
+        <button
+          onClick={openSignUpModal}
           className="flex items-center gap-1 uppercase rounded-sm py-2 px-3 text-2xl font-bold text-gray-100 bg-gray-800 transition-colors hover:bg-gray-700"
         >
           Jump In
-        </Link>
+        </button>
       </section>
 
       <section className="flex flex-col gap-6 justify-center items-center bg-gray-100 h-[1200px] md:h-[900px] xl:h-[550px]">
@@ -170,12 +170,12 @@ const Homepage: React.FC = () => {
           </div>
         </div>
 
-        <Link
-          href="/sign-up"
+        <button
+          onClick={openSignUpModal}
           className="flex items-center gap-1 uppercase rounded-sm py-2 px-3 text-2xl font-bold text-gray-900 bg-gray-200 transition-colors hover:bg-gray-300"
         >
           Try It Out
-        </Link>
+        </button>
       </section>
 
       {isSignInModalOpen && (
