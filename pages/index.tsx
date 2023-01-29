@@ -28,10 +28,6 @@ const Homepage: React.FC = () => {
   if (user) return <MyClassroomsPage />;
 
   return (
-    // <>
-    //   {user ? (
-    //     <MyClassroomsPage />
-    //   ) : (
     <>
       <Head>
         <title>SchoolBit</title>
@@ -62,7 +58,7 @@ const Homepage: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={openSignUpModal}
+          onClick={openSignInModal}
           className="flex items-center gap-1 uppercase bg-gray-100 rounded-sm py-2 px-3 text-xl font-semibold text-gray-900 transition-colors hover:bg-gray-200"
         >
           Get Started <BsArrowRight className="text-2xl" />
@@ -127,7 +123,7 @@ const Homepage: React.FC = () => {
         </div>
 
         <button
-          onClick={openSignUpModal}
+          onClick={openSignInModal}
           className="flex items-center gap-1 uppercase rounded-sm py-2 px-3 text-2xl font-bold text-gray-100 bg-gray-800 transition-colors hover:bg-gray-700"
         >
           Jump In
@@ -173,7 +169,7 @@ const Homepage: React.FC = () => {
         </div>
 
         <button
-          onClick={openSignUpModal}
+          onClick={openSignInModal}
           className="flex items-center gap-1 uppercase rounded-sm py-2 px-3 text-2xl font-bold text-gray-900 bg-gray-200 transition-colors hover:bg-gray-300"
         >
           Try It Out
@@ -236,8 +232,6 @@ const Homepage: React.FC = () => {
         </div>
       )}
     </>
-    //   )}
-    // </>
   );
 };
 
