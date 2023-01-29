@@ -10,18 +10,14 @@ import { TbListCheck } from "react-icons/tb";
 import { MdCreate } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import useAppContext from "../hooks/useAppContext";
-import { useRouter } from "next/router";
 import useModal from "../hooks/useModal";
 import SignInForm from "../components/home/SignInForm";
 import SignUpForm from "../components/home/SignUpForm";
 import { GrFormClose } from "react-icons/gr";
+import MyClassroomsPage from "./my-classrooms";
 
 const Homepage: React.FC = () => {
   const { user } = useAppContext();
-
-  const router = useRouter();
-
-  if (user) router.push("/my-classrooms");
 
   const [isSignInModalOpen, openSignInModal, closeSignInModal] = useModal();
   const [isSignUpModalOpen, openSignUpModal, closeSignUpModal] = useModal();
@@ -29,7 +25,13 @@ const Homepage: React.FC = () => {
   const stopPropagation = (event: React.MouseEvent<HTMLDivElement>) =>
     event.stopPropagation();
 
+  if (user) return <MyClassroomsPage />;
+
   return (
+    // <>
+    //   {user ? (
+    //     <MyClassroomsPage />
+    //   ) : (
     <>
       <Head>
         <title>SchoolBit</title>
@@ -234,6 +236,8 @@ const Homepage: React.FC = () => {
         </div>
       )}
     </>
+    //   )}
+    // </>
   );
 };
 

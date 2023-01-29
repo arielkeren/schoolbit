@@ -5,7 +5,7 @@ import Header from "../components/general/Header";
 import Sidebar from "../components/general/Sidebar";
 import EmptyArea from "../components/general/EmptyArea";
 
-const ClassroomsPage: React.FC = () => {
+const AttendedClassroomsPage: React.FC = () => {
   const { attendedClassrooms } = useAppContext();
 
   return (
@@ -25,4 +25,4 @@ const ClassroomsPage: React.FC = () => {
   );
 };
 
-export default ClassroomsPage;
+export default AttendedClassroomsPage;

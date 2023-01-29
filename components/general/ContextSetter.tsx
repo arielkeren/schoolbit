@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { useEffect, ReactNode } from "react";
+import { useRouter } from "next/router";
+import { useEffect, ReactNode, useState } from "react";
 import { auth, database } from "../../firebaseConfig";
 import useAppContext from "../../hooks/useAppContext";
 
@@ -17,6 +18,11 @@ const ContextSetter: React.FC<Props> = ({ children }) => {
     changeGrades,
   } = useAppContext();
 
+  const [shouldRedirectToHomepage, setShouldRedirectToHomepage] =
+    useState(false);
+
+  const router = useRouter();
+
   useEffect(() => {
     const getUser = async () => {
       if (!user) return;
@@ -31,9 +37,23 @@ const ContextSetter: React.FC<Props> = ({ children }) => {
     };
 
     getUser();
-  }, [user, changeOwnedClassrooms, changeAttendedClassrooms, changeGrades]);
 
-  onAuthStateChanged(auth, (currentUser) => changeUser(currentUser));
+    if (shouldRedirectToHomepage && router.pathname !== "/") router.push("/");
+  }, [
+    user,
+    router,
+    shouldRedirectToHomepage,
+    changeOwnedClassrooms,
+    changeAttendedClassrooms,
+    changeGrades,
+  ]);
+
+  onAuthStateChanged(auth, (currentUser) => {
+    changeUser(currentUser);
+
+    if (currentUser) setShouldRedirectToHomepage(false);
+    else setShouldRedirectToHomepage(true);
+  });
 
   return <>{children}</>;
 };
