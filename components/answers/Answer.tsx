@@ -30,13 +30,18 @@ const Answer: React.FC<Props> = ({ answer }) => {
       <div
         onClick={toggleIsCodeOpen}
         className={`flex justify-between items-center p-5 cursor-pointer ${
-          answer.checked ? "bg-gray-600" : "bg-gray-800"
+          answer.checked ? "bg-gray-800" : "bg-gray-900"
         } ${isCodeOpen ? "rounded-t-md" : "rounded-md"}`}
       >
         <h2 className="text-white text-2xl">{answer.senderName}</h2>
 
         {answer.checked ? (
-          <ImCheckmark className="text-gray-300 text-3xl" />
+          <Link
+            href={`/classrooms/${classroomID}/assignments/${assignmentID}/answers/${answer.senderID}`}
+            onClick={stopPropagation}
+          >
+            <ImCheckmark className="text-gray-300 text-3xl hover:text-gray-50 transition-colors" />
+          </Link>
         ) : (
           <Link
             href={`/classrooms/${classroomID}/assignments/${assignmentID}/answers/${answer.senderID}`}

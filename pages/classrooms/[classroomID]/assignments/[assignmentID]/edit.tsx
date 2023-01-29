@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Title from "../../../../../components/general/Title";
 import EditAssignmentForm from "../../../../../components/edit/EditAssignmentForm";
 import { useRouter } from "next/router";
 import useAppContext from "../../../../../hooks/useAppContext";
@@ -24,10 +23,6 @@ const EditAssignmentPage: React.FC = () => {
     getClassroom(classroomID);
   }, [classroomID, getClassroom]);
 
-  const assignment = classroom?.assignments.find(
-    (currentAssignment) => currentAssignment.id === assignmentID
-  );
-
   if (!classroom)
     return (
       <>
@@ -47,6 +42,10 @@ const EditAssignmentPage: React.FC = () => {
         </EmptyArea>
       </>
     );
+
+  const assignment = classroom.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
 
   if (!assignment)
     return (

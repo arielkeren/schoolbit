@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import Title from "../../../../../../components/general/Title";
 import CodeEditor from "../../../../../../components/general/CodeEditor";
 import GradeForm from "../../../../../../components/answer/GradeForm";
 import Head from "next/head";
@@ -26,13 +25,6 @@ const AnswerPage: React.FC = () => {
     getClassroom(classroomID);
   }, [getClassroom, classroomID]);
 
-  const assignment = classroom?.assignments.find(
-    (currentAssignment) => currentAssignment.id === assignmentID
-  );
-  const answer = assignment?.answers?.find(
-    (currentAnswer) => currentAnswer.senderID === studentID
-  );
-
   if (!classroom)
     return (
       <>
@@ -52,6 +44,10 @@ const AnswerPage: React.FC = () => {
         </EmptyArea>
       </>
     );
+
+  const assignment = classroom.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
 
   if (!assignment)
     return (
@@ -76,6 +72,10 @@ const AnswerPage: React.FC = () => {
         </EmptyArea>
       </>
     );
+
+  const answer = assignment.answers.find(
+    (currentAnswer) => currentAnswer.senderID === studentID
+  );
 
   if (!answer)
     return (
@@ -122,7 +122,14 @@ const AnswerPage: React.FC = () => {
               />
             </div>
 
-            <GradeForm />
+            {answer.checked ? (
+              <Information
+                primary="You've already graded this student's code"
+                secondary="The grade has already been sent to the student"
+              />
+            ) : (
+              <GradeForm />
+            )}
           </EmptyArea>
         </>
       ) : (

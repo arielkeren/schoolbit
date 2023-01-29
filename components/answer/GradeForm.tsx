@@ -6,7 +6,7 @@ import { IGrade } from "../../types/types";
 import useAppContext from "../../hooks/useAppContext";
 
 const GradeForm: React.FC = () => {
-  const { classroom } = useAppContext();
+  const { classroom, changeClassroom } = useAppContext();
 
   const [grade, setGrade] = useState("");
   const [message, setMessage] = useState("");
@@ -42,7 +42,7 @@ const GradeForm: React.FC = () => {
 
     if (!assignment) return;
 
-    const answer = assignment.answers?.find(
+    const answer = assignment.answers.find(
       (currentAnswer) => currentAnswer.senderID === studentID
     );
 
@@ -56,10 +56,12 @@ const GradeForm: React.FC = () => {
       checked: true,
     });
 
-    const newAssignments = {
-      ...classroom.assignments,
-      answers: newAnswers,
-    };
+    const newAssignment = { ...assignment, answers: newAnswers };
+
+    const newAssignments = classroom.assignments.filter(
+      (currentAssignment) => currentAssignment.id !== assignmentID
+    );
+    newAssignments.push(newAssignment);
 
     const classroomDocumentReference = doc(
       database,
@@ -68,7 +70,7 @@ const GradeForm: React.FC = () => {
 
     try {
       await updateDoc(classroomDocumentReference, {
-        newAssignments,
+        assignments: newAssignments,
       });
     } catch {
       alert("Failed to mark the answer as checked");
@@ -81,7 +83,6 @@ const GradeForm: React.FC = () => {
       assignmentName: assignment.name,
       grade,
       message,
-      assignmentID,
     };
 
     try {
@@ -92,6 +93,8 @@ const GradeForm: React.FC = () => {
       alert("Failed to send the grade to the student");
       return;
     }
+
+    changeClassroom({ ...classroom, assignments: newAssignments });
 
     router.push(
       `/classrooms/${classroomID}/assignments/${assignmentID}/answers`

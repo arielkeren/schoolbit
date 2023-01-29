@@ -15,8 +15,8 @@ const GradeList: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-1">
-      {grades?.map((grade) => (
-        <Grade grade={grade} key={grade.assignmentID} />
+      {grades?.map((grade, index) => (
+        <Grade grade={grade} key={index} />
       ))}
     </div>
   );

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import Title from "../../../../../../components/general/Title";
 import AnswerList from "../../../../../../components/answers/AnswerList";
 import Head from "next/head";
 import useAppContext from "../../../../../../hooks/useAppContext";
@@ -24,10 +23,6 @@ const AnswersPage: React.FC = () => {
     getClassroom(classroomID);
   }, [getClassroom, classroomID]);
 
-  const assignment = classroom?.assignments.find(
-    (currentAssignment) => currentAssignment.id === assignmentID
-  );
-
   if (!classroom)
     return (
       <>
@@ -47,6 +42,10 @@ const AnswersPage: React.FC = () => {
         </EmptyArea>
       </>
     );
+
+  const assignment = classroom.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
 
   if (!assignment)
     return (

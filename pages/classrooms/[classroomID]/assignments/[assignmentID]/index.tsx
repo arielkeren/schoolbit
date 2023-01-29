@@ -1,12 +1,9 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Title from "../../../../../components/general/Title";
 import Question from "../../../../../components/assignment/Question";
 import { useEffect, useState } from "react";
 import AssignmentHeader from "../../../../../components/assignment/AssignmentHeader";
-import ToggleCodeViewButton from "../../../../../components/assignment/CodeViewButton";
 import CodeEditor from "../../../../../components/general/CodeEditor";
-import SubmitButton from "../../../../../components/assignment/SubmitButton";
 import useAppContext from "../../../../../hooks/useAppContext";
 import Header from "../../../../../components/general/Header";
 import Sidebar from "../../../../../components/general/Sidebar";
@@ -39,10 +36,6 @@ const AssignmentPage: React.FC = () => {
 
   const changeCode = (newCode: string) => setCode(newCode);
 
-  const assignment = classroom?.assignments.find(
-    (currentAssignment) => currentAssignment.id === assignmentID
-  );
-
   if (!classroom)
     return (
       <>
@@ -62,6 +55,10 @@ const AssignmentPage: React.FC = () => {
         </EmptyArea>
       </>
     );
+
+  const assignment = classroom.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
 
   if (!assignment)
     return (
