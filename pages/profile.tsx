@@ -2,7 +2,7 @@ import Head from "next/head";
 import EmptyArea from "../components/general/EmptyArea";
 import Header from "../components/general/Header";
 import Sidebar from "../components/general/Sidebar";
-import LogOutButton from "../components/profile/LogOutButton";
+import SignOutButton from "../components/profile/SignOutButton";
 import ProfileDetails from "../components/profile/ProfileDetails";
 
 const ProfilePage: React.FC = () => (
@@ -18,7 +18,7 @@ const ProfilePage: React.FC = () => (
     <EmptyArea>
       <ProfileDetails />
 
-      <LogOutButton />
+      <SignOutButton />
     </EmptyArea>
   </>
 );

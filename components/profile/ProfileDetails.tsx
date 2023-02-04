@@ -1,34 +1,23 @@
 import useAppContext from "../../hooks/useAppContext";
+import Information from "../general/Information";
 
 const ProfileDetails: React.FC = () => {
   const { user } = useAppContext();
 
+  if (!user)
+    return (
+      <Information
+        primary="Not signed in"
+        secondary="Sign in to use SchoolBit"
+      />
+    );
+
   return (
-    <>
-      {user ? (
-        <div className="flex justify-center m-10">
-          <div className="flex flex-col gap-8">
-            <p className="font-bold text-3xl">
-              <span className="font-extrabold text-4xl mr-4 uppercase">
-                Username
-              </span>
-              {user.displayName}
-            </p>
-            <hr className="border-2 border-gray-200" />
-            <p className="font-bold text-3xl">
-              <span className="font-extrabold text-4xl mr-4 uppercase">
-                Email
-              </span>
-              {user.email}
-            </p>
-          </div>
-        </div>
-      ) : (
-        <p className="text-white text-center text-3xl font-bold">
-          Log in to see your profile
-        </p>
-      )}
-    </>
+    <div className="flex flex-col items-center">
+      <p className="text-xl font-bold uppercase sm:text-2xl">Signed in as</p>
+      <p className="text-lg font-medium sm:text-xl">{user.displayName}</p>
+      <p className="sm:text-lg">{user.email}</p>
+    </div>
   );
 };
 
