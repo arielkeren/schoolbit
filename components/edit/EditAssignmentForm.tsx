@@ -104,11 +104,11 @@ const EditAssignmentForm: React.FC = () => {
   };
 
   return (
-    <form className="flex justify-center mb-10">
-      <div className="w-1/2 flex flex-col items-center gap-8">
+    <form className="flex justify-center">
+      <div className="w-full flex flex-col items-center gap-8 lg:w-4/5 xl:w-1/2">
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-4/5">
-            <label htmlFor="name" className="text-2xl font-bold">
+            <label htmlFor="name" className="text-lg font-bold sm:text-xl">
               Name
             </label>
           </div>
@@ -119,12 +119,12 @@ const EditAssignmentForm: React.FC = () => {
             value={name}
             onChange={changeName}
             autoFocus
-            className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
+            className="w-4/5 p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors sm:text-lg"
           />
         </div>
 
-        <div>
-          <h2 className="text-2xl font-bold">Until</h2>
+        <div className="scale-50 sm:scale-100">
+          <h2 className="text-4xl font-bold sm:text-xl">Due Date</h2>
 
           <Calendar
             value={date}
@@ -138,7 +138,7 @@ const EditAssignmentForm: React.FC = () => {
 
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-full">
-            <label htmlFor="question" className="text-2xl font-bold">
+            <label htmlFor="question" className="text-lg font-bold sm:text-xl">
               Question
             </label>
           </div>
@@ -147,7 +147,7 @@ const EditAssignmentForm: React.FC = () => {
             id="question"
             value={question}
             onChange={changeQuestion}
-            className="w-full h-96 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
+            className="w-full h-96 p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors sm:text-lg"
           />
         </div>
 
