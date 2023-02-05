@@ -59,7 +59,7 @@ const JoinClassroomForm: React.FC = () => {
 
   return (
     <form className="flex justify-center">
-      <div className="w-full flex flex-col items-center gap-3 lg:w-4/5">
+      <div className="w-full flex flex-col items-center gap-3 lg:w-4/5 xl:w-1/2">
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-4/5">
             <label
