@@ -95,7 +95,7 @@ const CreateClassroomForm: React.FC = () => {
 
   return (
     <form className="flex justify-center mb-10">
-      <div className="w-full flex flex-col items-center gap-3 lg:w-11/12">
+      <div className="w-full flex flex-col items-center gap-3 lg:w-11/12 xl:w-1/2">
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-4/5">
             <label htmlFor="name" className="text-lg font-bold md:text-xl">
