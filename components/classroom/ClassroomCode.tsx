@@ -10,7 +10,7 @@ const ClassroomCode: React.FC = () => {
     <div className="absolute bottom-3 left-0 w-full flex justify-center">
       <button
         onClick={copyCodeToClipboard}
-        className="text-gray-600 text-3xl p-2 rounded ml-[103px] transition-colors hover:bg-gray-800 hover:text-gray-100"
+        className="text-gray-600 text-xl p-2 rounded ml-[103px] transition-colors hover:bg-gray-800 hover:text-gray-100 sm:text-2xl"
       >
         {classroomID}
       </button>
