@@ -1,5 +1,6 @@
 import IAssignment from "./IAssignment";
 import IRequest from "./IRequest";
+import IParticipant from "./IParticipant";
 
 export default interface IClassroomData {
   classroomName: string;
@@ -8,6 +9,6 @@ export default interface IClassroomData {
   ownerName: string;
   ownerID: string;
   assignments: IAssignment[];
-  participants: string[];
+  participants: IParticipant[];
   requests: IRequest[];
 }

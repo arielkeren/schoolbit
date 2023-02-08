@@ -1,6 +1,5 @@
 import useAppContext from "../../hooks/useAppContext";
 import Information from "../general/Information";
-import Participant from "./Participant";
 import ParticipantTypeTitle from "./ParticipantTypeTitle";
 
 const Owner: React.FC = () => {
@@ -18,7 +17,9 @@ const Owner: React.FC = () => {
     <div className="mb-3">
       <ParticipantTypeTitle title="Teacher" />
 
-      <Participant name={classroom.ownerName} />
+      <div className="bg-gray-900 flex flex-col gap-1 justify-between p-5 items-center rounded border-b-4 border-gray-700 md:flex-row">
+        <p className="text-slate-300 text-2xl">{classroom.ownerName}</p>
+      </div>
     </div>
   );
 };

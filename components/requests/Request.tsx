@@ -2,7 +2,7 @@ import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { database } from "../../firebaseConfig";
 import useAppContext from "../../hooks/useAppContext";
-import { IClassroom, IRequest } from "../../types/types";
+import { IClassroom, IParticipant, IRequest } from "../../types/types";
 
 interface Props {
   request: IRequest;
@@ -26,10 +26,15 @@ const Request: React.FC<Props> = ({ request }) => {
       `classrooms/${classroomID}`
     );
 
+    const newParticipant: IParticipant = {
+      name: request.senderName,
+      id: request.senderID,
+    };
+
     try {
       await updateDoc(classroomDocumentReference, {
         requests: newRequests,
-        participants: arrayUnion(request.senderName),
+        participants: arrayUnion(newParticipant),
       });
     } catch {
       alert("Failed to remove the request and add the student");
@@ -62,7 +67,7 @@ const Request: React.FC<Props> = ({ request }) => {
     changeClassroom({
       ...classroom,
       requests: newRequests,
-      participants: [...classroom.participants, request.senderName],
+      participants: [...classroom.participants, newParticipant],
     });
   };
 

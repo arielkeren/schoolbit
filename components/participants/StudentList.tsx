@@ -1,6 +1,6 @@
 import useAppContext from "../../hooks/useAppContext";
 import Information from "../general/Information";
-import Participant from "./Participant";
+import Student from "./Student";
 import ParticipantTypeTitle from "./ParticipantTypeTitle";
 
 const StudentList: React.FC = () => {
@@ -30,8 +30,12 @@ const StudentList: React.FC = () => {
     <>
       <ParticipantTypeTitle title="Students" />
 
-      {classroom.participants.map((participant, index) => (
-        <Participant name={participant} key={index} />
+      {classroom.participants.map((participant) => (
+        <Student
+          student={participant}
+          participants={classroom.participants}
+          key={participant.id}
+        />
       ))}
     </>
   );
