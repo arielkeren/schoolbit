@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Question from "../../../../../components/assignment/Question";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import AssignmentHeader from "../../../../../components/assignment/AssignmentHeader";
 import CodeEditor from "../../../../../components/general/CodeEditor";
 import useAppContext from "../../../../../hooks/useAppContext";
@@ -12,12 +12,14 @@ import Information from "../../../../../components/general/Information";
 import TeacherSidebar from "../../../../../components/general/TeacherSidebar";
 import StudentSidebar from "../../../../../components/general/StudentSidebar";
 import AssignmentStudentSidebar from "../../../../../components/assignment/AssignmentStudentSidebar";
+import SubmittedStudentSidebar from "../../../../../components/assignment/SubmittedStudentSidebar";
 
 const AssignmentPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
   const [isCodeView, setIsCodeView] = useState(false);
   const [code, setCode] = useState("");
+  const [language, setLanguage] = useState("javascript");
 
   const router = useRouter();
   const { classroomID, assignmentID } = router.query as {
@@ -35,6 +37,9 @@ const AssignmentPage: React.FC = () => {
   const closeCodeView = () => setIsCodeView(false);
 
   const changeCode = (newCode: string) => setCode(newCode);
+
+  const changeLanguage = (event: ChangeEvent<HTMLSelectElement>) =>
+    setLanguage(event.target.value);
 
   if (!classroom)
     return (
@@ -88,6 +93,10 @@ const AssignmentPage: React.FC = () => {
     (answer) => user?.uid === answer.senderID
   );
 
+  const answer = assignment.answers.find(
+    (currentAnswer) => currentAnswer.senderID === user?.uid
+  );
+
   return (
     <>
       <Head>
@@ -97,38 +106,73 @@ const AssignmentPage: React.FC = () => {
       <Header title={assignment.name} />
 
       {user?.uid === classroom.ownerID ? (
-        <TeacherSidebar />
-      ) : (
         <>
-          {didStudentSubmit ? (
-            <StudentSidebar />
-          ) : (
-            <AssignmentStudentSidebar
-              isCodeView={isCodeView}
-              toggleCodeView={toggleCodeView}
-              closeCodeView={closeCodeView}
-              code={code}
-            />
-          )}
-        </>
-      )}
+          <TeacherSidebar />
 
-      <EmptyArea>
-        {isCodeView ? (
-          <CodeEditor
-            code={code}
-            height="calc(100vh - 100px - 20px - 20px)"
-            width="100%"
-            changeCode={changeCode}
-          />
-        ) : (
-          <>
+          <EmptyArea>
             <AssignmentHeader />
 
             <Question question={assignment.question} />
-          </>
-        )}
-      </EmptyArea>
+          </EmptyArea>
+        </>
+      ) : (
+        <>
+          {didStudentSubmit ? (
+            <>
+              <SubmittedStudentSidebar
+                isCodeView={isCodeView}
+                toggleCodeView={toggleCodeView}
+              />
+
+              <EmptyArea>
+                {isCodeView ? (
+                  <CodeEditor
+                    code={answer?.code ?? ""}
+                    language={language}
+                    changeLanguage={changeLanguage}
+                    height="calc(100vh - 100px - 20px - 20px)"
+                    width="100%"
+                  />
+                ) : (
+                  <>
+                    <AssignmentHeader />
+
+                    <Question question={assignment.question} />
+                  </>
+                )}
+              </EmptyArea>
+            </>
+          ) : (
+            <>
+              <AssignmentStudentSidebar
+                isCodeView={isCodeView}
+                toggleCodeView={toggleCodeView}
+                closeCodeView={closeCodeView}
+                code={code}
+              />
+
+              <EmptyArea>
+                {isCodeView ? (
+                  <CodeEditor
+                    code={code}
+                    language={language}
+                    changeLanguage={changeLanguage}
+                    height="calc(100vh - 100px - 20px - 20px)"
+                    width="100%"
+                    changeCode={changeCode}
+                  />
+                ) : (
+                  <>
+                    <AssignmentHeader />
+
+                    <Question question={assignment.question} />
+                  </>
+                )}
+              </EmptyArea>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CodeEditor from "../../../../../../components/general/CodeEditor";
 import GradeForm from "../../../../../../components/answer/GradeForm";
@@ -14,6 +14,8 @@ import StudentSidebar from "../../../../../../components/general/StudentSidebar"
 const AnswerPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
+  const [language, setLanguage] = useState("javascript");
+
   const router = useRouter();
   const { classroomID, assignmentID, studentID } = router.query as {
     classroomID: string;
@@ -24,6 +26,9 @@ const AnswerPage: React.FC = () => {
   useEffect(() => {
     getClassroom(classroomID);
   }, [getClassroom, classroomID]);
+
+  const changeLanguage = (event: ChangeEvent<HTMLSelectElement>) =>
+    setLanguage(event.target.value);
 
   if (!classroom)
     return (
@@ -117,8 +122,10 @@ const AnswerPage: React.FC = () => {
             <div className="mb-14">
               <CodeEditor
                 code={answer.code}
+                language={language}
+                changeLanguage={changeLanguage}
                 height="calc(100vh - 136px - 48px - 100px)"
-                width="95vw"
+                width="100%"
               />
             </div>
 

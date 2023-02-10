@@ -1,23 +1,39 @@
 import Editor, { OnChange } from "@monaco-editor/react";
+import { ChangeEvent, useState } from "react";
+import ProgrammingLanguagePicker from "./ProgrammingLanguagePicker";
 
 interface Props {
   code: string;
+  language: string;
+  changeLanguage: (event: ChangeEvent<HTMLSelectElement>) => void;
   height: string;
   width: string;
   changeCode?: (newCode: string) => void;
 }
 
-const CodeEditor: React.FC<Props> = ({ code, height, width, changeCode }) => {
+const CodeEditor: React.FC<Props> = ({
+  code,
+  language,
+  changeLanguage,
+  height,
+  width,
+  changeCode,
+}) => {
   const onChangeCode: OnChange | undefined = changeCode
     ? (newCode: string | undefined) => changeCode(newCode ?? "")
     : undefined;
 
   return (
-    <div className="flex justify-center">
+    <div>
+      <ProgrammingLanguagePicker
+        languageID={language}
+        changeLanguage={changeLanguage}
+      />
+
       <Editor
-        height={height}
+        height={`calc(${height} - 25px)`}
         width={width}
-        language="javascript"
+        language={language}
         value={code}
         theme="vs-dark"
         onChange={onChangeCode}

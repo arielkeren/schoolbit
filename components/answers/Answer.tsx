@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { IAnswer } from "../../types/types";
 import CodeEditor from "../general/CodeEditor";
 import { FaPenAlt } from "react-icons/fa";
@@ -12,6 +12,7 @@ interface Props {
 
 const Answer: React.FC<Props> = ({ answer }) => {
   const [isCodeOpen, setIsCodeOpen] = useState(false);
+  const [language, setLanguage] = useState("javascript");
 
   const router = useRouter();
   const { classroomID, assignmentID } = router.query as {
@@ -25,13 +26,16 @@ const Answer: React.FC<Props> = ({ answer }) => {
   const stopPropagation = (event: React.MouseEvent<HTMLAnchorElement>) =>
     event.stopPropagation();
 
+  const changeLanguage = (event: ChangeEvent<HTMLSelectElement>) =>
+    setLanguage(event.target.value);
+
   return (
     <div>
       <div
         onClick={toggleIsCodeOpen}
-        className={`flex justify-between items-center p-5 cursor-pointer ${
+        className={`flex justify-between items-center p-5 cursor-pointer rounded ${
           answer.checked ? "bg-gray-800" : "bg-gray-900"
-        } ${isCodeOpen ? "rounded-t-md" : "rounded-md"}`}
+        }`}
       >
         <h2 className="text-white text-2xl">{answer.senderName}</h2>
 
@@ -53,7 +57,13 @@ const Answer: React.FC<Props> = ({ answer }) => {
       </div>
 
       {isCodeOpen && (
-        <CodeEditor code={answer.code} height="500px" width="100%" />
+        <CodeEditor
+          code={answer.code}
+          language={language}
+          changeLanguage={changeLanguage}
+          height="500px"
+          width="100%"
+        />
       )}
     </div>
   );
