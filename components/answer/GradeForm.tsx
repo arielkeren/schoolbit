@@ -102,11 +102,11 @@ const GradeForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={validateData} className="flex justify-center mb-10">
-      <div className="w-1/2 flex flex-col items-center gap-3">
+    <form onSubmit={validateData} className="flex justify-center">
+      <div className="w-full flex flex-col items-center gap-8 lg:w-4/5 xl:w-1/2">
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-4/5">
-            <label htmlFor="grade" className="text-2xl font-bold">
+            <label htmlFor="grade" className="text-lg font-bold sm:text-xl">
               Grade
             </label>
           </div>
@@ -114,17 +114,15 @@ const GradeForm: React.FC = () => {
             type="text"
             name="grade"
             id="grade"
-            placeholder="100"
-            autoFocus
             value={grade}
             onChange={changeGrade}
-            className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
+            className="w-4/5 p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors sm:text-lg"
           />
         </div>
 
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-4/5">
-            <label htmlFor="message" className="text-2xl font-bold">
+            <label htmlFor="message" className="text-lg font-bold sm:text-xl">
               Message
             </label>
           </div>
@@ -132,10 +130,9 @@ const GradeForm: React.FC = () => {
             type="text"
             name="message"
             id="message"
-            placeholder="Excellent!"
             value={message}
             onChange={changeMessage}
-            className="w-4/5 text-3xl p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors"
+            className="w-4/5 p-3 rounded-md outline-none bg-gray-100 focus:bg-gray-200 transition-colors sm:text-lg"
           />
         </div>
 
