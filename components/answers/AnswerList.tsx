@@ -16,7 +16,7 @@ const AnswerList: React.FC<Props> = ({ answers }) => {
     );
 
   return (
-    <div className="flex flex-col gap-3 mx-10">
+    <div className="flex flex-col gap-3">
       {answers.map((answer) => (
         <Answer answer={answer} key={answer.senderID} />
       ))}
