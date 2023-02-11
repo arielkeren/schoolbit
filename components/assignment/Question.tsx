@@ -5,7 +5,7 @@ interface Props {
 const Question: React.FC<Props> = ({ question }) => (
   <div className="flex justify-center">
     <div className="w-4/5 m-5 p-2">
-      <p className="text-3xl break-all whitespace-pre-wrap">{question}</p>
+      <p className="text-xl break-all whitespace-pre-wrap">{question}</p>
     </div>
   </div>
 );

@@ -1,7 +1,6 @@
 import { FaTrashAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { TbChecklist } from "react-icons/tb";
-import Title from "../general/Title";
 import { useRouter } from "next/router";
 import { doc, updateDoc } from "firebase/firestore";
 import { database } from "../../firebaseConfig";
@@ -19,9 +18,6 @@ const AssignmentHeader: React.FC = () => {
 
   const isOwner = user?.uid === classroom?.ownerID;
   const assignments = classroom?.assignments;
-  const assignment = assignments?.find(
-    (currentAssignmnet) => currentAssignmnet.id === assignmentID
-  );
 
   const removeAssignment = async () => {
     if (!assignments) return;
@@ -52,12 +48,8 @@ const AssignmentHeader: React.FC = () => {
   return (
     <div className="flex flex-col items-center w-4/5 mx-auto">
       <div className="flex justify-between items-center w-full">
-        <Title
-          title={!assignment ? "Couldn't Load Assignment" : assignment.name}
-        />
-
         {isOwner && (
-          <div className="flex">
+          <div className="flex py-2">
             <Link
               href={`/classrooms/${classroomID}/assignments/${assignmentID}/answers`}
               className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100"
