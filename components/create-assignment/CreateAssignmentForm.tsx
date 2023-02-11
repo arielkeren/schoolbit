@@ -102,18 +102,15 @@ const CreateAssignmentForm: React.FC = () => {
           />
         </div>
 
-        <div className="scale-50 sm:scale-100">
-          <h2 className="text-4xl font-bold sm:text-xl">Due Date</h2>
-
-          <Calendar
-            value={date}
-            onChange={setDate}
-            calendarType="US"
-            minDate={new Date()}
-            view="month"
-            locale="en-US"
-          />
-        </div>
+        <h2 className="text-xl font-bold">Due Date</h2>
+        <Calendar
+          value={date}
+          onChange={setDate}
+          calendarType="US"
+          minDate={new Date()}
+          view="month"
+          locale="en-US"
+        />
 
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-full">
