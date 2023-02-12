@@ -140,6 +140,7 @@ const AssignmentPage: React.FC = () => {
                     changeLanguage={changeLanguage}
                     height="calc(100vh - 100px - 20px - 20px)"
                     width="100%"
+                    isLanguageLocked
                   />
                 ) : (
                   <>
