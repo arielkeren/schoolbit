@@ -14,6 +14,7 @@ interface Props {
   toggleCodeView: () => void;
   closeCodeView: () => void;
   code: string;
+  language: string;
 }
 
 const AssignmentStudentSidebar: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const AssignmentStudentSidebar: React.FC<Props> = ({
   toggleCodeView,
   closeCodeView,
   code,
+  language,
 }) => {
   const router = useRouter();
   const { classroomID } = router.query as { classroomID: string };
@@ -47,7 +49,11 @@ const AssignmentStudentSidebar: React.FC<Props> = ({
           toggleCodeView={toggleCodeView}
         />
 
-        <SubmitButton code={code} closeCodeView={closeCodeView} />
+        <SubmitButton
+          code={code}
+          language={language}
+          closeCodeView={closeCodeView}
+        />
       </div>
 
       <div className="flex flex-col gap-5 mt-auto">

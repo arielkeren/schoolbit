@@ -9,6 +9,7 @@ interface Props {
   height: string;
   width: string;
   changeCode?: (newCode: string) => void;
+  isLanguageLocked?: boolean;
 }
 
 const CodeEditor: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const CodeEditor: React.FC<Props> = ({
   height,
   width,
   changeCode,
+  isLanguageLocked,
 }) => {
   const onChangeCode: OnChange | undefined = changeCode
     ? (newCode: string | undefined) => changeCode(newCode ?? "")
@@ -27,7 +29,7 @@ const CodeEditor: React.FC<Props> = ({
     <div>
       <ProgrammingLanguagePicker
         languageID={language}
-        changeLanguage={changeLanguage}
+        changeLanguage={isLanguageLocked ? undefined : changeLanguage}
       />
 
       <Editor

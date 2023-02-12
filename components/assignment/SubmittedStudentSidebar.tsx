@@ -7,7 +7,6 @@ import { HiUserGroup } from "react-icons/hi";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import CodeViewButton from "./CodeViewButton";
-import SubmitButton from "./SubmitButton";
 
 interface Props {
   isCodeView: boolean;

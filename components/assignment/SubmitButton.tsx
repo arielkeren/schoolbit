@@ -6,10 +6,11 @@ import useAppContext from "../../hooks/useAppContext";
 
 interface Props {
   code: string;
+  language: string;
   closeCodeView: () => void;
 }
 
-const SubmitButton: React.FC<Props> = ({ code, closeCodeView }) => {
+const SubmitButton: React.FC<Props> = ({ code, language, closeCodeView }) => {
   const { user, classroom, changeClassroom } = useAppContext();
 
   const router = useRouter();
@@ -46,6 +47,7 @@ const SubmitButton: React.FC<Props> = ({ code, closeCodeView }) => {
 
     const newAnswer: IAnswer = {
       code,
+      language,
       senderName: username,
       senderID: userID,
       checked: false,

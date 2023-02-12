@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 
 interface Props {
   languageID: string;
-  changeLanguage: (event: ChangeEvent<HTMLSelectElement>) => void;
+  changeLanguage: ((event: ChangeEvent<HTMLSelectElement>) => void) | undefined;
 }
 
 const ProgrammingLanguagePicker: React.FC<Props> = ({
@@ -121,7 +121,11 @@ const ProgrammingLanguagePicker: React.FC<Props> = ({
   ];
 
   return (
-    <select value={languageID} onChange={changeLanguage}>
+    <select
+      value={languageID}
+      onChange={changeLanguage}
+      className="bg-gray-100 rounded"
+    >
       {languages.map((currentLanguage) => (
         <option value={currentLanguage.id} key={currentLanguage.id}>
           {currentLanguage.name}

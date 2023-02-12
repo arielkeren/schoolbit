@@ -20,6 +20,7 @@ const AssignmentPage: React.FC = () => {
   const [isCodeView, setIsCodeView] = useState(false);
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("javascript");
+  const [isLanguageLocked, setIsLanguageLocked] = useState(false);
 
   const router = useRouter();
   const { classroomID, assignmentID } = router.query as {
@@ -27,9 +28,20 @@ const AssignmentPage: React.FC = () => {
     assignmentID: string;
   };
 
+  const assignment = classroom?.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
+
   useEffect(() => {
     getClassroom(classroomID);
-  }, [getClassroom, classroomID]);
+    setLanguage(assignment?.language ?? "javascript");
+    setIsLanguageLocked(assignment?.isLanguageLocked ?? false);
+  }, [
+    getClassroom,
+    classroomID,
+    assignment?.language,
+    assignment?.isLanguageLocked,
+  ]);
 
   const toggleCodeView = () =>
     setIsCodeView((previousCodeView) => !previousCodeView);
@@ -60,10 +72,6 @@ const AssignmentPage: React.FC = () => {
         </EmptyArea>
       </>
     );
-
-  const assignment = classroom.assignments.find(
-    (currentAssignment) => currentAssignment.id === assignmentID
-  );
 
   if (!assignment)
     return (
@@ -149,6 +157,7 @@ const AssignmentPage: React.FC = () => {
                 toggleCodeView={toggleCodeView}
                 closeCodeView={closeCodeView}
                 code={code}
+                language={language}
               />
 
               <EmptyArea>
@@ -160,6 +169,7 @@ const AssignmentPage: React.FC = () => {
                     height="calc(100vh - 100px - 20px - 20px)"
                     width="100%"
                     changeCode={changeCode}
+                    isLanguageLocked
                   />
                 ) : (
                   <>
