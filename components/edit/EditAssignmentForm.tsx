@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { database } from "../../firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
-import { IAssignment } from "../../types/types";
+import { IAnswer, IAssignment } from "../../types/types";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
 import useAppContext from "../../hooks/useAppContext";
@@ -22,6 +22,7 @@ const EditAssignmentForm: React.FC = () => {
   const [date, setDate] = useState(new Date());
   const [language, setLanguage] = useState("javascript");
   const [isLanguageLocked, setIsLanguageLocked] = useState(false);
+  const [answers, setAnswers] = useState<IAnswer[]>([]);
 
   useEffect(() => {
     const assignment = classroom?.assignments.find(
@@ -41,6 +42,7 @@ const EditAssignmentForm: React.FC = () => {
     setDate(dateFormat);
     setLanguage(assignment?.language ?? "javascript");
     setIsLanguageLocked(assignment?.isLanguageLocked ?? false);
+    setAnswers(assignment?.answers ?? []);
   }, [classroom, assignmentID]);
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -84,7 +86,7 @@ const EditAssignmentForm: React.FC = () => {
       until: shortenedDate,
       language,
       isLanguageLocked,
-      answers: [],
+      answers,
       id: assignmentID,
     };
 
