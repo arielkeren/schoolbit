@@ -14,7 +14,7 @@ import StudentSidebar from "../../../../../../components/general/StudentSidebar"
 const AnswerPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
-  const [language, setLanguage] = useState("javascript");
+  const [language, setLanguage] = useState<string | null>(null);
 
   const router = useRouter();
   const { classroomID, assignmentID, studentID } = router.query as {
@@ -122,7 +122,7 @@ const AnswerPage: React.FC = () => {
             <div className="mb-14">
               <CodeEditor
                 code={answer.code}
-                language={language}
+                language={language ?? answer.language}
                 changeLanguage={changeLanguage}
                 height="calc(100vh - 136px - 48px - 100px)"
                 width="100%"
