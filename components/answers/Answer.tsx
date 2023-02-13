@@ -12,7 +12,7 @@ interface Props {
 
 const Answer: React.FC<Props> = ({ answer }) => {
   const [isCodeOpen, setIsCodeOpen] = useState(false);
-  const [language, setLanguage] = useState("javascript");
+  const [language, setLanguage] = useState(answer.language);
 
   const router = useRouter();
   const { classroomID, assignmentID } = router.query as {
