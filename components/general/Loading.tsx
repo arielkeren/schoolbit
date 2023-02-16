@@ -10,7 +10,7 @@ const Loading: React.FC = () => {
         <title>SchoolBit</title>
       </Head>
 
-      <div className="h-screen w-screen bg-gray-900 flex justify-center items-center">
+      <div className="h-[100dvh] w-screen bg-gray-900 flex justify-center items-center">
         <VscLoading className="animate-spin text-gray-400 text-9xl" />
         <Image
           src={Logo}
