@@ -13,7 +13,7 @@ const TeacherSidebar: React.FC = () => {
   const { classroomID } = router.query as { classroomID: string };
 
   return (
-    <div className="fixed top-0 left-0 w-[100px] py-5 flex flex-col items-center bg-gray-900 h-[100dvh]">
+    <div className="fixed top-0 left-0 w-[100px] py-5 flex flex-col items-center bg-gray-900 h-screen h-[100dvh]">
       <Link href="/my-classrooms">
         <Image src={Logo} alt="" height="60" />
       </Link>
