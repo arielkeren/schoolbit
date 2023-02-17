@@ -54,7 +54,7 @@ const ContextSetter: React.FC<Props> = ({ children }) => {
   onAuthStateChanged(auth, (currentUser) => {
     changeUser(currentUser);
     setIsUserLoaded(true);
-    if (!user && currentUser) setIsLoading(true);
+    if (!!user === !currentUser) setIsLoading(true);
   });
 
   if (isLoading) return <Loading />;
