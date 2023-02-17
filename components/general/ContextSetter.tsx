@@ -37,11 +37,11 @@ const ContextSetter: React.FC<Props> = ({ children }) => {
       changeGrades(data?.grades ?? []);
     };
 
-    getUser();
-
-    if (isUserLoaded && !user && router.pathname !== "/")
-      router.push("/").then(() => setIsLoading(false));
-    else if (isUserLoaded && !user) setIsLoading(false);
+    getUser().then(() => {
+      if (isUserLoaded && !user && router.pathname !== "/")
+        router.push("/").then(() => setIsLoading(false));
+      else if ((isUserLoaded && !user) || user) setIsLoading(false);
+    });
   }, [
     user,
     router,
@@ -53,9 +53,8 @@ const ContextSetter: React.FC<Props> = ({ children }) => {
 
   onAuthStateChanged(auth, (currentUser) => {
     changeUser(currentUser);
-
-    if (currentUser) setIsLoading(false);
     setIsUserLoaded(true);
+    if (!user && currentUser) setIsLoading(true);
   });
 
   if (isLoading) return <Loading />;
