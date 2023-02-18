@@ -13,10 +13,12 @@ import TeacherSidebar from "../../../../../components/general/TeacherSidebar";
 import StudentSidebar from "../../../../../components/general/StudentSidebar";
 import AssignmentStudentSidebar from "../../../../../components/assignment/AssignmentStudentSidebar";
 import SubmittedStudentSidebar from "../../../../../components/assignment/SubmittedStudentSidebar";
+import Loading from "../../../../../components/general/Loading";
 
 const AssignmentPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [isCodeView, setIsCodeView] = useState(false);
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("javascript");
@@ -33,7 +35,7 @@ const AssignmentPage: React.FC = () => {
   );
 
   useEffect(() => {
-    getClassroom(classroomID);
+    getClassroom(classroomID).then(() => setIsLoading(false));
     setLanguage(assignment?.language ?? "javascript");
     setIsLanguageLocked(assignment?.isLanguageLocked ?? false);
   }, [
@@ -52,6 +54,8 @@ const AssignmentPage: React.FC = () => {
 
   const changeLanguage = (event: ChangeEvent<HTMLSelectElement>) =>
     setLanguage(event.target.value);
+
+  if (isLoading) return <Loading />;
 
   if (!classroom)
     return (

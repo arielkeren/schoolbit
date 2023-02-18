@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AssignmentList from "../../../components/classroom/AssignmentList";
 import ClassroomCode from "../../../components/classroom/ClassroomCode";
 import useAppContext from "../../../hooks/useAppContext";
@@ -10,16 +10,21 @@ import StudentSidebar from "../../../components/general/StudentSidebar";
 import Sidebar from "../../../components/general/Sidebar";
 import EmptyArea from "../../../components/general/EmptyArea";
 import Information from "../../../components/general/Information";
+import Loading from "../../../components/general/Loading";
 
 const ClassroomPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
   const { classroomID } = router.query as { classroomID: string };
 
   useEffect(() => {
-    getClassroom(classroomID);
+    getClassroom(classroomID).then(() => setIsLoading(false));
   }, [getClassroom, classroomID]);
+
+  if (isLoading) return <Loading />;
 
   if (!classroom)
     return (

@@ -16,7 +16,7 @@ interface StateInterface {
   changeAttendedClassrooms: (IGrade: IClassroom[]) => void;
   changeGrades: (newGrades: IGrade[]) => void;
   addOwnedClassroom: (newOwnedClassroom: IClassroom) => void;
-  getClassroom: (classroomID: string) => void;
+  getClassroom: (classroomID: string) => Promise<void>;
 }
 
 interface Props {
@@ -47,7 +47,7 @@ const defaultState: StateInterface = {
   changeGrades(newGrades) {
     return;
   },
-  getClassroom(classroomID) {
+  async getClassroom(classroomID) {
     return;
   },
 };

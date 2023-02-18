@@ -2,16 +2,19 @@ import Head from "next/head";
 import EditAssignmentForm from "../../../../../components/edit/EditAssignmentForm";
 import { useRouter } from "next/router";
 import useAppContext from "../../../../../hooks/useAppContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../../../../components/general/Header";
 import Sidebar from "../../../../../components/general/Sidebar";
 import EmptyArea from "../../../../../components/general/EmptyArea";
 import Information from "../../../../../components/general/Information";
 import TeacherSidebar from "../../../../../components/general/TeacherSidebar";
 import StudentSidebar from "../../../../../components/general/StudentSidebar";
+import Loading from "../../../../../components/general/Loading";
 
 const EditAssignmentPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
   const { classroomID, assignmentID } = router.query as {
@@ -20,8 +23,10 @@ const EditAssignmentPage: React.FC = () => {
   };
 
   useEffect(() => {
-    getClassroom(classroomID);
-  }, [classroomID, getClassroom]);
+    getClassroom(classroomID).then(() => setIsLoading(false));
+  }, [getClassroom, classroomID]);
+
+  if (isLoading) return <Loading />;
 
   if (!classroom)
     return (

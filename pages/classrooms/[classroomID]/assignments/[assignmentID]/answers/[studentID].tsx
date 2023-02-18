@@ -10,10 +10,12 @@ import EmptyArea from "../../../../../../components/general/EmptyArea";
 import Information from "../../../../../../components/general/Information";
 import TeacherSidebar from "../../../../../../components/general/TeacherSidebar";
 import StudentSidebar from "../../../../../../components/general/StudentSidebar";
+import Loading from "../../../../../../components/general/Loading";
 
 const AnswerPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<string | null>(null);
 
   const router = useRouter();
@@ -24,11 +26,13 @@ const AnswerPage: React.FC = () => {
   };
 
   useEffect(() => {
-    getClassroom(classroomID);
+    getClassroom(classroomID).then(() => setIsLoading(false));
   }, [getClassroom, classroomID]);
 
   const changeLanguage = (event: ChangeEvent<HTMLSelectElement>) =>
     setLanguage(event.target.value);
+
+  if (isLoading) return <Loading />;
 
   if (!classroom)
     return (
