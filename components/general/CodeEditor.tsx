@@ -44,6 +44,7 @@ const CodeEditor: React.FC<Props> = ({
           minimap: { renderCharacters: false },
           scrollBeyondLastLine: false,
           readOnly: !changeCode,
+          scrollbar: { alwaysConsumeMouseWheel: false },
         }}
       />
     </div>

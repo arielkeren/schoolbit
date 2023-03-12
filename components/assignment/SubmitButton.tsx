@@ -50,6 +50,8 @@ const SubmitButton: React.FC<Props> = ({ code, language, closeCodeView }) => {
       language,
       senderName: username,
       senderID: userID,
+      grade: "",
+      comments: [],
       checked: false,
     };
     assignment.answers.push(newAnswer);

@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CodeEditor from "../../../../../../components/general/CodeEditor";
-import GradeForm from "../../../../../../components/answer/GradeForm";
 import Head from "next/head";
 import useAppContext from "../../../../../../hooks/useAppContext";
 import Header from "../../../../../../components/general/Header";
@@ -11,12 +10,21 @@ import Information from "../../../../../../components/general/Information";
 import TeacherSidebar from "../../../../../../components/general/TeacherSidebar";
 import StudentSidebar from "../../../../../../components/general/StudentSidebar";
 import Loading from "../../../../../../components/general/Loading";
+import CommentList from "../../../../../../components/general/CommentList";
+import EditCommentList from "../../../../../../components/answer/EditCommentList";
+import { IComment } from "../../../../../../types/types";
+import GradeTeacherSidebar from "../../../../../../components/answer/GradeTeacherSidebar";
+import GradeModal from "../../../../../../components/answer/GradeModal";
+import useModal from "../../../../../../hooks/useModal";
 
 const AnswerPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<string | null>(null);
+  const [comments, setComments] = useState<IComment[]>([]);
+
+  const [isGradeModalOpen, openGradeModal, closeGradeModal] = useModal();
 
   const router = useRouter();
   const { classroomID, assignmentID, studentID } = router.query as {
@@ -110,6 +118,34 @@ const AnswerPage: React.FC = () => {
       </>
     );
 
+  const addComment = (lineNumber: number) => {
+    if (comments.some((comment) => comment.line === lineNumber)) return;
+
+    setComments((previousComments) => [
+      ...previousComments,
+      { line: lineNumber, text: "" },
+    ]);
+  };
+
+  const changeCommentText = (lineNumber: number, newText: string) => {
+    const commentIndex = comments.findIndex(
+      (comment) => comment.line === lineNumber
+    );
+
+    const newComments = [...comments];
+
+    newComments[commentIndex].text = newText;
+
+    setComments(newComments);
+  };
+
+  const deleteComment = (lineNumber: number) =>
+    setComments((previousComments) =>
+      previousComments.filter((comment) => comment.line !== lineNumber)
+    );
+
+  const numberOfLines = answer.code.split(/\r*\n/).length;
+
   return (
     <>
       <Head>
@@ -120,26 +156,53 @@ const AnswerPage: React.FC = () => {
 
       {user?.uid === classroom.ownerID ? (
         <>
-          <TeacherSidebar />
-
           <EmptyArea>
             <div className="mb-14">
               <CodeEditor
                 code={answer.code}
                 language={language ?? answer.language}
                 changeLanguage={changeLanguage}
-                height="calc(100vh - 136px - 48px - 100px)"
+                height={`${(numberOfLines + 1) * 34.15}px`}
                 width="100%"
               />
             </div>
 
             {answer.checked ? (
-              <Information
-                primary="You've already graded this student's code"
-                secondary="The grade has already been sent to the student"
-              />
+              <>
+                <TeacherSidebar />
+
+                <CommentList
+                  numberOfLines={numberOfLines}
+                  comments={answer.comments}
+                  isFullScreen={true}
+                />
+
+                <Information
+                  primary="You've already graded this student's code"
+                  secondary={`The grade you've given is: ${answer.grade}`}
+                />
+              </>
             ) : (
-              <GradeForm />
+              <>
+                <GradeTeacherSidebar openGradeModal={openGradeModal} />
+
+                <EditCommentList
+                  numberOfLines={numberOfLines}
+                  comments={comments}
+                  addComment={addComment}
+                  changeCommentText={changeCommentText}
+                  deleteComment={deleteComment}
+                />
+
+                {isGradeModalOpen && (
+                  <GradeModal
+                    code={answer.code}
+                    language={answer.language}
+                    comments={comments}
+                    closeModal={closeGradeModal}
+                  />
+                )}
+              </>
             )}
           </EmptyArea>
         </>
