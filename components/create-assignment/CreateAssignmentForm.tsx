@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { database } from "../../firebaseConfig";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
@@ -13,31 +13,69 @@ const CreateAssignmentForm: React.FC = () => {
   const { classroom, changeClassroom } = useAppContext();
 
   const [name, setName] = useState("");
-  const [question, setQuestion] = useState("");
-  const [date, setDate] = useState(new Date());
   const [language, setLanguage] = useState("javascript");
   const [isLanguageLocked, setIsLanguageLocked] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [question, setQuestion] = useState("");
+  const [loaded, setLoaded] = useState(false);
 
   const router = useRouter();
   const { classroomID } = router.query as { classroomID: string };
 
-  const changeName = (event: React.ChangeEvent<HTMLInputElement>) =>
+  useEffect(() => {
+    const storedName = localStorage.getItem("SchoolBit-Name");
+    const storedLanguage = localStorage.getItem("SchoolBit-Language");
+    const storedIsLanguageLocked = localStorage.getItem(
+      "SchoolBit-IsLanguageLocked"
+    );
+    const storedDueDate = localStorage.getItem("SchoolBit-DueDate");
+    const storedQuestion = localStorage.getItem("SchoolBit-Question");
+
+    setName(storedName ?? "");
+    setLanguage(storedLanguage ?? "javascript");
+    setIsLanguageLocked(storedIsLanguageLocked === "true");
+    setDate(storedDueDate ? new Date(storedDueDate) : new Date());
+    setQuestion(storedQuestion ?? "");
+  }, []);
+
+  useEffect(() => {
+    if (!loaded) {
+      setLoaded(true);
+      return;
+    }
+
+    const formattedDate = `${date.toLocaleString("default", {
+      month: "short",
+    })} ${date.getDate()} ${date.getFullYear()}`;
+
+    localStorage.setItem("SchoolBit-DueDate", formattedDate);
+  }, [date, loaded]);
+
+  const changeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
+    localStorage.setItem("SchoolBit-Name", event.target.value);
+  };
 
-  const changeQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
+  const changeQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuestion(event.target.value);
+    localStorage.setItem("SchoolBit-Question", event.target.value);
+  };
 
-  const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) =>
+  const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setLanguage(event.target.value);
+    localStorage.setItem("SchoolBit-Language", event.target.value);
+  };
 
   const lockLanguage = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setIsLanguageLocked(true);
+    localStorage.setItem("SchoolBit-IsLanguageLocked", "true");
   };
 
   const unlockLanguage = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setIsLanguageLocked(false);
+    localStorage.setItem("SchoolBit-IsLanguageLocked", "false");
   };
 
   const createAssignment = async () => {
@@ -83,6 +121,15 @@ const CreateAssignmentForm: React.FC = () => {
       ...classroom,
       assignments: [...classroom.assignments, newAssignment],
     });
+
+    const keyNames = [
+      "SchoolBit-Language",
+      "SchoolBit-Name",
+      "SchoolBit-DueDate",
+      "SchoolBit-IsLanguageLocked",
+      "SchoolBit-Question",
+    ];
+    keyNames.forEach((keyName) => localStorage.removeItem(keyName));
 
     router.push(`/classrooms/${classroomID}`);
   };
