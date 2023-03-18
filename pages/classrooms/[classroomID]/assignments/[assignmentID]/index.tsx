@@ -18,6 +18,11 @@ import Loading from "../../../../../components/general/Loading";
 const AssignmentPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCodeView, setIsCodeView] = useState(false);
+  const [code, setCode] = useState("");
+  const [language, setLanguage] = useState("javascript");
+
   const router = useRouter();
   const { classroomID, assignmentID } = router.query as {
     classroomID: string;
@@ -28,19 +33,14 @@ const AssignmentPage: React.FC = () => {
     (currentAssignment) => currentAssignment.id === assignmentID
   );
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isCodeView, setIsCodeView] = useState(false);
-  const [code, setCode] = useState("");
-  const [language, setLanguage] = useState(
-    assignment?.language ?? "javascript"
-  );
-
   useEffect(() => {
     getClassroom(classroomID).then(() => setIsLoading(false));
 
+    setLanguage(assignment?.language ?? "javascript");
+
     const storedCode = localStorage.getItem(`SchoolBit-${assignmentID}`);
     setCode(storedCode ?? "");
-  }, [getClassroom, classroomID, assignmentID]);
+  }, [getClassroom, classroomID, assignmentID, assignment?.language]);
 
   const toggleCodeView = () =>
     setIsCodeView((previousCodeView) => !previousCodeView);
@@ -109,7 +109,7 @@ const AssignmentPage: React.FC = () => {
     (currentAnswer) => currentAnswer.senderID === user?.uid
   );
 
-  const isLanguageLocked = assignment?.isLanguageLocked ?? false;
+  const isLanguageLocked = assignment.isLanguageLocked ?? false;
 
   return (
     <>
@@ -146,7 +146,7 @@ const AssignmentPage: React.FC = () => {
                     changeLanguage={changeLanguage}
                     height="calc(100vh - 140px)"
                     width="100%"
-                    isLanguageLocked
+                    isLanguageLocked={isLanguageLocked}
                   />
                 ) : (
                   <>
@@ -176,7 +176,7 @@ const AssignmentPage: React.FC = () => {
                     height="calc(100vh - 140px)"
                     width="100%"
                     changeCode={changeCode}
-                    isLanguageLocked
+                    isLanguageLocked={isLanguageLocked}
                   />
                 ) : (
                   <>

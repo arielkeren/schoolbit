@@ -120,19 +120,29 @@ const ProgrammingLanguagePicker: React.FC<Props> = ({
     },
   ];
 
-  return (
-    <select
-      value={languageID}
-      onChange={changeLanguage}
-      className="bg-gray-100 rounded"
-    >
-      {languages.map((currentLanguage) => (
-        <option value={currentLanguage.id} key={currentLanguage.id}>
-          {currentLanguage.name}
-        </option>
-      ))}
-    </select>
-  );
+  if (changeLanguage)
+    return (
+      <select
+        value={languageID}
+        onChange={changeLanguage}
+        className="bg-gray-100 rounded font-medium"
+      >
+        {languages.map((currentLanguage) => (
+          <option
+            value={currentLanguage.id}
+            key={currentLanguage.id}
+            className="font-medium"
+          >
+            {currentLanguage.name}
+          </option>
+        ))}
+      </select>
+    );
+
+  const languageName =
+    languages.find((language) => language.id === languageID)?.name ?? "";
+
+  return <p className="font-medium">{languageName}</p>;
 };
 
 export default ProgrammingLanguagePicker;

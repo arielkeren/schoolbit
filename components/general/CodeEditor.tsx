@@ -9,7 +9,7 @@ interface Props {
   height: string;
   width: string;
   changeCode?: (newCode: string) => void;
-  isLanguageLocked?: boolean;
+  isLanguageLocked: boolean;
 }
 
 const CodeEditor: React.FC<Props> = ({
