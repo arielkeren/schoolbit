@@ -18,6 +18,12 @@ import Loading from "../../../../../components/general/Loading";
 const AssignmentPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
+  const router = useRouter();
+  const { classroomID, assignmentID } = router.query as {
+    classroomID: string;
+    assignmentID: string;
+  };
+
   const assignment = classroom?.assignments.find(
     (currentAssignment) => currentAssignment.id === assignmentID
   );
@@ -29,22 +35,22 @@ const AssignmentPage: React.FC = () => {
     assignment?.language ?? "javascript"
   );
 
-  const router = useRouter();
-  const { classroomID, assignmentID } = router.query as {
-    classroomID: string;
-    assignmentID: string;
-  };
-
   useEffect(() => {
     getClassroom(classroomID).then(() => setIsLoading(false));
-  }, [getClassroom, classroomID]);
+
+    const storedCode = localStorage.getItem(`SchoolBit-${assignmentID}`);
+    setCode(storedCode ?? "");
+  }, [getClassroom, classroomID, assignmentID]);
 
   const toggleCodeView = () =>
     setIsCodeView((previousCodeView) => !previousCodeView);
 
   const closeCodeView = () => setIsCodeView(false);
 
-  const changeCode = (newCode: string) => setCode(newCode);
+  const changeCode = (newCode: string) => {
+    setCode(newCode);
+    localStorage.setItem(`SchoolBit-${assignmentID}`, newCode);
+  };
 
   const changeLanguage = (event: ChangeEvent<HTMLSelectElement>) =>
     setLanguage(event.target.value);

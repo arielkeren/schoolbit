@@ -66,7 +66,7 @@ const SubmitButton: React.FC<Props> = ({ code, language, closeCodeView }) => {
     }
 
     changeClassroom({ ...classroom, assignments: newAssignments });
-
+    localStorage.removeItem(`SchoolBit-${assignmentID}`);
     closeCodeView();
   };
 
