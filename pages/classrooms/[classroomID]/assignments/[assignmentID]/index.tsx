@@ -18,11 +18,16 @@ import Loading from "../../../../../components/general/Loading";
 const AssignmentPage: React.FC = () => {
   const { user, classroom, getClassroom } = useAppContext();
 
+  const assignment = classroom?.assignments.find(
+    (currentAssignment) => currentAssignment.id === assignmentID
+  );
+
   const [isLoading, setIsLoading] = useState(true);
   const [isCodeView, setIsCodeView] = useState(false);
   const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("javascript");
-  const [isLanguageLocked, setIsLanguageLocked] = useState(false);
+  const [language, setLanguage] = useState(
+    assignment?.language ?? "javascript"
+  );
 
   const router = useRouter();
   const { classroomID, assignmentID } = router.query as {
@@ -30,20 +35,9 @@ const AssignmentPage: React.FC = () => {
     assignmentID: string;
   };
 
-  const assignment = classroom?.assignments.find(
-    (currentAssignment) => currentAssignment.id === assignmentID
-  );
-
   useEffect(() => {
     getClassroom(classroomID).then(() => setIsLoading(false));
-    setLanguage(assignment?.language ?? "javascript");
-    setIsLanguageLocked(assignment?.isLanguageLocked ?? false);
-  }, [
-    getClassroom,
-    classroomID,
-    assignment?.language,
-    assignment?.isLanguageLocked,
-  ]);
+  }, [getClassroom, classroomID]);
 
   const toggleCodeView = () =>
     setIsCodeView((previousCodeView) => !previousCodeView);
@@ -109,6 +103,8 @@ const AssignmentPage: React.FC = () => {
     (currentAnswer) => currentAnswer.senderID === user?.uid
   );
 
+  const isLanguageLocked = assignment?.isLanguageLocked ?? false;
+
   return (
     <>
       <Head>
@@ -142,7 +138,7 @@ const AssignmentPage: React.FC = () => {
                     code={answer?.code ?? ""}
                     language={language}
                     changeLanguage={changeLanguage}
-                    height="calc(100vh - 100px - 20px - 20px)"
+                    height="calc(100vh - 140px)"
                     width="100%"
                     isLanguageLocked
                   />
@@ -171,7 +167,7 @@ const AssignmentPage: React.FC = () => {
                     code={code}
                     language={language}
                     changeLanguage={changeLanguage}
-                    height="calc(100vh - 100px - 20px - 20px)"
+                    height="calc(100vh - 140px)"
                     width="100%"
                     changeCode={changeCode}
                     isLanguageLocked
