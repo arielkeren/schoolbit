@@ -14,7 +14,7 @@ const SignOutButton: React.FC = () => {
     <div className="flex justify-center m-2">
       <button
         onClick={logOut}
-        className="bg-gray-900 text-white py-2 px-5 rounded-lg font-bold text-2xl uppercase hover:bg-gray-800 transition-colors"
+        className="bg-gray-900 text-white py-2 px-5 rounded font-bold text-2xl uppercase hover:bg-gray-800 transition-colors"
       >
         Sign Out
       </button>

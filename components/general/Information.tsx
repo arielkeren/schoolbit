@@ -5,8 +5,8 @@ interface Props {
 
 const Information: React.FC<Props> = ({ primary, secondary }) => (
   <>
-    <p className="text-3xl font-medium">{primary}</p>
-    <p className="text-xl">{secondary}</p>
+    <p className="text-3xl font-medium text-gray-100">{primary}</p>
+    <p className="text-xl text-gray-100">{secondary}</p>
   </>
 );
 

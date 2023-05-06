@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
   return (
     <div className="fixed top-0 left-0 w-[100px] py-5 flex flex-col items-center bg-gray-900 h-screen h-[100dvh]">
       <Link href="/my-classrooms">
-        <Image src={Logo} alt="" height="60" priority />
+        <Image src={Logo} alt="" height="65" priority />
       </Link>
 
       <hr className="border-2 w-2/3 border-gray-800 mt-4" />

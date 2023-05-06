@@ -32,20 +32,20 @@ const AssignmentHeader: React.FC = () => {
             <div className="flex py-2">
               <Link
                 href={`/classrooms/${classroomID}/assignments/${assignmentID}/answers`}
-                className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100"
+                className="rounded-full w-12 h-12 flex justify-center items-center transition-colors hover:bg-gray-900"
               >
-                <TbChecklist className="text-gray-500 text-3xl" />
+                <TbChecklist className="text-gray-300 text-3xl" />
               </Link>
               <Link
                 href={`/classrooms/${classroomID}/assignments/${assignmentID}/edit`}
-                className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100"
+                className="rounded-full w-12 h-12 flex justify-center items-center transition-colors hover:bg-gray-900"
               >
-                <MdEdit className="text-gray-500 text-3xl" />
+                <MdEdit className="text-gray-300 text-3xl" />
               </Link>
-              <button className="rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-100">
+              <button className="rounded-full w-12 h-12 flex justify-center items-center transition-colors hover:bg-gray-900">
                 <FaTrashAlt
                   onClick={openRemoveAssignmentModal}
-                  className="text-gray-500 text-2xl"
+                  className="text-gray-300 text-2xl"
                 />
               </button>
             </div>

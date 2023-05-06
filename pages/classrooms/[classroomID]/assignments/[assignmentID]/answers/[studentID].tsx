@@ -164,6 +164,7 @@ const AnswerPage: React.FC = () => {
                 changeLanguage={changeLanguage}
                 height={`${(numberOfLines + 1) * 34.15}px`}
                 width="100%"
+                isLanguageLocked={false}
               />
             </div>
 

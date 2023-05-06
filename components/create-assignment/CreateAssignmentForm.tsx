@@ -153,7 +153,10 @@ const CreateAssignmentForm: React.FC = () => {
       <div className="w-full flex flex-col items-center gap-8 lg:w-4/5 xl:w-1/2">
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-4/5">
-            <label htmlFor="name" className="text-lg font-bold sm:text-xl">
+            <label
+              htmlFor="name"
+              className="text-lg text-gray-100 font-bold sm:text-xl"
+            >
               Name
             </label>
           </div>
@@ -168,20 +171,20 @@ const CreateAssignmentForm: React.FC = () => {
           />
         </div>
 
-        <h2 className="text-xl font-bold">Language</h2>
+        <h2 className="text-xl text-gray-100 font-bold">Language</h2>
 
         <div className="flex items-center gap-1">
           {isLanguageLocked ? (
             <button
               onClick={unlockLanguage}
-              className="hover:bg-gray-100 p-1 rounded-full"
+              className="hover:bg-gray-900 p-2 rounded-full"
             >
               <TfiLock className="text-xl text-red-600" />
             </button>
           ) : (
             <button
               onClick={lockLanguage}
-              className="hover:bg-gray-100 p-1 rounded-full"
+              className="hover:bg-gray-900 p-2 rounded-full"
             >
               <TfiUnlock className="text-xl text-green-600" />
             </button>
@@ -193,7 +196,7 @@ const CreateAssignmentForm: React.FC = () => {
           />
         </div>
 
-        <h2 className="text-xl font-bold">Due Date</h2>
+        <h2 className="text-xl text-gray-100 font-bold">Due Date</h2>
 
         <Calendar
           value={date}
@@ -206,7 +209,10 @@ const CreateAssignmentForm: React.FC = () => {
 
         <div className="flex flex-col items-center w-full">
           <div className="flex justify-start w-full">
-            <label htmlFor="question" className="text-lg font-bold sm:text-xl">
+            <label
+              htmlFor="question"
+              className="text-lg text-gray-100 font-bold sm:text-xl"
+            >
               Question
             </label>
           </div>
@@ -223,7 +229,7 @@ const CreateAssignmentForm: React.FC = () => {
           type="submit"
           value="Create"
           onClick={validateAssignment}
-          className="mt-5 bg-gray-900 text-white py-3 px-12 rounded-lg font-bold text-3xl uppercase cursor-pointer hover:bg-gray-800 transition-colors"
+          className="mt-5 bg-gray-900 text-white py-3 px-12 rounded font-bold text-3xl uppercase cursor-pointer hover:bg-gray-800 transition-colors"
         />
       </div>
     </form>
