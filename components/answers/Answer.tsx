@@ -63,6 +63,7 @@ const Answer: React.FC<Props> = ({ answer }) => {
           changeLanguage={changeLanguage}
           height="500px"
           width="100%"
+          isLanguageLocked={false}
         />
       )}
     </div>
