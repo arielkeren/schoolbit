@@ -41,6 +41,7 @@ const Grade: React.FC<Props> = ({ grade }) => {
             code={grade.code}
             language={language ?? grade.language}
             changeLanguage={changeLanguage}
+            isLanguageLocked={false}
           />
 
           <CommentList
