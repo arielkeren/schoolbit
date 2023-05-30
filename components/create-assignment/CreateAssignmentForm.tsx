@@ -44,7 +44,7 @@ const CreateAssignmentForm: React.FC = () => {
       return;
     }
 
-    const formattedDate = `${date.toLocaleString("default", {
+    const formattedDate = `${date.toLocaleString("en-US", {
       month: "short",
     })} ${date.getDate()} ${date.getFullYear()}`;
 
