@@ -2,7 +2,7 @@
 
 Web application for creating digital classrooms.
 
-![SchoolBit](https://github.com/arielkeren/schoolbit/assets/103370042/ebbf084d-cb37-4d9e-beca-e8884f645e09)
+![SchoolBit](https://github.com/user-attachments/assets/dbdfe169-6dce-448e-a210-d7c15047dab4)
 
 ## Live Demo
 
