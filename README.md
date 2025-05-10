@@ -1,10 +1,54 @@
-Think Google Classroom but specifically designed for programming classes (computer science, software engineering and more).<br>
-SchoolBit allows teachers to create digital classrooms for their students, where they can post assignments, which the students can do.<br>
-With a built-in code editor, it is easier than ever to write code quickly and efficiently directly in the browser.<br>
-Using this method of writing code in the browser and not sending files (which takes the student a lot of time) allows for an easier life for the teacher, who now does not have to download each and every file every student of his/hers sends to him/her.<br>
-This makes it much easier for the teacher to grade the assignment for every student, which he/she is able to send to each student.<br>
-A student's grades will appear in his/her grades page after they have been sent by the teacher.<br>
-While grading a student's work, the teacher can comment on each and every line of code.<br>
-The comments are sent with the grade back to the student, shown with the original code which the student has written.<br>
-Live website link: https://schoolbyte.netlify.app<br><br>
-![image](https://github.com/Ariel-Keren/schoolbit/assets/103370042/ebbf084d-cb37-4d9e-beca-e8884f645e09)
+# SchoolBit
+
+Web application for creating digital classrooms.
+
+![SchoolBit](https://github.com/arielkeren/schoolbit/assets/103370042/ebbf084d-cb37-4d9e-beca-e8884f645e09)
+
+## Live Demo
+
+Try it here: [schoolbyte.netlify.app](https://schoolbyte.netlify.app)
+
+## Tech Stack
+- Next.js
+- React
+- Firebase
+- TypeScript
+- Tailwind CSS
+
+## Features
+
+- Create digital classrooms.
+- Invite students to join the classroom.
+- Accept requests to join the classroom in the `"Requests"` tab.
+- Assign assignments to students in the classroom in the `"Assignment Creation"` tab.
+- Students can answer directly from the browser, with a **built-in code editor**.
+- Grade the students' answers, by sending the grade and comments on their code.
+- Grades that were sent, will appear for each of the students in the `"Grades"` tab.
+
+## Instructions
+
+- Clone this repository.
+  ```bash
+  git clone https://github.com/arielkeren/schoolbit.git
+  ```
+- Navigate to the project directory.
+  ```bash
+  cd schoolbit
+  ```
+- Install the required Node modules.
+  ```bash
+  npm install
+  # or
+  yarn install
+  # or
+  pnpm install
+  ```
+- Run the development server.
+  ```bash
+  npm run dev
+  # or
+  yarn dev
+  # or
+  pnpm dev
+  ```
+- Open [localhost:3000](http://localhost:3000) on your browser.
